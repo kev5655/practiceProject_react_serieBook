@@ -35,8 +35,7 @@ const DUMMY_SERIES = [
 
 const Panel = () => {
 
-    const state = ActivePanel.SerieList;
-
+    const [state, setState] = useState(ActivePanel.SerieList);
     const [series, setSeries] = useState(DUMMY_SERIES);
 
     const addSerieHandler = (newSerie) => {
@@ -46,11 +45,21 @@ const Panel = () => {
         console.log(series);
     }
 
+    const openAddFromHandler = () => {
+        setState(ActivePanel.AddSerie)
+    }
+
+    const editSerieHandler = () => {
+        setState(ActivePanel.EditSerie)
+    }
+
     return (
         <main>
-            {state === ActivePanel.SerieList && <SeriePanel serieList={series}/>}
+            {state === ActivePanel.SerieList && <SeriePanel serieList={series}
+                                                            openAddForm={openAddFromHandler}
+                                                            editSerie={editSerieHandler}/>}
             {state === ActivePanel.AddSerie && <AddSeriePanel onAddSerie={addSerieHandler}/>}
-            {state === ActivePanel.EditSerie && <EditSeriePanel />}
+            {state === ActivePanel.EditSerie && <EditSeriePanel/>}
         </main>
     );
 }

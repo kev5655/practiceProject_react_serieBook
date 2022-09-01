@@ -12,11 +12,11 @@ const SeriePanel = (props) => {
         <>
 
             <Card>
-                <Header/>
+                <Header openAddForm={props.openAddForm}/>
             </Card>
 
             <Card>
-                <SerieList serieList={props.serieList}/>
+                <SerieList editSerie={props.editSerie} serieList={props.serieList}/>
             </Card>
 
             <footer>

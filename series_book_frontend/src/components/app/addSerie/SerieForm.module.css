@@ -38,5 +38,6 @@
 
 .card_content_center_btn {
     display: flex;
+    gap: 2%;
     justify-content: center;
 }

@@ -6,7 +6,7 @@ import InputText from "../../ui/form/InputText";
 import InputNumber from "../../ui/form/InputNumber";
 import InputStars from "../../ui/form/InputStars";
 import InputDate from "../../ui/form/InputDate";
-import SubmitBtn from "../../ui/form/SubmitBtn";
+import Btn from "../../ui/form/Btn";
 
 
 const SerieForm = (props) => {
@@ -47,6 +47,7 @@ const SerieForm = (props) => {
         if (enteredTitle.isValid && enteredSession.isValid &&
             enteredEpisode.isValid && enteredStartDate.isValid &&
             enteredEndDate.isValid) {
+            console.log('onSubmit')
             props.onAddSerie({
                 title: "Test",
                 session: 3,
@@ -95,9 +96,17 @@ const SerieForm = (props) => {
             </div>
 
             <div className={classes.card_content_center_btn}>
-                <SubmitBtn className={{
+                <Btn
+                    submitValue='submit'
+                    label='Add'
+                    className={{
                     width: '90%',
                 }}/>
+                <Btn
+                    label='Cancel'
+                    className={{
+                        width: '90%',
+                    }}/>
             </div>
         </form>
     )
