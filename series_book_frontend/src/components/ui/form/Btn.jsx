@@ -16,7 +16,8 @@ const Btn = (props) => {
         <Button
             sx={style}
             type={props.submitValue}
-            variant="contained">
+            variant="contained"
+            onClick={props.onClick}>
             {props.label}
         </Button>
     )

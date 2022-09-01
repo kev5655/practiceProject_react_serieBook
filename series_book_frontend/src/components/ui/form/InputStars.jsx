@@ -6,7 +6,7 @@ import Rating from "@mui/material/Rating";
 
 const InputStars = (props) => {
 
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(0);
 
     const styles = {
         color: 'black',
@@ -18,7 +18,14 @@ const InputStars = (props) => {
             name="simple-controlled"
             value={value}
             onChange={(event, newValue) => {
+                let starValues = [0,0,0,0,0]
+                for (let i = 0; i < starValues.length; i++) {
+                    if(newValue > i){
+                        starValues[i] = 1;
+                    }
+                }
                 setValue(newValue);
+                props.stars(starValues)
             }}
             icon={<StarRoundedIcon fontSize="inherit"/>}
             emptyIcon={<StarOutlineRoundedIcon fontSize="inherit"/>}

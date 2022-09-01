@@ -12,7 +12,7 @@ const AddSeriePanel = (props) => {
                 <h1 className={classes.card_header_title}>Add new Serie</h1>
             </header>
 
-            <SerieForm onAddSerie={props.onAddSerie}/>
+            <SerieForm onAddSerie={props.onAddSerie} onCancel={props.onCancel}/>
 
         </div>
     )

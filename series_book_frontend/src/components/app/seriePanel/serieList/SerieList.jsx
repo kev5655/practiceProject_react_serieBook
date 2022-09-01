@@ -6,14 +6,15 @@ const SerieList = (props) => {
 
     return (
         <>
-            {props.serieList.map((serie) => (
-                <Serie key={serie.title}
+            {props.serieList.map((serie, i) => (
+                <Serie key={i}
                        title={serie.title}
-                       season={serie.season}
+                       session={serie.session}
                        episode={serie.episode}
-                       editSerie={props.editSerie}/>
+                       stars={serie.stars}
+                       editSerie={props.editSerie}
+                />
             ))}
-
         </>
     );
 }

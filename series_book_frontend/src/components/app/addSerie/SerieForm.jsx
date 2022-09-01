@@ -17,6 +17,7 @@ const SerieForm = (props) => {
     const [enteredEpisode, setEnteredEpisode] = useState({value: '', isValid: false});
     const [enteredStartDate, setEnteredStartDate] = useState({value: '', isValid: false});
     const [enteredEndDate, setEnteredEndDate] = useState({value: '', isValid: false});
+    const [enteredStars, setEnteredStars] = useState({value: [0,0,0,0,0]})
     //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
         setEnteredTitle({value: value, isValid: true});
@@ -38,24 +39,30 @@ const SerieForm = (props) => {
         setEnteredEndDate({value: value, isValid: true})
     }
 
+    const starsHandler = (value) => {
+        setEnteredStars({value: value})
+    }
+
     //useEffect(() => {
     //    setFormValid(enteredTitle.isValid && enteredSession.isValid &&
     //        enteredEpisode.isValid && enteredStartDate && enteredEndDate);
     //}, [enteredTitle, enteredSession, enteredEpisode, enteredEndDate, enteredStartDate])
 
-    const addSerieHandler = () => {
+    const addSerieHandler = (e) => {
+        e.preventDefault()
         if (enteredTitle.isValid && enteredSession.isValid &&
             enteredEpisode.isValid && enteredStartDate.isValid &&
             enteredEndDate.isValid) {
             console.log('onSubmit')
-            props.onAddSerie({
-                title: "Test",
-                session: 3,
-                episode: 33,
-                startDate: new Date(),
-                endDate: new Date(),
-                stars: 5,
-            })
+            const newSerie = {
+                title: enteredTitle.value,
+                session: enteredSession.value,
+                episode: enteredEpisode.value,
+                startDate: enteredStartDate.value,
+                endDate: enteredEndDate.value,
+                stars: enteredStars.value,
+            }
+            props.onAddSerie(newSerie);
         }
     }
 
@@ -83,7 +90,9 @@ const SerieForm = (props) => {
                             onChange={episodeHandler}/>
                     </div>
                 </div>
-                <InputStars className={{
+                <InputStars
+                    stars={starsHandler}
+                    className={{
                     marginRight: '12%',
                     color: '#780000'
                 }}/>
@@ -97,16 +106,17 @@ const SerieForm = (props) => {
 
             <div className={classes.card_content_center_btn}>
                 <Btn
+                    label='Cancel'
+                    onClick={props.onCancel}
+                    className={{
+                        width: '90%',
+                    }}/>
+                <Btn
                     submitValue='submit'
                     label='Add'
                     className={{
                     width: '90%',
                 }}/>
-                <Btn
-                    label='Cancel'
-                    className={{
-                        width: '90%',
-                    }}/>
             </div>
         </form>
     )

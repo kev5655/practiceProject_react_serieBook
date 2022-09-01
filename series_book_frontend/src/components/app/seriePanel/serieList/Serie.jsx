@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import classes from './Serie.module.css'
 
@@ -6,15 +6,34 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarHalfRoundedIcon from '@mui/icons-material/StarHalfRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
+import {fireChangeForInputTimeIfValid} from "@testing-library/user-event/dist/keyboard/shared";
 
 
 const Serie = (props) => {
 
-    const editSerieHandler = () => {
-        props.editSerie(this.props)
-    }
+    //const [starsElements, setStarsElement] = useState(createStars());
 
-    console.log(props)
+    //const createStars = () => {
+    //    let elements = []
+    //    for (let i = 0; i < 5; i++) {
+    //        if (props.stars > i) {
+    //            elements.push(<StarRoundedIcon className={classes.star} key={i}/>)
+    //        } else {
+    //            elements.push(<StarOutlineRoundedIcon className={classes.star} key={i}/>)
+    //        }
+    //    }
+    //    return elements
+    //}
+    //const addSerieHandler = (newSerie) => {
+//
+    //    setSeries((prevSerie) => {
+    //        console.log(newSerie)
+    //        console.log(prevSerie);
+    //        return [newSerie, ...prevSerie];
+    //    });
+    //    setState(ActivePanel.SerieList);
+    //}
+
 
     return (
         <article className={classes.serie_context}>
@@ -22,26 +41,28 @@ const Serie = (props) => {
                 <div>
                     <div className={classes.serie_leftContent}>
                         <title>{props.title}</title>
-                        <p>{props.season}S</p>
+                        <p>{props.session}S</p>
                         <p>{props.episode}E</p>
                     </div>
 
                     <div>
-                        <StarRoundedIcon className={classes.star}/>
-                        <StarHalfRoundedIcon className={classes.star}/>
-                        <StarOutlineRoundedIcon className={classes.star}/>
-                        <StarOutlineRoundedIcon className={classes.star}/>
-                        <StarOutlineRoundedIcon className={classes.star}/>
+                        {props.stars.map((value, i) => {
+                            if (value === 1) {
+                                return (<StarRoundedIcon className={classes.star} key={i}/>)
+                            } else {
+                                return (<StarOutlineRoundedIcon className={classes.star} key={i}/>)
+                            }
+                        })}
                     </div>
                 </div>
 
                 <MoreHorizIcon
                     onClick={props.editSerie}
                     sx={{
-                    "&:hover": {
-                        color: '#868686',
-                    },
-                }}/>
+                        "&:hover": {
+                            color: '#868686',
+                        },
+                    }}/>
             </div>
         </article>
     );

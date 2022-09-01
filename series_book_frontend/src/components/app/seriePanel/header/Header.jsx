@@ -4,7 +4,6 @@ import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 import classes from './Header.module.css'
-import IconBtn from "../../../ui/IconBtn";
 
 const Header = (props) => {
 

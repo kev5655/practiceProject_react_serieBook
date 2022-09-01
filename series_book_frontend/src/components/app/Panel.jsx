@@ -20,7 +20,7 @@ const DUMMY_SERIES = [
         episode: 12,
         startDate: new Date(2021, 5, 2),
         endDate: new Date(2022, 1, 20),
-        stars: 4,
+        stars: [1,1,1,1,0],
     },
     {
         title: "My Hero Academy",
@@ -28,7 +28,7 @@ const DUMMY_SERIES = [
         episode: 22,
         startDate: new Date(2022, 2, 13),
         endDate: new Date(2022, 6, 18),
-        stars: 3,
+        stars: [1,1,1,0,0],
     }
 ]
 
@@ -39,10 +39,13 @@ const Panel = () => {
     const [series, setSeries] = useState(DUMMY_SERIES);
 
     const addSerieHandler = (newSerie) => {
+
         setSeries((prevSerie) => {
+            console.log(newSerie)
+            console.log(prevSerie);
             return [newSerie, ...prevSerie];
         });
-        console.log(series);
+        setState(ActivePanel.SerieList);
     }
 
     const openAddFromHandler = () => {
@@ -53,12 +56,17 @@ const Panel = () => {
         setState(ActivePanel.EditSerie)
     }
 
+    const onCancelAddFormHandler = () => {
+        setState(ActivePanel.SerieList)
+    }
+
     return (
         <main>
             {state === ActivePanel.SerieList && <SeriePanel serieList={series}
                                                             openAddForm={openAddFromHandler}
                                                             editSerie={editSerieHandler}/>}
-            {state === ActivePanel.AddSerie && <AddSeriePanel onAddSerie={addSerieHandler}/>}
+            {state === ActivePanel.AddSerie && <AddSeriePanel onAddSerie={addSerieHandler}
+                                                              onCancel={onCancelAddFormHandler}/>}
             {state === ActivePanel.EditSerie && <EditSeriePanel/>}
         </main>
     );
