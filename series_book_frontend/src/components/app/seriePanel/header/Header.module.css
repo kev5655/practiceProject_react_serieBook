@@ -1,0 +1,31 @@
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.title {
+    color: #780000;
+    font-size: xx-large;
+    margin: 0;
+    padding: 0;
+}
+
+.icon_container {
+    width: 15%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    padding-right: 15%;
+}
+
+.icon:hover{
+    color: #780000;
+    font-size: xx-large;
+}
+

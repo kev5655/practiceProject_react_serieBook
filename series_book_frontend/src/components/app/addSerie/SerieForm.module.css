@@ -1,0 +1,42 @@
+.card_content {
+    padding: 1% 2.5% 1% 2.5%;
+}
+
+.card_content_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 0;
+}
+
+.card_content_stars{
+    margin-right: 2%;
+}
+
+.card_content_input{
+    width: 50%;
+}
+
+.card_content_numbers {
+    display: flex;
+}
+
+.card_content_number {
+    margin: 4% 0;
+}
+
+.card_content_dates {
+    margin: 4% 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card_content_date_text {
+    color: #780000;
+}
+
+.card_content_center_btn {
+    display: flex;
+    justify-content: center;
+}

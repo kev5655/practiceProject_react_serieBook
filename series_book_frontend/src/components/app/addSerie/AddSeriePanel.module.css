@@ -1,0 +1,18 @@
+.card {
+    width: 70%;
+    margin: 4% auto;
+    background: #868686;
+    border-radius: 1rem;
+}
+
+.card_header {
+    padding: 1% 2.5% 1% 2.5%;
+    background: #6a6a6a;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.card_header_title {
+    font-size: 2rem;
+}
+

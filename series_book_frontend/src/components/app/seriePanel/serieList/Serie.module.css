@@ -1,0 +1,28 @@
+
+.serie_context {
+    padding: 1%;
+    margin: 2% auto 2% auto;
+    background: #669bbc;
+    border-radius: 1rem;
+}
+
+.serie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.serie_leftContent {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}
+
+title {
+    display: block;
+}
+
+.star {
+    font-size: 1.2rem !important;
+    margin-right: -0.30rem;
+}
