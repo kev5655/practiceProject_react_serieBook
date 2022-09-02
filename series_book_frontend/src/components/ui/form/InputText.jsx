@@ -40,6 +40,7 @@ const InputText = (props) => {
         <>
             <CssTextField
                 placeholder={props.placeholder}
+                value={props.value}
                 type='text'
                 margin='none'
                 size='small'

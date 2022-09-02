@@ -6,7 +6,14 @@ import Rating from "@mui/material/Rating";
 
 const InputStars = (props) => {
 
-    const [value, setValue] = useState(0);
+    let stars = 0;
+    props.value.map((star) => {
+        if(star === 1){
+            stars++;
+        }
+    })
+
+    const [value, setValue] = useState(stars);
 
     const styles = {
         color: 'black',

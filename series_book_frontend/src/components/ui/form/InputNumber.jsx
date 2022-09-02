@@ -30,7 +30,7 @@ const InputNumber = (props) => {
         },
     });
 
-    const [number, setNumber] = new useState();
+    const [number, setNumber] = new useState(props.value);
 
     const isValidate = (event) => {
         return parseInt(event.target.value) >= 1;

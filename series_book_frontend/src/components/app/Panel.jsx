@@ -5,6 +5,7 @@ import AddSeriePanel from "./addSerie/AddSeriePanel";
 import EditSeriePanel from "./editSerie/EditSeriePanel"
 
 import './Panel.module.css'
+import ManageSeriePanel from "./editSerie/ManageSeriePanel";
 
 
 const ActivePanel = {
@@ -20,7 +21,7 @@ const DUMMY_SERIES = [
         episode: 12,
         startDate: new Date(2021, 5, 2),
         endDate: new Date(2022, 1, 20),
-        stars: [1,1,1,1,0],
+        stars: [1, 1, 1, 1, 0],
     },
     {
         title: "My Hero Academy",
@@ -28,7 +29,7 @@ const DUMMY_SERIES = [
         episode: 22,
         startDate: new Date(2022, 2, 13),
         endDate: new Date(2022, 6, 18),
-        stars: [1,1,1,0,0],
+        stars: [1, 1, 1, 0, 0],
     }
 ]
 
@@ -37,7 +38,7 @@ const Panel = () => {
 
     const [state, setState] = useState(ActivePanel.SerieList);
     const [series, setSeries] = useState(DUMMY_SERIES);
-    const [editSerie, setEditSerie]  = useState();
+    const [editSerie, setEditSerie] = useState();
 
     const addSerieHandler = (newSerie) => {
 
@@ -54,6 +55,8 @@ const Panel = () => {
     }
 
     const editSerieHandler = (editSerie) => {
+        console.log(editSerie)
+        editSerie = [...editSerie, {isEdit: true}]
         setEditSerie(editSerie)
         setState(ActivePanel.EditSerie)
     }
@@ -66,10 +69,13 @@ const Panel = () => {
         <main>
             {state === ActivePanel.SerieList && <SeriePanel serieList={series}
                                                             openAddForm={openAddFromHandler}
-                                                            editSerie={editSerieHandler}/>}
+                                                            onEditSerie={editSerieHandler}/>}
             {state === ActivePanel.AddSerie && <AddSeriePanel onAddSerie={addSerieHandler}
                                                               onCancel={onCancelAddFormHandler}/>}
-            {state === ActivePanel.EditSerie && <EditSeriePanel editSerie={editSerie}/>}
+            {state === ActivePanel.EditSerie && <ManageSeriePanel title='Edit Serie'
+                                                                  editingSerie={editSerie}
+                                                                  onManagedSerie={addSerieHandler}
+                                                                  onCancel={onCancelAddFormHandler}/>}
         </main>
     );
 }

@@ -9,13 +9,18 @@ import InputDate from "../../ui/form/InputDate";
 import Btn from "../../ui/form/Btn";
 
 
-const SerieForm = (props) => {
+const ManageSerieForm = (props) => {
 
-    const [enteredTitle, setEnteredTitle] = useState({value: '', isValid: false});
-    const [enteredSession, setEnteredSession] = useState({value: '', isValid: false});
-    const [enteredEpisode, setEnteredEpisode] = useState({value: '', isValid: false});
-    const [enteredStartDate, setEnteredStartDate] = useState({value: '', isValid: false});
-    const [enteredEndDate, setEnteredEndDate] = useState({value: '', isValid: false});
+    let defaultIsValid = false;
+    if(props.isEdit){
+        defaultIsValid = true;
+    }
+
+    const [enteredTitle, setEnteredTitle] = useState({value: '', isValid: defaultIsValid});
+    const [enteredSession, setEnteredSession] = useState({value: '', isValid: defaultIsValid});
+    const [enteredEpisode, setEnteredEpisode] = useState({value: '', isValid: defaultIsValid});
+    const [enteredStartDate, setEnteredStartDate] = useState({value: '', isValid: defaultIsValid});
+    const [enteredEndDate, setEnteredEndDate] = useState({value: '', isValid: defaultIsValid});
     const [enteredStars, setEnteredStars] = useState({value: [0,0,0,0,0]})
     //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
@@ -42,18 +47,13 @@ const SerieForm = (props) => {
         setEnteredStars({value: value})
     }
 
-    //useEffect(() => {
-    //    setFormValid(enteredTitle.isValid && enteredSession.isValid &&
-    //        enteredEpisode.isValid && enteredStartDate && enteredEndDate);
-    //}, [enteredTitle, enteredSession, enteredEpisode, enteredEndDate, enteredStartDate])
-
-    const addSerieHandler = (e) => {
+    const submitHandler = (e) => {
         e.preventDefault()
         if (enteredTitle.isValid && enteredSession.isValid &&
             enteredEpisode.isValid && enteredStartDate.isValid &&
             enteredEndDate.isValid) {
             console.log('onSubmit')
-            const newSerie = {
+            const manageSerie = {
                 title: enteredTitle.value,
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
@@ -61,58 +61,69 @@ const SerieForm = (props) => {
                 endDate: enteredEndDate.value,
                 stars: enteredStars.value,
             }
-            props.onAddSerie(newSerie);
+            props.onManagedSerie(manageSerie);
         }
     }
 
+    console.log(props)
+
 
     return (
-        <form className={classes.card_content} onSubmit={addSerieHandler}>
+        <form className={classes.card_content} onSubmit={submitHandler}>
             <div className={classes.card_content_flex}>
                 <div className={classes.card_content_input}>
                     <InputText
                         placeholder='Serie Name'
+                        value={props.titleValue}
                         onChange={titleHandler}/>
 
                     <div className={classes.card_content_numbers}>
                         <InputNumber
+                            placeholder='Staffel'
+                            value={props.sessionValue}
                             className={{
                                 margin: '4% 2% 4% 0'
                             }}
-                            placeholder='Staffel'
                             onChange={sessionHandler}/>
                         <InputNumber
+                            placeholder='Folge'
+                            value={props.episodeValue}
                             className={{
                                 margin: '4% 0%'
                             }}
-                            placeholder='Folge'
                             onChange={episodeHandler}/>
                     </div>
                 </div>
                 <InputStars
-                    stars={starsHandler}
+                    value={props.starsValue}
                     className={{
-                    marginRight: '12%',
-                    color: '#780000'
-                }}/>
+                        marginRight: '12%',
+                        color: '#780000'
+                    }}
+                    stars={starsHandler}/>
             </div>
 
             <div className={classes.card_content_dates}>
-                <InputDate label='Start Watching' onChange={startDateHandler}/>
+                <InputDate label='Start Watching'
+                           value={props.startDateValue}
+                           onChange={startDateHandler}/>
                 <p className={classes.card_content_date_text}>to</p>
-                <InputDate label='End Watching' onChange={endDateHandler}/>
+                <InputDate
+                    value={props.endDateValue}
+                    label='End Watching'
+                    onChange={endDateHandler}/>
             </div>
 
             <div className={classes.card_content_center_btn}>
                 <Btn
-                    label='Cancel'
-                    onClick={props.onCancel}
+                    label={props.cancelBtnLabel} // Cancel
                     className={{
                         width: '90%',
-                    }}/>
+                    }}
+                    onClick={props.onCancel}/>
                 <Btn
+                    label={props.submitBtnLabel}  // Add
                     submitValue='submit'
-                    label='Add'
                     className={{
                     width: '90%',
                 }}/>
@@ -121,4 +132,4 @@ const SerieForm = (props) => {
     )
 }
 
-export default SerieForm;
+export default ManageSerieForm;

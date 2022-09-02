@@ -18,7 +18,7 @@ const SeriePanel = (props) => {
             </Card>
 
             <Card className={classes.serieList_card}>
-                <SerieList editSerie={props.editSerie} serieList={props.serieList}/>
+                <SerieList editSerie={props.onEditSerie} serieList={props.serieList}/>
             </Card>
 
             <footer>

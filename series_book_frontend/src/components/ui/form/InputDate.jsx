@@ -7,7 +7,7 @@ import {styled} from "@mui/joy";
 
 const InputDate = (props) => {
 
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(props.value);
 
     const CssTextField = styled(DatePicker)({
         '& label.Mui-focused': {
