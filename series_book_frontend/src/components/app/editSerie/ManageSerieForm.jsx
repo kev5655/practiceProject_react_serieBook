@@ -8,6 +8,9 @@ import InputStars from "../../ui/form/InputStars";
 import InputDate from "../../ui/form/InputDate";
 import Btn from "../../ui/form/Btn";
 
+import {v4 as uuidv4} from 'uuid';
+
+
 
 const ManageSerieForm = (props) => {
 
@@ -16,12 +19,12 @@ const ManageSerieForm = (props) => {
         defaultIsValid = true;
     }
 
-    const [enteredTitle, setEnteredTitle] = useState({value: '', isValid: defaultIsValid});
-    const [enteredSession, setEnteredSession] = useState({value: '', isValid: defaultIsValid});
-    const [enteredEpisode, setEnteredEpisode] = useState({value: '', isValid: defaultIsValid});
-    const [enteredStartDate, setEnteredStartDate] = useState({value: '', isValid: defaultIsValid});
-    const [enteredEndDate, setEnteredEndDate] = useState({value: '', isValid: defaultIsValid});
-    const [enteredStars, setEnteredStars] = useState({value: [0,0,0,0,0]})
+    const [enteredTitle, setEnteredTitle] = useState({value: props.titleValue, isValid: defaultIsValid});
+    const [enteredSession, setEnteredSession] = useState({value: props.sessionValue, isValid: defaultIsValid});
+    const [enteredEpisode, setEnteredEpisode] = useState({value: props.episodeValue, isValid: defaultIsValid});
+    const [enteredStartDate, setEnteredStartDate] = useState({value: props.startDateValue, isValid: defaultIsValid});
+    const [enteredEndDate, setEnteredEndDate] = useState({value: props.endDateValue, isValid: defaultIsValid});
+    const [enteredStars, setEnteredStars] = useState({value: props.starsValue})
     //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
         setEnteredTitle({value: value, isValid: true});
@@ -52,14 +55,23 @@ const ManageSerieForm = (props) => {
         if (enteredTitle.isValid && enteredSession.isValid &&
             enteredEpisode.isValid && enteredStartDate.isValid &&
             enteredEndDate.isValid) {
-            console.log('onSubmit')
+
+            let id;
+            if(props.id === undefined){
+                id = uuidv4();
+            } else {
+                id = props.id
+            }
+
             const manageSerie = {
+                id: id,
                 title: enteredTitle.value,
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
                 startDate: enteredStartDate.value,
                 endDate: enteredEndDate.value,
                 stars: enteredStars.value,
+                isEdit: props.isEdit,
             }
             props.onManagedSerie(manageSerie);
         }

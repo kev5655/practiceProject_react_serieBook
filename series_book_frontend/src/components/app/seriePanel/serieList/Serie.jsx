@@ -11,7 +11,15 @@ import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 const Serie = (props) => {
 
     const editSerieHandler = () => {
-        props.editSerie(props)
+        props.editSerie({
+            id: props.id,
+            title: props.title,
+            session: props.session,
+            episode: props.episode,
+            startDate: props.startDate,
+            endDate: props.endDate,
+            stars: props.stars,
+        })
     }
 
     return (

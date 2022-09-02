@@ -6,8 +6,9 @@ const SerieList = (props) => {
 
     return (
         <>
-            {props.serieList.map((serie, i) => (
-                <Serie key={i}
+            {props.serieList.map((serie) => (
+                <Serie key={serie.id}
+                       id={serie.id}
                        title={serie.title}
                        session={serie.session}
                        episode={serie.episode}
