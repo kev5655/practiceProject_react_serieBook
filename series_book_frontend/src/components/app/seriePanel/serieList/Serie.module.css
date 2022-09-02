@@ -1,18 +1,21 @@
 
-.serie_context {
+.serie {
     padding: 1%;
     margin: 2% auto 2% auto;
-    background: #669bbc;
+    border-top: 1px #868686 solid;
+    border-bottom: 1px #868686 solid;
     border-radius: 1rem;
-}
-
-.serie {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.serie_leftContent {
+.serie:hover{
+    background: #868686;
+}
+
+
+.serie_firstRow {
     align-items: center;
     display: flex;
     gap: 1rem;
@@ -22,7 +25,7 @@ title {
     display: block;
 }
 
-.star {
+.serie_secondRow_star {
     font-size: 1.2rem !important;
     margin-right: -0.30rem;
 }
