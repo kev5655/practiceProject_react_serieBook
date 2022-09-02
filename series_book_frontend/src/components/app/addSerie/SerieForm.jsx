@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 
 import classes from "./SerieForm.module.css";
 
@@ -11,7 +11,6 @@ import Btn from "../../ui/form/Btn";
 
 const SerieForm = (props) => {
 
-    const [isFormValid, setFormValid] = useState(false);
     const [enteredTitle, setEnteredTitle] = useState({value: '', isValid: false});
     const [enteredSession, setEnteredSession] = useState({value: '', isValid: false});
     const [enteredEpisode, setEnteredEpisode] = useState({value: '', isValid: false});

@@ -10,13 +10,17 @@ import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
 const Serie = (props) => {
 
+    const editSerieHandler = () => {
+        props.editSerie(props)
+    }
+
     return (
         <article className={classes.serie}>
             <div>
                 <div className={classes.serie_firstRow}>
-                    <title>{props.title}</title>
-                    <p>{props.session}S</p>
-                    <p>{props.episode}E</p>
+                    <title className={classes.serie_firstRow_title}>{props.title}</title>
+                    <p className={classes.serie_firstRow_text}>{props.session}S</p>
+                    <p className={classes.serie_firstRow_text}>{props.episode}E</p>
                 </div>
 
                 <div>
@@ -29,14 +33,9 @@ const Serie = (props) => {
                     })}
                 </div>
             </div>
-
             <MoreHorizIcon
-                onClick={props.editSerie}
-                sx={{
-                    "&:hover": {
-                        color: '#868686',
-                    },
-                }}/>
+                onClick={editSerieHandler}
+                className={classes.serie_editIcon}/>
         </article>
     );
 }

@@ -1,9 +1,11 @@
 
 .serie {
-    padding: 1%;
+    padding: 1% 2% 1% 1%;
     margin: 2% auto 2% auto;
-    border-top: 1px #868686 solid;
-    border-bottom: 1px #868686 solid;
+    border-top: 1px #6a6a6a solid;
+    border-bottom: 1px #6a6a6a solid;
+    box-shadow:  10px 10px 40px #5d5d5d,
+    -10px -10px 40px #777777;
     border-radius: 1rem;
     display: flex;
     align-items: center;
@@ -11,7 +13,9 @@
 }
 
 .serie:hover{
-    background: #868686;
+    background: #6a6a6a;
+    box-shadow: inset 10px 10px 40px #5d5d5d,
+    inset -10px -10px 40px #777777;
 }
 
 
@@ -21,11 +25,22 @@
     gap: 1rem;
 }
 
-title {
+.serie_firstRow_title {
     display: block;
+    color: #780000;
+}
+
+.serie_firstRow_text {
+    color: #780000;
 }
 
 .serie_secondRow_star {
     font-size: 1.2rem !important;
     margin-right: -0.30rem;
 }
+
+.serie_editIcon:hover {
+    color: #780000;
+    transform: scale(1.4);
+}
+
