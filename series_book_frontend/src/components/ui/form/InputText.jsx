@@ -5,6 +5,9 @@ import {styled} from "@mui/joy";
 
 
 const CssTextField = styled(TextField)({
+    "& input::placeholder": {
+        fontFamily:"\"JetBrains Mono\", sans-serif"
+    },
     '& label.Mui-focused': {
         color: '#c1121f',
         borderWidth: '0.15rem'
@@ -12,7 +15,6 @@ const CssTextField = styled(TextField)({
     '& .MuiInput-underline:after': {
         borderBottomColor: '#c1121f',
         borderWidth: '0.15rem'
-
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {

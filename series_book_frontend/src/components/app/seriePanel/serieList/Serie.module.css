@@ -1,7 +1,7 @@
 
 .serie {
-    padding: 1% 2% 1% 1%;
-    margin: 2% auto 2% auto;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    margin: 1rem auto 1rem auto;
     border-top: 1px #6a6a6a solid;
     border-bottom: 1px #6a6a6a solid;
     box-shadow:  10px 10px 40px #5d5d5d,

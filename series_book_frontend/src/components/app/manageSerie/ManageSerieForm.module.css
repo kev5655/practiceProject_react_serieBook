@@ -4,6 +4,8 @@
 
 .card_content_flex {
     display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin: 2% 0;
@@ -19,15 +21,18 @@
 
 .card_content_numbers {
     display: flex;
+    gap: 2%;
 }
 
 .card_content_number {
-    margin: 4% 0;
+    margin: 4% 0 !important;
 }
 
 .card_content_dates {
     margin: 4% 0;
     display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }

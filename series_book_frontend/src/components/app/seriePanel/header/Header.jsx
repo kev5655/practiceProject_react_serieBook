@@ -13,7 +13,7 @@ const Header = (props) => {
 
     return (
         <article className={classes.container}>
-            <h1 className={classes.title}>Serie Liste</h1>
+            <h1>Serie Liste</h1> {/* Global Styling in App.css */}
             <div className={classes.icon_container}>
                 <FilterListIcon className={classes.icon}/>
                 <AddIcon onClick={switchToAddFromHandler}

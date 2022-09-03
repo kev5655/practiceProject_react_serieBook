@@ -6,5 +6,6 @@
 }
 
 .serieList_card {
+    padding: 0.5rem 1rem !important;
     background: #868686 !important;
 }

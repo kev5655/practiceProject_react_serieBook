@@ -4,12 +4,52 @@ import {DatePicker} from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {styled} from "@mui/joy";
+import {fontFamily} from "@mui/joy/styles/styleFunctionSx";
 
 const InputDate = (props) => {
 
-    const [value, setValue] = useState(props.value);
+    let defalutValue = ""
+    if(props.value !== undefined){
+        defalutValue = props.value
+    }
+
+    const [value, setValue] = useState(defalutValue);
 
     const CssTextField = styled(DatePicker)({
+        '& .MuiFormLabel-root': {
+            color: 'green !important'
+        },
+    /*
+        '& .MuiInputLabel-root': {
+            color: 'blue !important'
+        }, */
+        '& .MuiInputLabel-formControl': {
+            color: 'blue !important'
+        },
+    });
+
+    return (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <CssTextField
+                label={props.label}
+                value={value}
+                inputFormat="DD/MM/YY"
+                onChange={(newValue) => {
+                    setValue(newValue);
+                    props.onChange(newValue)
+                }}
+                renderInput={(params) => <TextField {...params}/>}
+            />
+        </LocalizationProvider>
+    )
+
+}
+
+export default InputDate;
+
+/*
+
+{
         '& label.Mui-focused': {
             color: '#c1121f',
             borderWidth: '0.15rem'
@@ -19,6 +59,7 @@ const InputDate = (props) => {
         },
         '& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root.Mui-error': {
             color: '#555555',
+            fontFamily:"\"JetBrains Mono\", sans-serif"
         },
         '.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
             borderColor: '#780000',
@@ -36,26 +77,9 @@ const InputDate = (props) => {
             },
             '&.Mui-focused fieldset': {
                 borderColor: '#c1121f',
-                borderWidth: '0.15rem'
+                borderWidth: '0.15rem',
             },
         },
-    });
+    }
 
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <CssTextField
-                label={props.label}
-                value={value}
-                inputFormat="DD/MM/YY"
-                onChange={(newValue) => {
-                    setValue(newValue);
-                    props.onChange(newValue)
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-    )
-
-}
-
-export default InputDate;
+ */

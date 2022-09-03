@@ -1,11 +1,9 @@
 import React, {useState} from "react";
 
 import SeriePanel from "./seriePanel/SeriePanel";
-import AddSeriePanel from "./addSerie/AddSeriePanel";
-import EditSeriePanel from "./editSerie/EditSeriePanel"
 
 import './Panel.module.css'
-import ManageSeriePanel from "./editSerie/ManageSeriePanel";
+import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import {v4 as uuidv4} from "uuid";
 
 

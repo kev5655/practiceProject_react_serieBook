@@ -2,6 +2,7 @@ import React from 'react'
 
 import classes from './ManageSeriePanel.module.css'
 import ManageSerieForm from "./ManageSerieForm";
+import Card from './../../ui/Card'
 
 
 const ManageSeriePanel = (props) => {
@@ -9,9 +10,9 @@ const ManageSeriePanel = (props) => {
     console.log(props)
 
     return (
-        <div className={classes.card}>
+        <Card className={classes.card}>
             <header className={classes.card_header}>
-                <h1 className={classes.card_header_title}>{props.title}</h1>
+                <h1>{props.title}</h1> {/* Global Styling in App.css */}
             </header>
 
             {
@@ -38,9 +39,7 @@ const ManageSeriePanel = (props) => {
                 onCancel={props.onCancel}
                 />
             }
-
-
-        </div>
+        </Card>
     )
 }
 

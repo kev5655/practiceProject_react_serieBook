@@ -26,7 +26,7 @@ const Serie = (props) => {
         <article className={classes.serie}>
             <div>
                 <div className={classes.serie_firstRow}>
-                    <title className={classes.serie_firstRow_title}>{props.title}</title>
+                    <p className={classes.serie_firstRow_title}>{props.title}</p>
                     <p className={classes.serie_firstRow_text}>{props.session}S</p>
                     <p className={classes.serie_firstRow_text}>{props.episode}E</p>
                 </div>
