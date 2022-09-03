@@ -12,6 +12,8 @@ const SerieList = (props) => {
                        title={serie.title}
                        session={serie.session}
                        episode={serie.episode}
+                       startDate={serie.startDate}
+                       endDate={serie.endDate}
                        stars={serie.stars}
                        editSerie={props.editSerie}
                 />

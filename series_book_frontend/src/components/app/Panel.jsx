@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 
+import {v4 as uuidv4} from "uuid";
+import dayjs from "dayjs";
+
 import SeriePanel from "./seriePanel/SeriePanel";
 
 import './Panel.module.css'
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
-import {v4 as uuidv4} from "uuid";
-
 
 const ACTIVE_PANEL = {
     SERIE_LIST: 0,
@@ -23,8 +24,8 @@ const DUMMY_SERIES = [
         title: "Attack On Titan",
         session: 4,
         episode: 12,
-        startDate: new Date(2021, 5, 2),
-        endDate: new Date(2022, 1, 20),
+        startDate: dayjs('2011-01-01') ,
+        endDate: dayjs('2022-02-02') ,
         stars: [1, 1, 1, 1, 0],
     },
     {
@@ -32,8 +33,8 @@ const DUMMY_SERIES = [
         title: "My Hero Academy",
         session: 2,
         episode: 22,
-        startDate: new Date(2022, 2, 13),
-        endDate: new Date(2022, 6, 18),
+        startDate: dayjs('2033-03-03'),
+        endDate: dayjs('2044-04-04'),
         stars: [1, 1, 1, 0, 0],
     }
 ]
@@ -41,13 +42,13 @@ const DUMMY_SERIES = [
 
 const Panel = () => {
 
-    const [state, setState] = useState(ACTIVE_PANEL.MANAGE_SERIE);
+    const [state, setState] = useState(ACTIVE_PANEL.SERIE_LIST);
     const [series, setSeries] = useState(DUMMY_SERIES);
     const [editSerie, setEditSerie] = useState();
 
     const addSerieHandler = (newSerie) => {
 
-        if(newSerie.isEdit === "true"){
+        if(newSerie.isEdit.toString() === "true"){
             const editedSeries = series.map((serie) => {
                 if(serie.id === newSerie.id){
                     return newSerie;
