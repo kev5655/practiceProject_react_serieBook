@@ -7,10 +7,9 @@ import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import {v4 as uuidv4} from "uuid";
 
 
-const ActivePanel = {
-    SerieList: 0,
-    AddSerie: 1,
-    EditSerie: 2,
+const ACTIVE_PANEL = {
+    SERIE_LIST: 0,
+    MANAGE_SERIE: 1
 }
 
 export const MANAGE_FORM = {
@@ -42,7 +41,7 @@ const DUMMY_SERIES = [
 
 const Panel = () => {
 
-    const [state, setState] = useState(ActivePanel.SerieList);
+    const [state, setState] = useState(ACTIVE_PANEL.MANAGE_SERIE);
     const [series, setSeries] = useState(DUMMY_SERIES);
     const [editSerie, setEditSerie] = useState();
 
@@ -65,32 +64,32 @@ const Panel = () => {
         }
 
 
-        setState(ActivePanel.SerieList);
+        setState(ACTIVE_PANEL.SERIE_LIST);
     }
 
     const openAddFromHandler = () => {
         setEditSerie(undefined)
-        setState(ActivePanel.EditSerie)
+        setState(ACTIVE_PANEL.MANAGE_SERIE)
     }
 
     const editSerieHandler = (editSerie) => {
         editSerie = Object.assign(editSerie, {isEdit: true})
         setEditSerie(editSerie);
-        setState(ActivePanel.EditSerie)
+        setState(ACTIVE_PANEL.MANAGE_SERIE)
     }
 
 
     const onCancelAddFormHandler = () => {
-        setState(ActivePanel.SerieList)
+        setState(ACTIVE_PANEL.SERIE_LIST)
     }
 
     return (
         <main>
-            {state === ActivePanel.SerieList && <SeriePanel serieList={series}
+            {state === ACTIVE_PANEL.SERIE_LIST && <SeriePanel serieList={series}
                                                             openAddForm={openAddFromHandler}
                                                             onEditSerie={editSerieHandler}/>}
 
-            {state === ActivePanel.EditSerie && <ManageSeriePanel title='Edit Serie'
+            {state === ACTIVE_PANEL.MANAGE_SERIE && <ManageSeriePanel title='Edit Serie'
                                                                   editingSerie={editSerie}
                                                                   onManagedSerie={addSerieHandler}
                                                                   onCancel={onCancelAddFormHandler}/>}
