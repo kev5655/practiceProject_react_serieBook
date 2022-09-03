@@ -56,7 +56,6 @@ const InputDate = (props) => {
             />
         </LocalizationProvider>
     )
-
 }
 
 export default InputDate;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
 import classes from "./ManageSerieForm.module.css";
 
@@ -11,11 +11,10 @@ import Btn from "../../ui/form/Btn";
 import {v4 as uuidv4} from 'uuid';
 
 
-
 const ManageSerieForm = (props) => {
 
     let defaultIsValid = false;
-    if(props.isEdit){
+    if (props.isEdit) {
         defaultIsValid = true;
     }
 
@@ -57,7 +56,7 @@ const ManageSerieForm = (props) => {
             enteredEndDate.isValid) {
 
             let id;
-            if(props.id === undefined){
+            if (props.id === undefined) {
                 id = uuidv4();
             } else {
                 id = props.id
@@ -81,62 +80,64 @@ const ManageSerieForm = (props) => {
 
 
     return (
-        <form className={classes.card_content} onSubmit={submitHandler}>
-            <div className={classes.card_content_flex}>
-                <div className={classes.card_content_input}>
-                    <InputText
-                        placeholder='Serie Name'
-                        value={props.titleValue}
-                        onChange={titleHandler}/>
+        <form className={classes.grid} onSubmit={submitHandler}>
+            <div className={`${classes.grid_title_item} ${classes.item}`}>
+                <InputText
+                    placeholder='Serie Name'
+                    value={props.titleValue}
+                    onChange={titleHandler}/>
+            </div>
 
-                    <div className={classes.card_content_numbers}>
-                        <InputNumber
-                            placeholder='Staffel'
-                            value={props.sessionValue}
-                            className={classes.card_content_number}
-                            onChange={sessionHandler}/>
-                        <InputNumber
-                            placeholder='Folge'
-                            value={props.episodeValue}
-                            className={classes.card_content_number}
-                            onChange={episodeHandler}/>
-                    </div>
-                </div>
+            <div className={`${classes.grid_episode_season_item} ${classes.item}`}>
+                <InputNumber
+                    placeholder='Staffel'
+                    value={props.sessionValue}
+                    onChange={sessionHandler}/>
+                <InputNumber
+                    placeholder='Folge'
+                    value={props.episodeValue}
+                    onChange={episodeHandler}/>
+            </div>
+
+            <div className={`${classes.grid_stars_item} ${classes.item}`}>
                 <InputStars
                     value={props.starsValue}
                     className={{
-                        marginRight: '12%',
                         color: '#780000',
-                        fontFamily:"\"JetBrains Mono\", sans-serif"
+                        fontFamily: "\"JetBrains Mono\", sans-serif"
                     }}
                     stars={starsHandler}/>
             </div>
 
-            <div className={classes.card_content_dates}>
+            <div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
                 <InputDate label='Start Watching'
                            value={props.startDateValue}
                            onChange={startDateHandler}/>
-                <p className={classes.card_content_date_text}>to</p>
+                <p>to</p>
                 <InputDate
                     value={props.endDateValue}
                     label='End Watching'
                     onChange={endDateHandler}/>
             </div>
 
-            <div className={classes.card_content_center_btn}>
+            <div className={`${classes.grid_cancelBtn_item} ${classes.item} ${classes.space}`}>
                 <Btn
                     label={props.cancelBtnLabel} // Cancel
                     className={{
-                        width: '90%',
+                        width: '100%',
                     }}
                     onClick={props.onCancel}/>
+            </div>
+
+            <div className={`${classes.grid_submitBtn_item} ${classes.item} ${classes.space}`}>
                 <Btn
                     label={props.submitBtnLabel}  // Add
                     submitValue='submit'
                     className={{
-                    width: '90%',
-                }}/>
+                        width: '100%',
+                    }}/>
             </div>
+
         </form>
     )
 }

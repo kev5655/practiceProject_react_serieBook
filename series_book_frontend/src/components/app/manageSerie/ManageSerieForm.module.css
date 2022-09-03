@@ -1,48 +1,54 @@
-.card_content {
-    padding: 1% 2.5% 1% 2.5%;
+
+.grid {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-gap: 1rem;
+
+    grid-template-areas:
+        "title stars"
+        "episode_season stars"
+        "date date"
+        "cancel_btn submit_btn";
+
+    align-items: center;
+
+
 }
 
-.card_content_flex {
+.item {
+    text-align: center;
+}
+
+.grid_title_item {
+    grid-area: title;
+}
+
+.grid_episode_season_item {
+    grid-area: episode_season;
     display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.grid_stars_item {
+    grid-area: stars;
+    display: flex;
+    justify-content: center;
+}
+
+.grid_date_item {
+    grid-area: date;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 2% 0;
 }
 
-.card_content_stars{
-    margin-right: 2%;
+.grid_cancelBtn_item {
+    grid-area: cancel_btn;
 }
 
-.card_content_input{
-    width: 50%;
-}
 
-.card_content_numbers {
-    display: flex;
-    gap: 2%;
-}
-
-.card_content_number {
-    margin: 4% 0 !important;
-}
-
-.card_content_dates {
-    margin: 4% 0;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.card_content_date_text {
-    color: #780000;
-}
-
-.card_content_center_btn {
-    display: flex;
-    gap: 2%;
-    justify-content: center;
+.space {
+    margin-top: 1rem;
 }
