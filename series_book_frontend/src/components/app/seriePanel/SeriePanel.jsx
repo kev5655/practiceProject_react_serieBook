@@ -6,17 +6,19 @@ import './SeriePanel.module.css'
 import Card from "../../ui/Card";
 import Header from "./header/Header";
 
+import classes from './SeriePanel.module.css'
+
 const SeriePanel = (props) => {
 
     return (
         <>
 
-            <Card>
+            <Card className={classes.header_card}>
                 <Header openAddForm={props.openAddForm}/>
             </Card>
 
-            <Card>
-                <SerieList editSerie={props.editSerie} serieList={props.serieList}/>
+            <Card className={classes.serieList_card}>
+                <SerieList editSerie={props.onEditSerie} serieList={props.serieList}/>
             </Card>
 
             <footer>

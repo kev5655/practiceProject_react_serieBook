@@ -6,21 +6,31 @@ import Rating from "@mui/material/Rating";
 
 const InputStars = (props) => {
 
-    const [value, setValue] = useState(0);
+    let stars = 0;
+    if (props.value !== undefined) {
+        props.value.map((star) => {
+            if (star === 1) {
+                stars++;
+            }
+        })
+    }
+
+    const [value, setValue] = useState(stars);
 
     const styles = {
         color: 'black',
         ...props.className,
     }
 
-    return(
+    return (
         <Rating
             name="simple-controlled"
             value={value}
             onChange={(event, newValue) => {
-                let starValues = [0,0,0,0,0]
+                let starValues = [0, 0, 0, 0, 0]
+                //ToDo add map(() => {})
                 for (let i = 0; i < starValues.length; i++) {
-                    if(newValue > i){
+                    if (newValue > i) {
                         starValues[i] = 1;
                     }
                 }

@@ -1,0 +1,30 @@
+
+
+
+.react-datepicker__input-container input {
+    all: unset;
+    height: 40px;
+    background-color: transparent;
+    font-family: "JetBrains Mono", sans-serif;
+    text-align: left;
+    padding-left: 0.5rem;
+
+    border-width: 1px;
+    border-style:solid;
+    border-color: #780000;
+    border-radius: 4px;
+}
+
+.react-datepicker__input-container input:hover {
+    border-color: #c1121f;
+}
+
+input:focus{
+    border-width: 2px;
+    border-color: #c1121f;
+}
+
+.react-datepicker__input-container input::placeholder {
+    color: #555555;
+    text-align: left;
+}

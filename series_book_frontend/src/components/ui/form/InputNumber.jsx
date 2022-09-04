@@ -7,6 +7,9 @@ import {styled} from "@mui/joy";
 const InputNumber = (props) => {
 
     const CssTextField = styled(TextField)({
+        "& input::placeholder": {
+            fontFamily:"\"JetBrains Mono\", sans-serif"
+        },
         '& label.Mui-focused': {
             color: '#c1121f',
             borderWidth: '0.15rem'
@@ -30,7 +33,7 @@ const InputNumber = (props) => {
         },
     });
 
-    const [number, setNumber] = new useState();
+    const [number, setNumber] = new useState(props.value);
 
     const isValidate = (event) => {
         return parseInt(event.target.value) >= 1;
@@ -60,7 +63,7 @@ const InputNumber = (props) => {
             size='small'
             fullWidth={true}
             value={number}
-            sx={props.className}
+            className={props.className}
             onChange={(e) => {onChangeHandler(e);}}
             onKeyDown={(e) => {onKeyDownHandler(e);}}
 

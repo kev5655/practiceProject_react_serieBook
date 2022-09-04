@@ -1,0 +1,58 @@
+
+.grid {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-gap: 1rem;
+
+    grid-template-areas:
+        "title stars"
+        "episode_season stars"
+        "date date"
+        "cancel_btn submit_btn";
+
+    align-items: center;
+
+
+}
+
+.item {
+    text-align: center;
+}
+
+.grid_title_item {
+    grid-area: title;
+}
+
+.grid_episode_season_item {
+    grid-area: episode_season;
+    display: flex;
+    gap: 1rem;
+}
+
+.grid_stars_item {
+    grid-area: stars;
+    display: flex;
+    justify-content: center;
+}
+
+.grid_date_item {
+    grid-area: date;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid_cancelBtn_item {
+    grid-area: cancel_btn;
+}
+
+.grid_submitBtn_item {
+    grid-area: submit_btn;
+}
+
+
+.space {
+    margin-top: 1rem;
+}
