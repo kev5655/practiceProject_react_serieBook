@@ -115,13 +115,16 @@ const ManageSerieForm = (props) => {
                     value={props.startDateValue}
                     onChange={startDateHandler}
                 />
-                <p>to</p>
+
+                <title className={classes.grid_date_text}>to</title>
+
                 <InputDatepicker
                     label='End Date'
                     value={props.endDateValue}
                     onChange={endDateHandler}
                 />
             </div>
+
 
             <div className={`${classes.grid_cancelBtn_item} ${classes.item} ${classes.space}`}>
                 <Btn
@@ -146,3 +149,24 @@ const ManageSerieForm = (props) => {
 }
 
 export default ManageSerieForm;
+
+/*
+
+<div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
+                <div className={classes.grid_date_div}>
+                    <InputDatepicker
+                        label='Start Date'
+                        value={props.startDateValue}
+                        onChange={startDateHandler}
+                    />
+                </div>
+                <div className={classes.grid_date_div}><p>to</p></div>
+                <div className={classes.grid_date_div}>
+                    <InputDatepicker
+                        label='End Date'
+                        value={props.endDateValue}
+                        onChange={endDateHandler}
+                    />
+                </div>
+            </div>
+ */

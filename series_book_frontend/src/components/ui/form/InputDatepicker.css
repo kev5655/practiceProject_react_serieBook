@@ -1,9 +1,15 @@
 
-
+.react-datepicker-wrapper {
+    display: inline;
+}
 
 .react-datepicker__input-container input {
     all: unset;
+    box-sizing: border-box;
+    display: inline;
     height: 40px;
+    width: 100%;
+    min-width: 0;
     background-color: transparent;
     font-family: "JetBrains Mono", sans-serif;
     text-align: left;
@@ -27,4 +33,5 @@ input:focus{
 .react-datepicker__input-container input::placeholder {
     color: #555555;
     text-align: left;
+
 }

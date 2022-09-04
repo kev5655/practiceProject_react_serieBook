@@ -5,6 +5,25 @@
     }
 }
 
+@media only screen and (max-width: 700px) {
+    .card {
+        width: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 85% !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .card {
+        width: 90% !important;
+    }
+}
+
+
 
 .card {
     width: 70%;

@@ -4,19 +4,34 @@
         font-size: 1.5rem !important;
     }
     p {
-        font-size: 0.75rem !important;
+        font-size: 1rem !important;
     }
 }
 
 @media only screen and (max-width: 350px) {
     h1 {
-        font-size: 1rem !important;
+        font-size: 1.25rem !important;
     }
     p {
-        font-size: 0.5rem !important;
+        font-size: 0.9rem !important;
     }
 }
 
+@media only screen and (max-width: 320px) {
+    p {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media only screen and (max-width: 290px) {
+    p {
+        font-size: 0.7rem !important;
+    }
+}
+
+body {
+    background: #353535;
+}
 
 h1, h2, h3, p, a, title{
     all: unset;

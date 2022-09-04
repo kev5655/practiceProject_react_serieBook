@@ -1,4 +1,29 @@
 
+@media only screen and (max-width: 600px)  {
+    .grid_date_text {
+        margin: 0 2rem !important;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .grid {
+
+        grid-template-areas:
+        "title title"
+        "episode_season episode_season"
+        "stars stars"
+        "date date"
+        "cancel_btn submit_btn" !important;
+    }
+
+    .grid_date_item {
+        display: grid !important;
+        justify-content: center !important;
+        grid-gap: 1rem;
+    }
+}
+
 .grid {
     padding: 1rem;
     display: grid;
@@ -13,13 +38,12 @@
         "cancel_btn submit_btn";
 
     align-items: center;
-
-
 }
 
 .item {
     text-align: center;
 }
+
 
 .grid_title_item {
     grid-area: title;
@@ -33,7 +57,7 @@
 
 .grid_stars_item {
     grid-area: stars;
-    display: flex;
+    display: grid;
     justify-content: center;
 }
 
@@ -52,6 +76,10 @@
     grid-area: submit_btn;
 }
 
+
+.grid_date_text {
+    margin: 0 4rem;
+}
 
 .space {
     margin-top: 1rem;
