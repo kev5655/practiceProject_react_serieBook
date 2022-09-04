@@ -48,6 +48,10 @@
     grid-area: cancel_btn;
 }
 
+.grid_submitBtn_item {
+    grid-area: submit_btn;
+}
+
 
 .space {
     margin-top: 1rem;

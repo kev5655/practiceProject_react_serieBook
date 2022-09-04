@@ -4,7 +4,6 @@ import classes from './Serie.module.css'
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import StarHalfRoundedIcon from '@mui/icons-material/StarHalfRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
 

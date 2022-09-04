@@ -1,10 +1,10 @@
 
 import axios from "axios"
 
-var url = " https://api.tvmaze.com";
-var searchUrl = "/search/shows?q="
+let url = " https://api.tvmaze.com";
+let searchUrl = "/search/shows?q="
 
-var searchValue = "Attack on Titan"
+let searchValue = "Attack on Titan"
 
 axios.get(url + searchUrl + searchValue).then(function (response) {
     let incomingData = response.data;

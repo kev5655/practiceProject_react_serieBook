@@ -5,11 +5,10 @@ import classes from "./ManageSerieForm.module.css";
 import InputText from "../../ui/form/InputText";
 import InputNumber from "../../ui/form/InputNumber";
 import InputStars from "../../ui/form/InputStars";
-import InputDate from "../../ui/form/InputDate";
 import Btn from "../../ui/form/Btn";
 
 import {v4 as uuidv4} from 'uuid';
-import InputReeactDatePicker from "../../ui/form/InputReeactDatePicker";
+import InputDatepicker from "../../ui/form/InputDatepicker";
 
 
 const ManageSerieForm = (props) => {
@@ -111,11 +110,17 @@ const ManageSerieForm = (props) => {
             </div>
 
             <div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
-                <InputReeactDatePicker
-                    value={props.startDateValue}/>
+                <InputDatepicker
+                    label='Start Date'
+                    value={props.startDateValue}
+                    onChange={startDateHandler}
+                />
                 <p>to</p>
-                <InputReeactDatePicker
-                    value={props.endDateValue}/>
+                <InputDatepicker
+                    label='End Date'
+                    value={props.endDateValue}
+                    onChange={endDateHandler}
+                />
             </div>
 
             <div className={`${classes.grid_cancelBtn_item} ${classes.item} ${classes.space}`}>
@@ -141,14 +146,3 @@ const ManageSerieForm = (props) => {
 }
 
 export default ManageSerieForm;
-
-/*
-<InputDate label='Start Watching'
-                           value={props.startDateValue}
-                           onChange={startDateHandler}/>
-                <p>to</p>
-                <InputDate
-                    value={props.endDateValue}
-                    label='End Watching'
-                    onChange={endDateHandler}/>
-*/

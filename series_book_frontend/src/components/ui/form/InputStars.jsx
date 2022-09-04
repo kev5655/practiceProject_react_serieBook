@@ -28,6 +28,7 @@ const InputStars = (props) => {
             value={value}
             onChange={(event, newValue) => {
                 let starValues = [0, 0, 0, 0, 0]
+                //ToDo add map(() => {})
                 for (let i = 0; i < starValues.length; i++) {
                     if (newValue > i) {
                         starValues[i] = 1;
