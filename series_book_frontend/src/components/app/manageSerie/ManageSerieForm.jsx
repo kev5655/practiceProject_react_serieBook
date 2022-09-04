@@ -9,6 +9,7 @@ import InputDate from "../../ui/form/InputDate";
 import Btn from "../../ui/form/Btn";
 
 import {v4 as uuidv4} from 'uuid';
+import InputReeactDatePicker from "../../ui/form/InputReeactDatePicker";
 
 
 const ManageSerieForm = (props) => {
@@ -110,14 +111,11 @@ const ManageSerieForm = (props) => {
             </div>
 
             <div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
-                <InputDate label='Start Watching'
-                           value={props.startDateValue}
-                           onChange={startDateHandler}/>
+                <InputReeactDatePicker
+                    value={props.startDateValue}/>
                 <p>to</p>
-                <InputDate
-                    value={props.endDateValue}
-                    label='End Watching'
-                    onChange={endDateHandler}/>
+                <InputReeactDatePicker
+                    value={props.endDateValue}/>
             </div>
 
             <div className={`${classes.grid_cancelBtn_item} ${classes.item} ${classes.space}`}>
@@ -143,3 +141,14 @@ const ManageSerieForm = (props) => {
 }
 
 export default ManageSerieForm;
+
+/*
+<InputDate label='Start Watching'
+                           value={props.startDateValue}
+                           onChange={startDateHandler}/>
+                <p>to</p>
+                <InputDate
+                    value={props.endDateValue}
+                    label='End Watching'
+                    onChange={endDateHandler}/>
+*/

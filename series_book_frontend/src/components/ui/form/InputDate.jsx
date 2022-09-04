@@ -8,51 +8,73 @@ import {styled} from "@mui/joy";
 const InputDate = (props) => {
 
     let defaultValue = ""
-    if(props.value !== undefined){
+    if (props.value !== undefined) {
         defaultValue = props.value
     }
 
     const [value, setValue] = useState(defaultValue);
 
-    const CssTextField = styled(DatePicker)({
+    const onChangeHandler = (newValue) => {
+        setValue(newValue);
+        props.onChange(newValue)
+    }
+
+    const CssDatePicker = styled(DatePicker)({
         /* Label Color */
         '& .MuiFormLabel-root': {
-            color: '#555555 !important',
-            fontFamily:"\"JetBrains Mono\", sans-serif",
+            fontFamily: "\"JetBrains Mono\", sans-serif",
         },
-        '& .MuiInputLabel-shrink': {
+        '& .MuiFormLabel-root.Mui-error': {
+            color: '#555555 !important',
+        },
+        '& .MuiInputLabel-root': {
+            color: '#780000 !important'
+        },
+        '& .MuiInputLabel-root:hover': {
+            color: '#d32f2f !important'
+        },
+        '& .MuiInputLabel-shrink.Mui-focused': {
             color: '#d32f2f !important'
         },
         '& .MuiInputBase-inputAdornedEnd': {
-            fontFamily:"\"JetBrains Mono\", sans-serif"
+            fontFamily: "\"JetBrains Mono\", sans-serif"
         },
-        '& .css-1in441m': {
+        '& legend': {
             width: '110px'
         },
 
-        /* Border Color */
-        '& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
+        /* Border Color when no Date inside */
+        '& .Mui-error .MuiOutlinedInput-notchedOutline': {
             borderColor: '#780000',
         },
-        '& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-error:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#c1121f',
+        '& .Mui-error:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#d32f2f',
         },
-        '& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#c1121f',
+        '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#d32f2f !important',
+        },
+
+        /* Border Color when Date inside */
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#780000'
+        },
+        '& .MuiOutlinedInput-notchedOutline:hover': {
+            borderColor: '#d32f2f'
         }
+    });
+
+    const CssTextField = styled(TextField)({
+
     });
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <CssTextField
+            <CssDatePicker
                 label={props.label}
                 value={value}
                 inputFormat="DD/MM/YY"
-                onChange={(newValue) => {
-                    setValue(newValue);
-                    props.onChange(newValue)
-                }}
-                renderInput={(params) => <TextField {...params}/>}
+                onChange={onChangeHandler}
+                renderInput={(params) => <CssTextField {...params}/>}
             />
         </LocalizationProvider>
     )

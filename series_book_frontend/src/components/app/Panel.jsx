@@ -24,8 +24,8 @@ const DUMMY_SERIES = [
         title: "Attack On Titan",
         session: 4,
         episode: 12,
-        startDate: dayjs('2011-01-01') ,
-        endDate: dayjs('2022-02-02') ,
+        startDate: new Date(2011,1,1),
+        endDate: new Date(2012,2,2),
         stars: [1, 1, 1, 1, 0],
     },
     {
@@ -33,8 +33,8 @@ const DUMMY_SERIES = [
         title: "My Hero Academy",
         session: 2,
         episode: 22,
-        startDate: dayjs('2033-03-03'),
-        endDate: dayjs('2044-04-04'),
+        startDate: new Date(2013,3,3),
+        endDate: new Date(2013,3,3),
         stars: [1, 1, 1, 0, 0],
     }
 ]
