@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {v4 as uuidv4} from "uuid";
 
@@ -42,11 +42,10 @@ const DUMMY_SERIES = [
 const Panel = () => {
 
     const [state, setState] = useState(ACTIVE_PANEL.SERIE_LIST);
-    const [series, setSeries] = useState(DUMMY_SERIES);
+    const [series, setSeries] = useState([]);
     const [editSerie, setEditSerie] = useState();
 
     const addSerieHandler = (newSerie) => {
-
         if(newSerie.isEdit.toString() === "true"){
             const editedSeries = series.map((serie) => {
                 if(serie.id === newSerie.id){
@@ -62,8 +61,6 @@ const Panel = () => {
                 return [newSerie, ...prevSerie];
             });
         }
-
-
         setState(ACTIVE_PANEL.SERIE_LIST);
     }
 
@@ -82,6 +79,28 @@ const Panel = () => {
     const onCancelAddFormHandler = () => {
         setState(ACTIVE_PANEL.SERIE_LIST)
     }
+
+
+    useEffect(() => {
+        getSeries()
+    }, [])
+
+    let getSeries = async () => {
+        let response = await fetch('/api/series/');
+        let data = await response.json()
+
+        data.map((serie) => {
+            serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0]))
+            serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
+            serie.created = new Date(serie.created)
+            serie.update = new Date(serie.update)
+
+            setSeries(data)
+        })
+
+
+    }
+
 
     return (
         <main>

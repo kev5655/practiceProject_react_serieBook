@@ -6,9 +6,10 @@ import InputText from "../../ui/form/InputText";
 import InputNumber from "../../ui/form/InputNumber";
 import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
+import InputDatepicker from "../../ui/form/InputDatepicker";
 
 import {v4 as uuidv4} from 'uuid';
-import InputDatepicker from "../../ui/form/InputDatepicker";
+import Cookies from 'js-cookie'
 
 
 const ManageSerieForm = (props) => {
@@ -64,19 +65,37 @@ const ManageSerieForm = (props) => {
 
             const manageSerie = {
                 id: id,
+                userId: '90138275901',
                 title: enteredTitle.value,
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
                 startDate: enteredStartDate.value,
                 endDate: enteredEndDate.value,
                 stars: enteredStars.value,
-                isEdit: props.isEdit,
             }
+
+            if(props.isEdit){
+                updateDB(manageSerie)
+            }
+            manageSerie.isEdit= props.isEdit;
             props.onManagedSerie(manageSerie);
         }
     }
 
-    console.log(props)
+
+
+    let updateDB = async (updateSerie) => {
+        //let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        const csrfToken = Cookies.get('csrftoken');
+        await fetch(`/api/series/${updateSerie.id}/update/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRFToken": csrfToken
+            },
+            body: JSON.stringify(updateSerie)
+        })
+    }
 
 
     return (

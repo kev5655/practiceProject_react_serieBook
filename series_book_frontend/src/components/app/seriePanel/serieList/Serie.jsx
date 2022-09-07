@@ -9,6 +9,12 @@ import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
 const Serie = (props) => {
 
+    const createArray = (fillUp, length) => {
+        let array = new Array(length).fill(1)
+        array = array.fill(0, fillUp)
+        return array;
+    }
+
     const editSerieHandler = () => {
         props.editSerie({
             id: props.id,
@@ -31,7 +37,7 @@ const Serie = (props) => {
                 </div>
 
                 <div>
-                    {props.stars.map((value, i) => {
+                    {createArray(props.stars, 5).map((value, i) => {
                         if (value === 1) {
                             return (<StarRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
                         } else {
