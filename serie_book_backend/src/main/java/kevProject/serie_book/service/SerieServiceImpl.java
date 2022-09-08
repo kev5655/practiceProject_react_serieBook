@@ -16,11 +16,11 @@ public class SerieServiceImpl implements SerieService {
 
     @Override
     public Serie saveSerie(Serie serie) {
-        return null;
+        return serieRepository.save(serie);
     }
 
     @Override
     public List<Serie> getAllSeries() {
-        return null;
+        return serieRepository.findAll();
     }
 }
