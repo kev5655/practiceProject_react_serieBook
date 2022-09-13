@@ -1,4 +1,4 @@
-package kevProject.serie_book.controller;
+package kevProject.serie_book.api;
 
 
 import kevProject.serie_book.model.Serie;
@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/series")
-@CrossOrigin
+@RequestMapping("/api")
+@CrossOrigin()
 public class SerieController {
 
-    @Autowired
     private SerieService serieService;
 
-    @PostMapping("/add")
+    @CrossOrigin()
+    @PostMapping("/series/add")
     public String add(@RequestBody Serie serie){
         serieService.saveSerie(serie);
         return "Save new Serie";
     }
 
-    @GetMapping("/getAll")
+    @CrossOrigin()
+    @GetMapping("/series")
     public List<Serie> getAllSeries(){
         return serieService.getAllSeries();
     }

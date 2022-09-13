@@ -8,8 +8,9 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 
-import {v4 as uuidv4} from 'uuid';
+
 import Cookies from 'js-cookie'
+const UUID = require('uuid-int');
 
 
 const ManageSerieForm = (props) => {
@@ -58,14 +59,14 @@ const ManageSerieForm = (props) => {
 
             let id;
             if (props.id === undefined) {
-                id = uuidv4();
+                id = Math.round(1 * (2147483647 * 2) - 2147483648);
             } else {
                 id = props.id
             }
 
             const manageSerie = {
                 id: id,
-                userId: '90138275901',
+                userId: 1,
                 title: enteredTitle.value,
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
@@ -74,8 +75,10 @@ const ManageSerieForm = (props) => {
                 stars: enteredStars.value,
             }
 
-            if(props.isEdit){
-                updateDB(manageSerie)
+            if(props.isEdit === "true"){
+                //updateDB(manageSerie);
+            }else {
+                add2DB(manageSerie);
             }
             manageSerie.isEdit= props.isEdit;
             props.onManagedSerie(manageSerie);
@@ -85,14 +88,22 @@ const ManageSerieForm = (props) => {
 
 
     let updateDB = async (updateSerie) => {
-        //let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
-        const csrfToken = Cookies.get('csrftoken');
         await fetch(`/api/series/${updateSerie.id}/update/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(updateSerie)
+        })
+    }
+
+    let add2DB = async (addSerie) => {
+        await fetch("/api/series/add", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(addSerie)
         })
     }
 
