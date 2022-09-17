@@ -62,7 +62,6 @@ const ManageSerieForm = (props) => {
             }
 
             const manageSerie = {
-                id: id,
                 userId: 1,
                 title: enteredTitle.value,
                 session: enteredSession.value,

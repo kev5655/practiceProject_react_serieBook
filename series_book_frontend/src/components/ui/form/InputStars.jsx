@@ -6,10 +6,7 @@ import Rating from "@mui/material/Rating";
 
 const InputStars = (props) => {
 
-    let stars = 0;
-    if (props.value !== undefined) {
-        stars = parseInt(props.stars)
-    }
+    let stars = parseInt(props.value ?? 0)
 
     const [value, setValue] = useState(stars);
 
