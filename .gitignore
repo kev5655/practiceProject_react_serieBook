@@ -549,8 +549,5 @@ README.html
 
 # Config of Spring Boot
 application.properties
-SecurityConfig.java
-SecurityConfigNew.java
-CustomAuthenticationFilter.java
-CustomAuthorizationFilter.java
+filter/
 security/

@@ -1,10 +1,5 @@
 package kevProject.serie_book.api;
 
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import kevProject.serie_book.model.AppUser;
 import kevProject.serie_book.model.Serie;
 import kevProject.serie_book.service.AppUserService;
@@ -33,7 +28,7 @@ public class SerieController {
     private final AppUserService appUserService;
 
     @CrossOrigin()
-    @PostMapping("/serie/add")
+    @PostMapping(Url.serieAdd)
     public String add(@RequestHeader Map<String, String> headers, @RequestBody Serie serie){
         log.info("Add Serie {}", serie);
         AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
@@ -43,7 +38,7 @@ public class SerieController {
     }
 
     @CrossOrigin()
-    @PostMapping("/series")
+    @PostMapping(Url.series)
     public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers){
         //String token = headers.get("authorization").substring("Bearer ".length());
         //Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());

@@ -7,7 +7,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kevProject.serie_book.model.AppRole;
 import kevProject.serie_book.model.AppUser;
+import kevProject.serie_book.security.SecurityVariables;
 import kevProject.serie_book.service.AppUserService;
+import kevProject.serie_book.utils.JwtUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,18 +39,18 @@ public class AppUserController {
 
     private final AppUserService appUserService;
 
-    @GetMapping("/users")
+    @GetMapping(Url.users)
     public ResponseEntity<List<AppUser>> getUsers(){
         return ResponseEntity.ok().body(appUserService.getAppUsers());
     }
 
-    @PostMapping("/user/save")
+    @PostMapping(Url.userSave)
     public ResponseEntity<AppUser>saveUsers(@RequestBody AppUser user){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         return ResponseEntity.created(uri).body(appUserService.saveAppUser(user));
     }
 
-    @PostMapping("/role/save")
+    @PostMapping(Url.roleSave)
     public ResponseEntity<AppRole>saveRole(@RequestBody AppRole role){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         if(role.isValid()){
@@ -59,20 +61,20 @@ public class AppUserController {
         }
     }
 
-    @PostMapping("/role/addtouser")
+    @PostMapping(Url.roleAddtouser)
     public ResponseEntity<?>saveRole(@RequestBody RoleToUserFrom form){
         appUserService.addRoleToUser(form.getUsername(), form.getRolename());
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/token/refresh")
+    @PostMapping(Url.tokenRefresh)
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if(authorizationHeader != null && authorizationHeader.startsWith(SecurityVariables.JWT_FOREWORD)) {
             try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                String refresh_token = authorizationHeader.substring(SecurityVariables.JWT_FOREWORD.length());
+                Algorithm algorithm = Algorithm.HMAC256(SecurityVariables.HMAC256_KEY.getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
