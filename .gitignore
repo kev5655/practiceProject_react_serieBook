@@ -569,3 +569,5 @@ README.html
 
 # Config of Spring Boot
 application.properties
+SecurityConfig.java
+SecurityConfigNew.java
