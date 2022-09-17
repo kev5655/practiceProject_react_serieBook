@@ -1,0 +1,11 @@
+
+
+.header_card{
+    box-shadow: inset 10px 10px 40px #5d5d5d,
+    inset -10px -10px 40px #777777;
+}
+
+.serieList_card {
+    padding: 0.5rem 1rem !important;
+    background: #868686 !important;
+}

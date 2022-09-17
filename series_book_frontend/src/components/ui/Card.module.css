@@ -1,0 +1,34 @@
+
+@media only screen and (min-width: 1000px) {
+    .card {
+        width: 700px !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .card {
+        width: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 85% !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .card {
+        width: 90% !important;
+    }
+}
+
+
+
+.card {
+    width: 70%;
+    margin: 1rem auto 1rem auto;
+    padding: 1rem;
+    background: #6a6a6a;
+    border-radius: 2rem;
+}
