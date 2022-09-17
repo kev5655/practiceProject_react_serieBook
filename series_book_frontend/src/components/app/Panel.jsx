@@ -7,6 +7,7 @@ import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import LoggingPanel from "./loggin/LoggingPanel";
 
 import {getJwtToken, setJwtToken, setRefreshToken} from "../utils/jwt"
+import {fetchData} from "../utils/api";
 
 import './Panel.module.css'
 
@@ -28,8 +29,8 @@ const DUMMY_SERIES = [
         title: "Attack On Titan",
         session: 4,
         episode: 12,
-        startDate: new Date(2011,1,1),
-        endDate: new Date(2012,2,2),
+        startDate: new Date(2011, 1, 1),
+        endDate: new Date(2012, 2, 2),
         stars: [1, 1, 1, 1, 0],
     },
     {
@@ -37,8 +38,8 @@ const DUMMY_SERIES = [
         title: "My Hero Academy",
         session: 2,
         episode: 22,
-        startDate: new Date(2013,3,3),
-        endDate: new Date(2013,3,3),
+        startDate: new Date(2013, 3, 3),
+        endDate: new Date(2013, 3, 3),
         stars: [1, 1, 1, 0, 0],
     }
 ]
@@ -52,15 +53,15 @@ const Panel = () => {
     const [loggedIn, setLoggedIn] = useState(false)
 
     const addSerieHandler = (newSerie) => {
-        if(newSerie.isEdit.toString() === "true"){
+        if (newSerie.isEdit.toString() === "true") {
             const editedSeries = series.map((serie) => {
-                if(serie.id === newSerie.id){
+                if (serie.id === newSerie.id) {
                     return newSerie;
                 }
                 return serie;
             })
             setSeries(editedSeries)
-        }else{
+        } else {
             setSeries((prevSerie) => {
                 console.log(newSerie)
                 console.log(prevSerie);
@@ -103,36 +104,21 @@ const Panel = () => {
     }, [loggedIn])
 
     let getSeries = async () => {
-        let jwt = getJwtToken();
         try {
-            let response = await fetch(
-                '/api/series', {
-                    method: 'Post',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                        'Authorization': "Bearer " + jwt
-                    }
-                });
-            console.log(response.ok)
-            let seriesFromDB = []
-            if(response.ok){
-                const res = await response.json()
-                res.map((serie) => {
-                    serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0]))
-                    serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
-                    serie.created = new Date(serie.created)
-                    serie.update = new Date(serie.update)
-                    delete serie.username;
-                    seriesFromDB.push(serie)
-                })
-                console.log(seriesFromDB)
-                setSeries(seriesFromDB)
-                return null;
-            }
+            let response = await fetchData('/api/series', 'Post')
 
-            setState(ACTIVE_PANEL.LOGGIN);
+            response.map((serie) => {
+                serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0]))
+                serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
+                serie.created = new Date(serie.created)
+                serie.update = new Date(serie.update)
+                delete serie.username;
+            })
+            console.log(response)
+            setSeries(response)
+
         } catch (exception) {
-            console.log(exception)
+            //console.log(exception)
             setState(ACTIVE_PANEL.LOGGIN);
         }
     }
@@ -142,17 +128,17 @@ const Panel = () => {
         <main>
             <input type='button' value="Logout" onClick={onLogoutHandler}/>
             {state === ACTIVE_PANEL.SERIE_LIST && <SeriePanel serieList={series}
-                                                            openAddForm={openAddFromHandler}
-                                                            onEditSerie={editSerieHandler}
+                                                              openAddForm={openAddFromHandler}
+                                                              onEditSerie={editSerieHandler}
             />}
 
             {state === ACTIVE_PANEL.MANAGE_SERIE && <ManageSeriePanel title='Edit Serie'
-                                                                  editingSerie={editSerie}
-                                                                  onManagedSerie={addSerieHandler}
-                                                                  onCancel={onCancelAddFormHandler}
+                                                                      editingSerie={editSerie}
+                                                                      onManagedSerie={addSerieHandler}
+                                                                      onCancel={onCancelAddFormHandler}
             />}
             {state === ACTIVE_PANEL.LOGGIN && <LoggingPanel
-            onLogging={onLoggingHandler}/>}
+                                                    onLogging={onLoggingHandler}/>}
         </main>
     );
 }

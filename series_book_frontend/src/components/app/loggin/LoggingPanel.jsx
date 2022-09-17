@@ -5,37 +5,19 @@ import classes from "./LoginPanel.module.css";
 import LoggingForm from "./LoggingForm";
 
 import {setJwtToken, setRefreshToken} from '../../utils/jwt';
+import {fetchData, convertJsonTo_x_www_form_urlencoded} from '../../utils/api';
 
 
 const LoggingPanel = (props) => {
 
     const loggingHandler = async (logging) => {
-        let formBody = [];
-        for (var property in logging) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(logging[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-        let response = await fetch(
-             '/api/login', {
-                method: 'Post',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                },
-                body: formBody
-            });
-        if(response.ok){
-            response.json().then((res) => {
-                setJwtToken(res.access_token)
-                setRefreshToken(res.refresh_token)
-                console.log(res.access_token , res.refresh_token)
-                props.onLogging()
-            })
-        }else {
-            console.log("Logging Failed")
-        }
+        const body = convertJsonTo_x_www_form_urlencoded(logging)
 
+        let response = await fetchData('/api/login', 'Post', body);
+
+        setJwtToken(response.access_token)
+        setRefreshToken(response.refresh_token)
+        props.onLogging()
     }
 
 
