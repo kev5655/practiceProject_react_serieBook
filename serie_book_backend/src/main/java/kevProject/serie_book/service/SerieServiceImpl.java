@@ -1,11 +1,10 @@
 package kevProject.serie_book.service;
 
+import kevProject.serie_book.model.AppUser;
 import kevProject.serie_book.model.Serie;
-import kevProject.serie_book.repository.SerieRepository;
-import lombok.NoArgsConstructor;
+import kevProject.serie_book.repo.SerieRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,16 +16,21 @@ import java.util.List;
 @Service
 public class SerieServiceImpl implements SerieService {
 
-    private final SerieRepository serieRepository;
-
+    private final SerieRepo serieRepo;
 
     @Override
-    public Serie saveSerie(Serie serie) {
-        return serieRepository.save(serie);
+    public void saveSerie(Serie serie) {
+        serieRepo.save(serie);
     }
 
     @Override
-    public List<Serie> getAllSeries() {
-        return serieRepository.findAll();
+    public Serie getSerie(String title) {
+        return serieRepo.findByTitle(title);
     }
+
+    @Override
+    public List<Serie> getAllSeries(String username) {
+        return serieRepo.findAll();
+    }
+
 }

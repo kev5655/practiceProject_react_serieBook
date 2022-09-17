@@ -8,6 +8,7 @@ import './InputDatepicker.css'
 
 const InputDatepicker = (props) => {
 
+    //ToDo vereinfachen
     let date = props.value
     let defaultDateValue = ""
     let defaultDayValue = undefined;

@@ -8,10 +8,10 @@ const InputStars = (props) => {
 
     let stars = 0;
     if (props.value !== undefined) {
-        stars = props.stars
+        stars = parseInt(props.stars)
     }
 
-    const [value, setValue] = useState(parseInt(stars));
+    const [value, setValue] = useState(stars);
 
     const styles = {
         color: 'black',

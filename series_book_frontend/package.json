@@ -1,6 +1,6 @@
 {
   "homepage": ".",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:8081",
   "name": "series_book_frontend",
   "version": "0.1.0",
   "private": true,
@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "js-cookie": "^3.0.1",
+    "material-ui-password-field": "^2.1.2",
     "moment": "^2.29.4",
     "node-fetch": "^3.2.10",
     "prop-types": "^15.8.1",

@@ -8,10 +8,7 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 
-
-import Cookies from 'js-cookie'
-const UUID = require('uuid-int');
-
+// https://mui.com/material-ui/react-autocomplete/#autocomplete-autofill for LabelPicker
 
 const ManageSerieForm = (props) => {
 
@@ -178,24 +175,3 @@ const ManageSerieForm = (props) => {
 }
 
 export default ManageSerieForm;
-
-/*
-
-<div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
-                <div className={classes.grid_date_div}>
-                    <InputDatepicker
-                        label='Start Date'
-                        value={props.startDateValue}
-                        onChange={startDateHandler}
-                    />
-                </div>
-                <div className={classes.grid_date_div}><p>to</p></div>
-                <div className={classes.grid_date_div}>
-                    <InputDatepicker
-                        label='End Date'
-                        value={props.endDateValue}
-                        onChange={endDateHandler}
-                    />
-                </div>
-            </div>
- */

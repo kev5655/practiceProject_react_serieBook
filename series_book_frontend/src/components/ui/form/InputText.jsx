@@ -32,7 +32,7 @@ const CssTextField = styled(TextField)({
 
 const InputText = (props) => {
     
-    const [text, setText] = useState(props.value);
+    const [text, setText] = useState(props.value ?? "");
     
     const onChangeHandler = (e) => {
         const value = e.target.value;
