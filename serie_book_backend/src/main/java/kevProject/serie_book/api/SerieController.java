@@ -9,6 +9,7 @@ import kevProject.serie_book.model.AppUser;
 import kevProject.serie_book.model.Serie;
 import kevProject.serie_book.service.AppUserService;
 import kevProject.serie_book.service.SerieService;
+import kevProject.serie_book.utils.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,10 @@ public class SerieController {
 
     @CrossOrigin()
     @PostMapping("/serie/add")
-    public String add(@RequestBody Serie serie){
+    public String add(@RequestHeader Map<String, String> headers, @RequestBody Serie serie){
+        log.info("Add Serie {}", serie);
+        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        serie.setAppUser(appUser);
         serieService.saveSerie(serie);
         return "Save new Serie";
     }
@@ -41,13 +45,14 @@ public class SerieController {
     @CrossOrigin()
     @PostMapping("/series")
     public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers){
-        String token = headers.get("authorization").substring("Bearer ".length());
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-        String username = decodedJWT.getSubject();
-        log.info("username {} and toke {}", username, token);
-        AppUser appUser = appUserService.getAppUser(username);
+        //String token = headers.get("authorization").substring("Bearer ".length());
+        //Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        //JWTVerifier verifier = JWT.require(algorithm).build();
+        //DecodedJWT decodedJWT = verifier.verify(token);
+        //String username = decodedJWT.getSubject();
+        //log.info("username {} and toke {}", username, token);
+        //AppUser appUser = appUserService.getAppUser(username);
+        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
         appUser.getSeries().forEach(serie -> {
