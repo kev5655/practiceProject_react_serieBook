@@ -24,8 +24,18 @@ public class SerieServiceImpl implements SerieService {
     }
 
     @Override
+    public void updateSerie(Serie serie) {
+        serieRepo.save(serie);
+    }
+
+    @Override
     public Serie getSerie(String title) {
         return serieRepo.findByTitle(title);
+    }
+
+    @Override
+    public Serie getSerieById(Long id) {
+        return serieRepo.findById(id);
     }
 
     @Override

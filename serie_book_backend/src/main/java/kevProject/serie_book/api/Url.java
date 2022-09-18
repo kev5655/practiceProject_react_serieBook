@@ -11,6 +11,7 @@ public class Url {
 
     // SerieController
     public static final String serieAdd = "/serie/add";
+    public static final String serieUpdate = "/serie/update";
     public static final String series = "/series";
 
 }
