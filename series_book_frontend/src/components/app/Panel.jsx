@@ -54,10 +54,12 @@ const Panel = () => {
 
     const globalBlur = useContext(BlurEffect)
 
-    const onMainClickHandler = () => {
-        if(globalBlur.isBlur){
-            globalBlur.deactivateBlur()
-        }
+    const onMainClickHandler = (e) => {
+        //if(! document.getElementById("detailSerie").contains(e.target)){
+        //    if(globalBlur.isBlur){
+        //        //globalBlur.deactivateBlur()
+        //    }
+        //}
     }
 
     const addSerieHandler = (newSerie) => {

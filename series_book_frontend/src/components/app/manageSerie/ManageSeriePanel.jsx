@@ -14,8 +14,6 @@ const ManageSeriePanel = (props) => {
         return props.editingSerie === undefined;
     }
 
-    console.log(props)
-
     return (
         <Card className={classes.card}>
             <header className={classes.card_header}>

@@ -15,8 +15,11 @@ const SerieList = (props) => {
 
     const onSerieClickHandler = (serie) => {
         globalBlur.activateBlur();
-        console.log(serie)
         setDetailSerie(serie);
+    }
+
+    const onOutSideClickHandler = () => {
+        globalBlur.deactivateBlur();
     }
 
 
@@ -36,7 +39,10 @@ const SerieList = (props) => {
                        onClick={onSerieClickHandler}
                 />
             ))}
-            {globalBlur.isBlur && <DetailSerie serie={detailSerie}/>}
+            {globalBlur.isBlur && <DetailSerie
+                serie={detailSerie}
+                onClickOutside={onOutSideClickHandler}
+            />}
         </>
     );
 }

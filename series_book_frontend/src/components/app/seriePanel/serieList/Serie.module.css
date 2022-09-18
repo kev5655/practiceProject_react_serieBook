@@ -12,7 +12,7 @@
     justify-content: space-between;
 }
 
-.serie:hover{
+.serie_hover:hover{
     background: #6a6a6a;
     box-shadow: inset 10px 10px 40px #5d5d5d,
     inset -10px -10px 40px #777777;
@@ -39,7 +39,7 @@
     margin-right: -0.30rem;
 }
 
-.serie_editIcon:hover {
+.serie_editIcon_hover:hover {
     color: #780000;
     transform: scale(1.4);
 }

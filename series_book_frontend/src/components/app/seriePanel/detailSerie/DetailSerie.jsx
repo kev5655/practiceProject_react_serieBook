@@ -1,14 +1,31 @@
-import React from 'react'
+import React, {useRef, useEffect} from 'react'
 import ReactDOM from 'react-dom';
+
 import Card from "../../../ui/Card";
 
 import classes from './DetailSerie.module.css'
-import serie from "../serieList/Serie";
 
 const DetailSeriePanle = (props) => {
-    console.log(props)
+    const ref = useRef(null);
+    const { onClickOutside } = props;
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                onClickOutside && onClickOutside();
+            }
+        };
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, [ onClickOutside ]);
+
     return (
-        <Card className={classes.card}>
+        <Card className={classes.card}
+              id='detailSerie'
+              ref={ref}
+        >
             <p>{props.title}</p>
             <p>{props.session} Session</p>
             <p>{props.episode} Episode</p>
@@ -23,8 +40,6 @@ const DetailSeriePanle = (props) => {
 
 const DetailSerie = (props) => {
 
-    console.log(props.serie)
-
     return (
         <React.Fragment>
             {
@@ -36,8 +51,9 @@ const DetailSerie = (props) => {
                     endDate={props.serie.endDate}
                     createdDate={props.serie.createdDate}
                     stars={props.serie.stars}
+                    onClickOutside={props.onClickOutside}
                     />,
-                    document.getElementById('detailSerie')
+                    document.getElementById('detailSerie_root')
                 )
             }
         </React.Fragment>
