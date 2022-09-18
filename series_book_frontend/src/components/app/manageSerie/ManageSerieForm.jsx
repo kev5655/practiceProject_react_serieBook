@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 
-import classes from "./ManageSerieForm.module.css";
 
 import InputText from "../../ui/form/InputText";
 import InputNumber from "../../ui/form/InputNumber";
@@ -8,8 +7,11 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 
-// https://mui.com/material-ui/react-autocomplete/#autocomplete-autofill for LabelPicker
+import {fetchData} from "../../utils/api"
 
+import classes from "./ManageSerieForm.module.css";
+
+// https://mui.com/material-ui/react-autocomplete/#autocomplete-autofill for LabelPicker
 const ManageSerieForm = (props) => {
 
     let defaultIsValid = false;
@@ -27,23 +29,18 @@ const ManageSerieForm = (props) => {
     const titleHandler = (value) => {
         setEnteredTitle({value: value, isValid: true});
     }
-
     const sessionHandler = (value) => {
         setEnteredSession({value: value, isValid: true});
     }
-
     const episodeHandler = (value) => {
         setEnteredEpisode({value: value, isValid: true})
     }
-
     const startDateHandler = (value) => {
         setEnteredStartDate({value: value, isValid: true})
     }
-
     const endDateHandler = (value) => {
         setEnteredEndDate({value: value, isValid: true})
     }
-
     const starsHandler = (value) => {
         setEnteredStars({value: value})
     }
@@ -67,6 +64,7 @@ const ManageSerieForm = (props) => {
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
                 startDate: enteredStartDate.value,
+                createdDate: props.createdDateValue ?? Date.now(),
                 endDate: enteredEndDate.value,
                 stars: enteredStars.value,
             }
@@ -74,7 +72,7 @@ const ManageSerieForm = (props) => {
             if(props.isEdit === "true"){
                 //updateDB(manageSerie);
             }else {
-                add2DB(manageSerie);
+                saveSerieIntoDB(manageSerie);
             }
             manageSerie.isEdit= props.isEdit;
             props.onManagedSerie(manageSerie);
@@ -93,14 +91,19 @@ const ManageSerieForm = (props) => {
         })
     }
 
-    let add2DB = async (addSerie) => {
-        await fetch("/api/series/add", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(addSerie)
-        })
+    let saveSerieIntoDB = async (addSerie) => {
+        await fetchData("/api/serie/add",
+            "Post",
+            JSON.stringify(addSerie),
+            'application/json')
+
+        //await fetch("/api/series/add", {
+        //    method: 'POST',
+        //    headers: {
+        //        'Content-Type': 'application/json'
+        //    },
+        //    body: JSON.stringify(addSerie)
+        //})
     }
 
 

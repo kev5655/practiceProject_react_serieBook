@@ -13,7 +13,7 @@ const LoggingPanel = (props) => {
     const loggingHandler = async (logging) => {
         const body = convertJsonTo_x_www_form_urlencoded(logging)
 
-        let response = await fetchData('/api/login', 'Post', body);
+        let response = await fetchData('/api/login', 'Post', body, 'application/x-www-form-urlencoded;charset=UTF-8');
 
         setJwtToken(response.access_token)
         setRefreshToken(response.refresh_token)
