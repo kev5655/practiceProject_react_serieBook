@@ -549,5 +549,4 @@ README.html
 
 # Config of Spring Boot
 application.properties
-filter/
 security/
