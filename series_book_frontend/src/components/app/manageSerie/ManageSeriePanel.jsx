@@ -7,6 +7,13 @@ import Card from './../../ui/Card'
 
 const ManageSeriePanel = (props) => {
 
+    const isEditing = () => {
+        return props.editingSerie !== undefined;
+    }
+    const isAdd = () => {
+        return props.editingSerie === undefined;
+    }
+
     console.log(props)
 
     return (
@@ -16,7 +23,7 @@ const ManageSeriePanel = (props) => {
             </header>
 
             {
-                props.editingSerie !== undefined && <ManageSerieForm
+                isEditing() && <ManageSerieForm
                     id={props.editingSerie.id}
                     titleValue={props.editingSerie.title}
                     sessionValue={props.editingSerie.session}
@@ -24,6 +31,7 @@ const ManageSeriePanel = (props) => {
                     starsValue={props.editingSerie.stars}
                     startDateValue={props.editingSerie.startDate}
                     endDateValue={props.editingSerie.endDate}
+                    createdDateValue={props.editingSerie.createdDate}
                     cancelBtnLabel='Cancel'
                     submitBtnLabel='Editieren'
                     isEdit={props.editingSerie.isEdit}
@@ -31,7 +39,7 @@ const ManageSeriePanel = (props) => {
                     onCancel={props.onCancel}/>
             }
             {
-                props.editingSerie === undefined && <ManageSerieForm
+                isAdd() && <ManageSerieForm
                 cancelBtnLabel='Cancel'
                 submitBtnLabel='Add'
                 onManagedSerie={props.onManagedSerie}
