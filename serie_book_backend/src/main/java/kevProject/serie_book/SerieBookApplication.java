@@ -42,11 +42,21 @@ public class SerieBookApplication {
 			appUserService.addRoleToUser("admin", "ROLE_ADMIN");
 			appUserService.addRoleToUser("kevin", "ROLE_USER");
 
-			serieService.saveSerie(new Serie(null, "Admin Attack On Titan", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin CyberPunk", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin One Naruto", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Admin Attack On Titan", 10, 23,
+					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+					new java.sql.Timestamp(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23,
+					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+					new java.sql.Timestamp(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23,
+					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Kevin CyberPunk", 10, 23,
+					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Kevin One Naruto", 10, 23,
+					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
 		};
 	}
 

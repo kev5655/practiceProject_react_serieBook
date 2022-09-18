@@ -1,9 +1,11 @@
 package kevProject.serie_book.model;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -18,9 +20,9 @@ public class Serie {
     private String title;
     private int session;
     private int episode;
-    private String startDate;
-    private String endDate;
-    private Date createdDate;
+    private Date startDate;
+    private Date endDate;
+    private Timestamp createdDate;
     private int stars;
 
     @ManyToOne

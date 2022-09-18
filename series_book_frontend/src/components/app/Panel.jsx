@@ -87,6 +87,7 @@ const Panel = () => {
     }
 
     const editSerieHandler = (editSerie) => {
+        console.log(series)
         editSerie = Object.assign(editSerie, {isEdit: true})
         setEditSerie(editSerie);
         setState(ACTIVE_PANEL.MANAGE_SERIE)
@@ -118,19 +119,31 @@ const Panel = () => {
             let response = await fetchData('/api/series', 'Post', null, 'application/x-www-form-urlencoded;charset=UTF-8')
 
             response.map((serie) => {
-                serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0]))
-                serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
-                serie.createdDate = new Date(parseInt(serie.createdDate.split('/')[2]), parseInt(serie.createdDate.split('/')[1]), parseInt(serie.createdDate.split('/')[0]))
+                let splitUpDate = serie.startDate.split("/")
+                serie.startDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+
+                splitUpDate = serie.endDate.split("/")
+                serie.endDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+
+                splitUpDate = serie.createdDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
+                serie.createdDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
+                //serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0])) //parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0])
+                //serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0])) //parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0])
+                //serie.createdDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
                 delete serie.username;
             })
-            console.log(response)
+            console.log("Fetch Series: ", response)
             setSeries(response)
 
         } catch (exception) {
-            //console.log(exception)
-            setState(ACTIVE_PANEL.LOGGING);
+            console.log(exception)
+            //setState(ACTIVE_PANEL.LOGGING);
         }
     }
+
+    //let splitUpDate = (value, sequences) => {
+    //    return value.split(/[sequences]+/);
+    //}
 
 
     return (
@@ -147,7 +160,7 @@ const Panel = () => {
                                                                       onCancel={onCancelAddFormHandler}
             />}
             {state === ACTIVE_PANEL.LOGGING && <LoggingPanel
-                                                    onLogging={onLoggingHandler}/>}
+                onLogging={onLoggingHandler}/>}
         </main>
     );
 }
