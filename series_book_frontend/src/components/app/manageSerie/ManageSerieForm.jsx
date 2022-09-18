@@ -45,67 +45,52 @@ const ManageSerieForm = (props) => {
         setEnteredStars({value: value})
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
         if (enteredTitle.isValid && enteredSession.isValid &&
             enteredEpisode.isValid && enteredStartDate.isValid &&
             enteredEndDate.isValid) {
 
-            let id;
-            if (props.id === undefined) {
-                id = Math.round(1 * (2147483647 * 2) - 2147483648);
-            } else {
-                id = props.id
-            }
+            let id = props.id;
 
             const manageSerie = {
-                userId: 1,
+                id: id,
                 title: enteredTitle.value,
                 session: enteredSession.value,
                 episode: enteredEpisode.value,
                 startDate: enteredStartDate.value,
-                createdDate: props.createdDateValue ?? Date.now(),
                 endDate: enteredEndDate.value,
+                createdDate: props.createdDateValue ?? new Date(Date.now()),
                 stars: enteredStars.value,
             }
-
-            if(props.isEdit === "true"){
-                //updateDB(manageSerie);
-            }else {
-                saveSerieIntoDB(manageSerie);
+            if (props.isEdit === true) {
+                await updateSerieIntoDB(manageSerie)
+            } else {
+                delete manageSerie.id
+                id = await saveSerieIntoDB(manageSerie);
+                manageSerie.id = id;
             }
-            manageSerie.isEdit= props.isEdit;
+            manageSerie.isEdit = props.isEdit;
             props.onManagedSerie(manageSerie);
         }
     }
 
 
 
-    let updateDB = async (updateSerie) => {
-        await fetch(`/api/series/${updateSerie.id}/update/`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updateSerie)
-        })
+    let updateSerieIntoDB = async (updateSerie) => {
+        await fetchData("/api/serie/update",
+            "Put",
+            JSON.stringify(updateSerie),
+            'application/json')
     }
 
     let saveSerieIntoDB = async (addSerie) => {
-        await fetchData("/api/serie/add",
+        let response = await fetchData("/api/serie/add",
             "Post",
             JSON.stringify(addSerie),
             'application/json')
-
-        //await fetch("/api/series/add", {
-        //    method: 'POST',
-        //    headers: {
-        //        'Content-Type': 'application/json'
-        //    },
-        //    body: JSON.stringify(addSerie)
-        //})
+        return response.id
     }
-
 
     return (
         <form className={classes.grid} onSubmit={submitHandler}>

@@ -26,6 +26,7 @@ const DetailSeriePanle = (props) => {
               id='detailSerie'
               ref={ref}
         >
+            <p>Id: {props.id}</p>
             <p>{props.title}</p>
             <p>{props.session} Session</p>
             <p>{props.episode} Episode</p>
@@ -44,6 +45,7 @@ const DetailSerie = (props) => {
         <React.Fragment>
             {
                 ReactDOM.createPortal(<DetailSeriePanle
+                    id={props.serie.id}
                     title={props.serie.title}
                     session={props.serie.session}
                     episode={props.serie.episode}
