@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -40,11 +42,11 @@ public class SerieBookApplication {
 			appUserService.addRoleToUser("admin", "ROLE_ADMIN");
 			appUserService.addRoleToUser("kevin", "ROLE_USER");
 
-			serieService.saveSerie(new Serie(null, "Admin Attack On Titan", 10, 23, "01/01/11", "02/02/22", 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/11", "02/02/22", 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/11", "02/02/22", 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin CyberPunk", 10, 23, "01/01/11", "02/02/22", 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin One Naruto", 10, 23, "01/01/11", "02/02/22", 4, user));
+			serieService.saveSerie(new Serie(null, "Admin Attack On Titan", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Kevin CyberPunk", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Kevin One Naruto", 10, 23, "01/01/2011", "02/02/2022", new java.sql.Date(System.currentTimeMillis()), 4, user));
 		};
 	}
 

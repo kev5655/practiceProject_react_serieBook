@@ -7,3 +7,7 @@ main {
     bottom: 0;
 }
 
+.blur{
+    filter: blur(10px);
+}
+

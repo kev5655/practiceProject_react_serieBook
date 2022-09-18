@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import {v4 as uuidv4} from "uuid";
 
@@ -9,7 +9,8 @@ import LoggingPanel from "./loggin/LoggingPanel";
 import {getJwtToken, setJwtToken, setRefreshToken} from "../utils/jwt"
 import {fetchData} from "../utils/api";
 
-import './Panel.module.css'
+import classes from './Panel.module.css'
+import BlurEffect from "../storage/blurEffect";
 
 
 const ACTIVE_PANEL = {
@@ -20,7 +21,7 @@ const ACTIVE_PANEL = {
 export const MANAGE_FORM = {
     ADDING: 0,
     EDIT: 1,
-    LOGGIN: 2
+    LOGGING: 2
 }
 
 const DUMMY_SERIES = [
@@ -44,13 +45,20 @@ const DUMMY_SERIES = [
     }
 ]
 
-
 const Panel = () => {
 
     const [state, setState] = useState(ACTIVE_PANEL.SERIE_LIST);
     const [series, setSeries] = useState([]);
     const [editSerie, setEditSerie] = useState();
     const [loggedIn, setLoggedIn] = useState(false)
+
+    const globalBlur = useContext(BlurEffect)
+
+    const onMainClickHandler = () => {
+        if(globalBlur.isBlur){
+            globalBlur.deactivateBlur()
+        }
+    }
 
     const addSerieHandler = (newSerie) => {
         if (newSerie.isEdit.toString() === "true") {
@@ -105,13 +113,12 @@ const Panel = () => {
 
     let getSeries = async () => {
         try {
-            let response = await fetchData('/api/series', 'Post')
+            let response = await fetchData('/api/series', 'Post', null, 'application/x-www-form-urlencoded;charset=UTF-8')
 
             response.map((serie) => {
                 serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0]))
                 serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
-                serie.created = new Date(serie.created)
-                serie.update = new Date(serie.update)
+                serie.createdDate = new Date(parseInt(serie.createdDate.split('/')[2]), parseInt(serie.createdDate.split('/')[1]), parseInt(serie.createdDate.split('/')[0]))
                 delete serie.username;
             })
             console.log(response)
@@ -119,13 +126,13 @@ const Panel = () => {
 
         } catch (exception) {
             //console.log(exception)
-            setState(ACTIVE_PANEL.LOGGIN);
+            setState(ACTIVE_PANEL.LOGGING);
         }
     }
 
 
     return (
-        <main>
+        <main className={`${globalBlur.isBlur && classes.blur}`} onClick={onMainClickHandler}>
             <input type='button' value="Logout" onClick={onLogoutHandler}/>
             {state === ACTIVE_PANEL.SERIE_LIST && <SeriePanel serieList={series}
                                                               openAddForm={openAddFromHandler}
@@ -137,7 +144,7 @@ const Panel = () => {
                                                                       onManagedSerie={addSerieHandler}
                                                                       onCancel={onCancelAddFormHandler}
             />}
-            {state === ACTIVE_PANEL.LOGGIN && <LoggingPanel
+            {state === ACTIVE_PANEL.LOGGING && <LoggingPanel
                                                     onLogging={onLoggingHandler}/>}
         </main>
     );

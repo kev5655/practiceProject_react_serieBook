@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,18 +41,12 @@ public class SerieController {
     @CrossOrigin()
     @PostMapping(Url.series)
     public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers){
-        //String token = headers.get("authorization").substring("Bearer ".length());
-        //Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-        //JWTVerifier verifier = JWT.require(algorithm).build();
-        //DecodedJWT decodedJWT = verifier.verify(token);
-        //String username = decodedJWT.getSubject();
-        //log.info("username {} and toke {}", username, token);
-        //AppUser appUser = appUserService.getAppUser(username);
         AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
         appUser.getSeries().forEach(serie -> {
             String uname = serie.getAppUser().getUsername();
+            String createdDate = serie.getCreatedDate().toLocalDate().getDayOfMonth() + "/" + serie.getCreatedDate().toLocalDate().getMonthValue() + "/" + serie.getCreatedDate().toLocalDate().getYear();
             serieResponses.add(new SerieResponse(
                     serie.getId(),
                     serie.getTitle(),
@@ -59,6 +54,7 @@ public class SerieController {
                     serie.getEpisode(),
                     serie.getStartDate(),
                     serie.getEndDate(),
+                    createdDate,
                     serie.getStars(),
                     uname));
         });
@@ -75,6 +71,7 @@ class SerieResponse {
     private int episode;
     private String startDate;
     private String endDate;
+    private String createdDate;
     private int stars;
     private String username;
 }

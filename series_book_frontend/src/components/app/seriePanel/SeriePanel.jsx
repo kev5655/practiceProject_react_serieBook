@@ -10,6 +10,8 @@ import classes from './SeriePanel.module.css'
 
 const SeriePanel = (props) => {
 
+    console.log(props)
+
     return (
         <>
 

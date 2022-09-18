@@ -15,7 +15,21 @@ const Serie = (props) => {
         return array;
     }
 
-    const editSerieHandler = () => {
+    const onClickHandler = () => {
+        props.onClick({
+            id: props.id,
+            title: props.title,
+            session: props.session,
+            episode: props.episode,
+            startDate: props.startDate,
+            endDate: props.endDate,
+            createdDate: props.createdDate,
+            stars: props.stars,
+        })
+    }
+
+    const editSerieHandler = (e) => {
+        e.stopPropagation();
         props.editSerie({
             id: props.id,
             title: props.title,
@@ -23,12 +37,13 @@ const Serie = (props) => {
             episode: props.episode,
             startDate: props.startDate,
             endDate: props.endDate,
+            createdDate: props.createdDate,
             stars: props.stars,
         })
     }
 
     return (
-        <article className={classes.serie}>
+        <article className={classes.serie} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
                     <p className={classes.serie_firstRow_title}>{props.title}</p>

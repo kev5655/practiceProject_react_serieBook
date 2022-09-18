@@ -3,6 +3,7 @@ package kevProject.serie_book.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 
 @Entity
@@ -19,6 +20,7 @@ public class Serie {
     private int episode;
     private String startDate;
     private String endDate;
+    private Date createdDate;
     private int stars;
 
     @ManyToOne
