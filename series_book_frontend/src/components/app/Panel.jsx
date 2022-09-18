@@ -111,7 +111,7 @@ const Panel = () => {
 
 
     useEffect(() => {
-        getSeries()
+        getSeries().then()
     }, [loggedIn])
 
     let getSeries = async () => {
@@ -127,23 +127,17 @@ const Panel = () => {
 
                 splitUpDate = serie.createdDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
                 serie.createdDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
-                //serie.endDate = new Date(parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0])) //parseInt(serie.endDate.split('/')[2]), parseInt(serie.endDate.split('/')[1]), parseInt(serie.endDate.split('/')[0])
-                //serie.startDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0])) //parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0])
-                //serie.createdDate = new Date(parseInt(serie.startDate.split('/')[2]), parseInt(serie.startDate.split('/')[1]), parseInt(serie.startDate.split('/')[0]))
+
                 delete serie.username;
             })
             console.log("Fetch Series: ", response)
             setSeries(response)
 
         } catch (exception) {
-            console.log(exception)
-            //setState(ACTIVE_PANEL.LOGGING);
+            console.error(exception)
+            setState(ACTIVE_PANEL.LOGGING);
         }
     }
-
-    //let splitUpDate = (value, sequences) => {
-    //    return value.split(/[sequences]+/);
-    //}
 
 
     return (
