@@ -1,12 +1,12 @@
 import {getJwtToken} from "./jwt";
 
-
-export async function fetchData(url, methode, body){
+// 'application/x-www-form-urlencoded;charset=UTF-8'
+export async function fetchData(url, methode, body, contentType){
     let rawResponse = await fetch(
         url, {
             method: methode,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Content-Type': contentType,
                 'Authorization': "Bearer " + getJwtToken()
             },
             body: body
