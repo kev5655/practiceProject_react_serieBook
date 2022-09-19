@@ -547,6 +547,8 @@ target
 README.html
 .exercism
 
+${project.build.directory}
+
 # Config of Spring Boot
 application.properties
 security/
