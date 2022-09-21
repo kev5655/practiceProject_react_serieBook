@@ -3,7 +3,7 @@ import {getJwtToken} from "./jwt";
 // 'application/x-www-form-urlencoded;charset=UTF-8'
 export async function fetchData(url, methode, body, contentType){
     let rawResponse = await fetch(
-        "http://localhost:8081" + url, {
+        "http://192.168.1.138:8081" + url, {
             method: methode,
             headers: {
                 'Content-Type': contentType,

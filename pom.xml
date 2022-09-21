@@ -92,6 +92,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>serie_book_app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
