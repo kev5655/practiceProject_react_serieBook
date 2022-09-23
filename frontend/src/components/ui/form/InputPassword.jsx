@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import './InputPassword.css'
+import classes from './Input.module.css'
 
 
 const InputPassword = (props) => {
@@ -22,11 +22,10 @@ const InputPassword = (props) => {
         setInputType("password")
     }
 
-
     return (
         <>
             <input
-                className="passwordInput"
+                className={classes.passwordInput}
                 type={inputType}
                 name="pwd"
                 maxLength="50"
@@ -35,14 +34,13 @@ const InputPassword = (props) => {
             />
             {
                 inputType === "password" && <VisibilityIcon
-                    className="icon"
+                    className={classes.icon}
                     onClick={onHideClickHandler}
                 />
             }
-
             {
                 inputType === "text" && <VisibilityOffIcon
-                    className="icon"
+                    className={classes.icon}
                     onClick={onVisibleClickHandler}
                 />
             }
