@@ -48,15 +48,9 @@ const InfoPanel = (props) => {
 
 const Info = (props) => {
     return (
-        <React.Fragment>
-            {
-                ReactDOM.createPortal(<InfoPanel
-                        onCancel={props.onCancel}
-                        onAccept={props.onAccept}/>,
-                    document.getElementById('infoCard_root')
-                )
-            }
-        </React.Fragment>
+        <InfoPanel
+            onCancel={props.onCancel}
+            onAccept={props.onAccept}/>
     )
 }
 
