@@ -44,13 +44,6 @@ const LoggingForm = (props) => {
             </div>
             <div className={classes.form_button}>
                 <Btn
-                    label="Cancel"
-                    className={{
-                        width: '50%',
-                    }}
-                    onClick={props.onCancel}
-                />
-                <Btn
                     label="Logging"
                     submitValue='submit'
                     className={{
