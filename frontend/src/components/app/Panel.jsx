@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 
-import {v4 as uuidv4} from "uuid";
-
 import SeriePanel from "./seriePanel/SeriePanel";
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import LoggingPanel from "./loggin/LoggingPanel";
@@ -24,27 +22,6 @@ export const MANAGE_FORM = {
     LOGGING: 2
 }
 
-const DUMMY_SERIES = [
-    {
-        id: uuidv4(),
-        title: "Attack On Titan",
-        session: 4,
-        episode: 12,
-        startDate: new Date(2011, 1, 1),
-        endDate: new Date(2012, 2, 2),
-        stars: [1, 1, 1, 1, 0],
-    },
-    {
-        id: uuidv4(),
-        title: "My Hero Academy",
-        session: 2,
-        episode: 22,
-        startDate: new Date(2013, 3, 3),
-        endDate: new Date(2013, 3, 3),
-        stars: [1, 1, 1, 0, 0],
-    }
-]
-
 const Panel = () => {
 
     const [state, setState] = useState(ACTIVE_PANEL.SERIE_LIST);
@@ -53,14 +30,6 @@ const Panel = () => {
     const [loggedIn, setLoggedIn] = useState(false)
 
     const globalBlur = useContext(BlurEffect)
-
-    const onMainClickHandler = (e) => {
-        //if(! document.getElementById("detailSerie").contains(e.target)){
-        //    if(globalBlur.isBlur){
-        //        //globalBlur.deactivateBlur()
-        //    }
-        //}
-    }
 
     const addSerieHandler = (newSerie) => {
         if (newSerie.isEdit.toString() === "true") {
@@ -93,8 +62,16 @@ const Panel = () => {
         setState(ACTIVE_PANEL.MANAGE_SERIE)
     }
 
-    const onCancelAddFormHandler = () => {
+    const onCancelHandler = () => {
         setState(ACTIVE_PANEL.SERIE_LIST)
+    }
+
+    const onDeletionHandler = (serieToBeDeleted) => {
+        setState(ACTIVE_PANEL.SERIE_LIST)
+        let newSerieList = series.filter((serie) => {
+            return serieToBeDeleted.id !== serie.id;
+        })
+        setSeries(newSerieList)
     }
 
     const onLoggingHandler = () => {
@@ -115,10 +92,11 @@ const Panel = () => {
     }, [loggedIn])
 
     let getSeries = async () => {
+        let response;
         try {
-            let response = await fetchData('/api/series', 'Post', null, 'application/x-www-form-urlencoded;charset=UTF-8')
+            response = await fetchData('/api/series', 'Post', null, 'application/x-www-form-urlencoded;charset=UTF-8')
 
-            response.map((serie) => {
+            response.forEach((serie) => {
                 let splitUpDate = serie.startDate.split("/")
                 serie.startDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
 
@@ -134,14 +112,14 @@ const Panel = () => {
             setSeries(response)
 
         } catch (exception) {
-            console.error(exception)
+            console.error(exception, response)
             setState(ACTIVE_PANEL.LOGGING);
         }
     }
 
 
     return (
-        <main className={`${globalBlur.isBlur && classes.blur}`} onClick={onMainClickHandler}>
+        <main className={`${globalBlur.isBlur && classes.blur}`}>
             <input type='button' value="Logout" onClick={onLogoutHandler}/>
             {state === ACTIVE_PANEL.SERIE_LIST && <SeriePanel serieList={series}
                                                               openAddForm={openAddFromHandler}
@@ -151,7 +129,8 @@ const Panel = () => {
             {state === ACTIVE_PANEL.MANAGE_SERIE && <ManageSeriePanel title='Edit Serie'
                                                                       editingSerie={editSerie}
                                                                       onManagedSerie={addSerieHandler}
-                                                                      onCancel={onCancelAddFormHandler}
+                                                                      onCancel={onCancelHandler}
+                                                                      onDeletion={onDeletionHandler}
             />}
             {state === ACTIVE_PANEL.LOGGING && <LoggingPanel
                 onLogging={onLoggingHandler}/>}

@@ -24,8 +24,7 @@ export const BlurEffectProvider = (props) => {
                 isBlur: isBlur,
                 activateBlur: activeBlurHandler,
                 deactivateBlur: deactivateBlurHandler
-            }}
-        >
+            }}>
             {props.children}
         </BlurEffect.Provider>
 
