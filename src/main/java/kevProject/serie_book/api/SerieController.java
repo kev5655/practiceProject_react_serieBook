@@ -34,6 +34,27 @@ public class SerieController {
     private final AppUserService appUserService;
 
     @CrossOrigin()
+    @PostMapping(Url.series)
+    public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers) {
+        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+
+        Collection<SerieResponse> serieResponses = new ArrayList<>();
+        appUser.getSeries().forEach((serie) -> {
+            serieResponses.add(new SerieResponse(
+                    serie.getId(),
+                    serie.getTitle(),
+                    serie.getSession(),
+                    serie.getEpisode(),
+                    serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))),
+                    serie.getStars(),
+                    serie.getAppUser().getUsername()));
+        });
+        return serieResponses;
+    }
+
+    @CrossOrigin()
     @PostMapping(Url.serieAdd)
     public ResponseEntity<SerieResponse> add(@RequestHeader Map<String, String> headers, @RequestBody Serie serie) {
         log.info("Add Serie {}", serie);
@@ -85,26 +106,17 @@ public class SerieController {
                 updatedSerie.getAppUser().getUsername()));
     }
 
-    @CrossOrigin()
-    @PostMapping(Url.series)
-    public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers) {
+    @DeleteMapping(Url.serieDelete)
+    public ResponseEntity<?> deleteSerie(@RequestHeader Map<String, String> headers, @RequestBody Serie serie){
+        Serie serieToDelete = serieService.getSerieById(serie.getId());
         AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        log.info("Delete Serie {} from user {}", serie, appUser.getUsername());
 
-        Collection<SerieResponse> serieResponses = new ArrayList<>();
-        appUser.getSeries().forEach((serie) -> {
-            serieResponses.add(new SerieResponse(
-                    serie.getId(),
-                    serie.getTitle(),
-                    serie.getSession(),
-                    serie.getEpisode(),
-                    serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))),
-                    serie.getStars(),
-                    serie.getAppUser().getUsername()));
-        });
-        return serieResponses;
+        serieService.deleteSerie(serieToDelete.getId());
+        return ResponseEntity.ok().build();
     }
+
+
 }
 
 @Data

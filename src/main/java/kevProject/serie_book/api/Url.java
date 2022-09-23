@@ -10,8 +10,8 @@ public class Url {
     public static final String tokenRefresh = "/token/refresh";
 
     // SerieController
+    public static final String series = "/series";
     public static final String serieAdd = "/serie/add";
     public static final String serieUpdate = "/serie/update";
-    public static final String series = "/series";
-
+    public static final String serieDelete = "/serie/delete";
 }

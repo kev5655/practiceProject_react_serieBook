@@ -1,11 +1,18 @@
-import React from 'react'
+import React, {useRef, useState} from 'react'
+
+
+import ManageSerieForm from "./ManageSerieForm";
+import Card from "../../ui/Card";
+import Info from "../../ui/info/Info";
+
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import classes from './ManageSeriePanel.module.css'
-import ManageSerieForm from "./ManageSerieForm";
-import Card from './../../ui/Card'
-
 
 const ManageSeriePanel = (props) => {
+
+    const [activeDeletion, setActiveDeletion] = useState(false);
+    const deleteRef = useRef();
 
     const isEditing = () => {
         return props.editingSerie !== undefined;
@@ -14,24 +21,39 @@ const ManageSeriePanel = (props) => {
         return props.editingSerie === undefined;
     }
 
-    console.log(props)
+    const onActivateDeletion = () => {
+        setActiveDeletion(true);
+    }
+
+    const onAcceptDeletionClickHandler = () => {
+        setActiveDeletion(false);
+        deleteRef.current.deleteSerie();
+        props.onDeletion(props.editingSerie)
+    }
+
+    const onCancelDeletionClickHandler = () => {
+        setActiveDeletion(false);
+    }
+
 
     return (
         <Card className={classes.card}>
             <header className={classes.card_header}>
                 <h1>{props.title}</h1> {/* Global Styling in App.css */}
+                { isEditing() && <DeleteIcon
+                    onClick={onActivateDeletion}
+                    className={classes.icon_hover}/>}
             </header>
 
             {
+                activeDeletion && <Info
+                    onCancel={onCancelDeletionClickHandler}
+                    onAccept={onAcceptDeletionClickHandler}/>
+            }
+            {
                 isEditing() && <ManageSerieForm
-                    id={props.editingSerie.id}
-                    titleValue={props.editingSerie.title}
-                    sessionValue={props.editingSerie.session}
-                    episodeValue={props.editingSerie.episode}
-                    starsValue={props.editingSerie.stars}
-                    startDateValue={props.editingSerie.startDate}
-                    endDateValue={props.editingSerie.endDate}
-                    createdDateValue={props.editingSerie.createdDate}
+                    ref={deleteRef}
+                    editingSerie={props.editingSerie}
                     cancelBtnLabel='Cancel'
                     submitBtnLabel='Editieren'
                     isEdit={props.editingSerie.isEdit}
@@ -52,3 +74,4 @@ const ManageSeriePanel = (props) => {
 }
 
 export default ManageSeriePanel;
+

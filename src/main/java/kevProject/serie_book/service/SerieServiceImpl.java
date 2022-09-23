@@ -29,6 +29,11 @@ public class SerieServiceImpl implements SerieService {
     }
 
     @Override
+    public void deleteSerie(Long id) {
+        serieRepo.deleteById(id);
+    }
+
+    @Override
     public Serie getSerie(String title) {
         return serieRepo.findByTitle(title);
     }
