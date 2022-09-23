@@ -1,9 +1,9 @@
 import {getJwtToken} from "./jwt";
 
 // 'application/x-www-form-urlencoded;charset=UTF-8'
-export async function fetchData(url, methode, body, contentType){
+export async function fetchData(url, methode, body, contentType) {
     let rawResponse = await fetch(
-        "http://192.168.1.138:8081" + url, {
+        "" + url, { //http://192.168.1.138:8081 http://localhost:8081
             method: methode,
             headers: {
                 'Content-Type': contentType,
@@ -11,8 +11,12 @@ export async function fetchData(url, methode, body, contentType){
             },
             body: body
         });
-    if(rawResponse.ok){
-        return await rawResponse.json()
+    if (rawResponse.ok) {
+        try {
+            return await rawResponse.json()
+        } catch (exception) {
+            return null;
+        }
     }
     throw new Error("Failed Fetch Data from Url: " + url + " / " + methode + " / " + body);
 }
