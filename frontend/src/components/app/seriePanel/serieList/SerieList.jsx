@@ -2,7 +2,6 @@ import React, {useContext, useState} from "react";
 
 import Serie from "./Serie";
 import DetailSerie from "../detailSerie/DetailSerie"
-import {Details} from "@mui/icons-material";
 import BlurEffect from "../../../storage/blurEffect";
 
 

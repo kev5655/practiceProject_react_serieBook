@@ -5,12 +5,9 @@ import classes from './Serie.module.css'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
-import BlurEffect from "../../../storage/blurEffect";
 
 
 const Serie = (props) => {
-
-    const globalBlur = useContext(BlurEffect)
 
     const createArray = (fillUp, length) => {
         let array = new Array(length).fill(1)
@@ -18,7 +15,7 @@ const Serie = (props) => {
         return array;
     }
 
-    const onClickHandler = () => {
+    const onClickHandler = (e) => {
         props.onClick({
             id: props.id,
             title: props.title,
@@ -46,7 +43,7 @@ const Serie = (props) => {
     }
 
     return (
-        <article className={`${classes.serie} ${!globalBlur.isBlur && classes.serie_hover}`} onClick={onClickHandler}>
+        <article className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
                     <p className={classes.serie_firstRow_title}>{props.title}</p>
@@ -66,7 +63,7 @@ const Serie = (props) => {
             </div>
             <MoreHorizIcon
                 onClick={editSerieHandler}
-                className={`${!globalBlur.isBlur && classes.serie_editIcon_hover}`}/>
+                className={classes.serie_editIcon_hover}/>
         </article>
     );
 }
