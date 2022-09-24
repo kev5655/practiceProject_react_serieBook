@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -42,21 +43,21 @@ public class SerieBookApplication {
 			appUserService.addRoleToUser("admin", "ROLE_ADMIN");
 			appUserService.addRoleToUser("kevin", "ROLE_USER");
 
-			serieService.saveSerie(new Serie(null, "Admin Attack On Titan", 10, 23,
-					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
+			serieService.saveSerie(new Serie(null, "Attack On Titan", 10, 23,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
 					new java.sql.Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23,
-					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
-					new java.sql.Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "Admin Kevin One Piece", 10, 23,
-					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
-					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin CyberPunk", 10, 23,
-					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
-					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Kevin One Naruto", 10, 23,
-					java.sql.Date.valueOf("2011-01-01"), java.sql.Date.valueOf("2022-02-02"),
-					new java.sql.Timestamp(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "One Piece", 10, 23,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "One Piece", 10, 23,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "CyberPunk", 10, 23,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()), 4, user));
+			serieService.saveSerie(new Serie(null, "Naruto", 10, 23,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()), 4, user));
 		};
 	}
 

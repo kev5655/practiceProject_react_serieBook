@@ -5,16 +5,17 @@ import kevProject.serie_book.model.Serie;
 import kevProject.serie_book.service.AppUserService;
 import kevProject.serie_book.service.SerieService;
 import kevProject.serie_book.utils.JwtUtils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.net.URI;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,16 +41,7 @@ public class SerieController {
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
         appUser.getSeries().forEach((serie) -> {
-            serieResponses.add(new SerieResponse(
-                    serie.getId(),
-                    serie.getTitle(),
-                    serie.getSession(),
-                    serie.getEpisode(),
-                    serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))),
-                    serie.getStars(),
-                    serie.getAppUser().getUsername()));
+            serieResponses.add(new SerieResponse(serie));
         });
         return serieResponses;
     }
@@ -62,17 +54,7 @@ public class SerieController {
         serie.setAppUser(appUser);
         serieService.saveSerie(serie);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieAdd).toUriString());
-        return ResponseEntity.created(uri).body(new SerieResponse(
-                serie.getId(),
-                serie.getTitle(),
-                serie.getSession(),
-                serie.getEpisode(),
-                serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))),
-                serie.getStars(),
-                serie.getAppUser().getUsername()
-        ));
+        return ResponseEntity.created(uri).body(new SerieResponse(serie));
     }
 
     // ToDo Check if serie Title unique
@@ -94,16 +76,7 @@ public class SerieController {
         serieService.updateSerie(updatedSerie);
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieUpdate).toUriString());
-        return ResponseEntity.created(uri).body(new SerieResponse(
-                updatedSerie.getId(),
-                updatedSerie.getTitle(),
-                updatedSerie.getSession(),
-                updatedSerie.getEpisode(),
-                updatedSerie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                updatedSerie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                updatedSerie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))),
-                updatedSerie.getStars(),
-                updatedSerie.getAppUser().getUsername()));
+        return ResponseEntity.created(uri).body(new SerieResponse(updatedSerie));
     }
 
     @DeleteMapping(Url.serieDelete)
@@ -119,8 +92,11 @@ public class SerieController {
 
 }
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
+@ToString
+
 class SerieResponse {
     private Long id;
     private String title;
@@ -131,6 +107,20 @@ class SerieResponse {
     private String createdDate;
     private int stars;
     private String username;
+
+    public SerieResponse(Serie serie){
+        this.id = serie.getId();
+        this.title = serie.getTitle();
+        this.session = serie.getSession();
+        this.episode = serie.getEpisode();
+        if(serie.getStartDate() == null) this.startDate = "";
+        else this.startDate = serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        if(serie.getEndDate() == null) this.endDate = "";
+        else this.endDate = serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.createdDate = serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
+        this.stars = serie.getStars();
+        this.username = serie.getAppUser().toString();
+    }
 }
 
 
