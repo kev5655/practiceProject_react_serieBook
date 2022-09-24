@@ -6,10 +6,13 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 
 @Entity
-@Data
+@Setter
+@Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Serie {

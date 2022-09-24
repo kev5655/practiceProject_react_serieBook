@@ -2,19 +2,23 @@ package kevProject.serie_book.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.AUTO;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AppUser {
 
     @Id
@@ -28,6 +32,8 @@ public class AppUser {
     private Collection<AppRole> roles = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "appUser")
+    @ToString.Exclude
     private Collection<Serie> series = new HashSet<>();
+
 
 }

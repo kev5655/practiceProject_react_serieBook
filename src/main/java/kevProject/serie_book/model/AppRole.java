@@ -1,16 +1,16 @@
 package kevProject.serie_book.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Data
+@Setter
+@Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppRole {
