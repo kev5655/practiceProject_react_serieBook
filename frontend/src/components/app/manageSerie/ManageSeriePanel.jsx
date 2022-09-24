@@ -9,6 +9,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import classes from './ManageSeriePanel.module.css'
 
+const emptySerie = {
+    id: '',
+    title: '',
+    session: '',
+    episode: '',
+    startDate: '',
+    endDate: '',
+    stars: '',
+    createdDate: null
+}
+
 const ManageSeriePanel = (props) => {
 
     const [activeDeletion, setActiveDeletion] = useState(false);
@@ -40,7 +51,7 @@ const ManageSeriePanel = (props) => {
         <Card className={classes.card}>
             <header className={classes.card_header}>
                 <h1>{props.title}</h1> {/* Global Styling in App.css */}
-                { isEditing() && <DeleteIcon
+                {isEditing() && <DeleteIcon
                     onClick={onActivateDeletion}
                     className={classes.icon_hover}/>}
             </header>
@@ -62,12 +73,12 @@ const ManageSeriePanel = (props) => {
             }
             {
                 isAdd() && <ManageSerieForm
-                cancelBtnLabel='Cancel'
-                submitBtnLabel='Add'
-                onManagedSerie={props.onManagedSerie}
-                isEdit='false'
-                onCancel={props.onCancel}
-                />
+                    editingSerie={emptySerie}
+                    cancelBtnLabel='Cancel'
+                    submitBtnLabel='Add'
+                    onManagedSerie={props.onManagedSerie}
+                    isEdit='false'
+                    onCancel={props.onCancel}/>
             }
         </Card>
     )

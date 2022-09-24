@@ -14,35 +14,18 @@ import classes from "./ManageSerieForm.module.css";
 // https://mui.com/material-ui/react-autocomplete/#autocomplete-autofill for LabelPicker
 const ManageSerieForm = forwardRef ((props, ref) => {
 
-    let defaultIsValid = false;
-    if (props.isEdit === "true") {
-        defaultIsValid = true;
-    }
+    let serie = props.editingSerie
 
-    let serie = {}
-    if (props.editingSerie === undefined){
-        serie.id = ''
-        serie.title = ''
-        serie.session = ''
-        serie.episode = ''
-        serie.startDate = ''
-        serie.endDate = ''
-        serie.stars = ''
-        serie.createdDate = null
-    } else {
-        serie = props.editingSerie
-    }
-
-    const [enteredTitle, setEnteredTitle] = useState({value: serie.title, isValid: defaultIsValid});
-    const [enteredSession, setEnteredSession] = useState({value: serie.session, isValid: defaultIsValid});
-    const [enteredEpisode, setEnteredEpisode] = useState({value: serie.episode, isValid: defaultIsValid});
-    const [enteredStartDate, setEnteredStartDate] = useState({value: serie.startDate, isValid: defaultIsValid});
-    const [enteredEndDate, setEnteredEndDate] = useState({value: serie.endDate, isValid: defaultIsValid});
+    const [enteredTitle, setEnteredTitle] = useState({value: serie.title, isValid: serie.isEdit});
+    const [enteredSession, setEnteredSession] = useState({value: serie.session, isValid: serie.isEdit});
+    const [enteredEpisode, setEnteredEpisode] = useState({value: serie.episode, isValid: serie.isEdit});
+    const [enteredStartDate, setEnteredStartDate] = useState({value: serie.startDate, isValid: serie.isEdit});
+    const [enteredEndDate, setEnteredEndDate] = useState({value: serie.endDate, isValid: serie.isEdit});
     const [enteredStars, setEnteredStars] = useState({value: serie.stars})
 
     //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
-        setEnteredTitle({value: value, isValid: true});
+        setEnteredTitle({value: value, isValid: value !== ""});
     }
     const sessionHandler = (value) => {
         setEnteredSession({value: value, isValid: true});
@@ -62,9 +45,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
 
     const submitHandler = async (e) => {
         e.preventDefault()
-        if (enteredTitle.isValid && enteredSession.isValid &&
-            enteredEpisode.isValid && enteredStartDate.isValid &&
-            enteredEndDate.isValid) {
+        if (enteredTitle.isValid && enteredSession.isValid) {
 
             let manageSerie = getSerieDate();
 
@@ -119,14 +100,14 @@ const ManageSerieForm = forwardRef ((props, ref) => {
 
     return (
         <form className={classes.grid} onSubmit={submitHandler}>
-            <div className={`${classes.grid_title_item} ${classes.item}`}>
+            <div className={`${classes.grid_title_container} ${classes.item}`}>
                 <InputText
                     placeholder='Serie Name'
                     value={enteredTitle.value}
                     onChange={titleHandler}/>
             </div>
 
-            <div className={`${classes.grid_episode_season_item} ${classes.item}`}>
+            <div className={`${classes.grid_episode_season_container} ${classes.item}`}>
                 <InputNumber
                     placeholder='Staffel'
                     value={enteredSession.value}
@@ -137,7 +118,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
                     onChange={episodeHandler}/>
             </div>
 
-            <div className={`${classes.grid_stars_item} ${classes.item}`}>
+            <div className={`${classes.grid_stars_container} ${classes.item}`}>
                 <InputStars
                     value={enteredStars.value}
                     className={{
@@ -147,7 +128,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
                     stars={starsHandler}/>
             </div>
 
-            <div className={`${classes.grid_date_item} ${classes.item} ${classes.space}`}>
+            <div className={`${classes.grid_date_container} ${classes.item} ${classes.space}`}>
                 <InputDatepicker
                     label='Start Date'
                     value={enteredStartDate.value}
@@ -164,7 +145,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
             </div>
 
 
-            <div className={`${classes.grid_cancelBtn_item} ${classes.item} ${classes.space}`}>
+            <div className={`${classes.grid_cancelBtn_container} ${classes.item} ${classes.space}`}>
                 <Btn
                     label={props.cancelBtnLabel} // Cancel
                     className={{
@@ -173,7 +154,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
                     onClick={props.onCancel}/>
             </div>
 
-            <div className={`${classes.grid_submitBtn_item} ${classes.item} ${classes.space}`}>
+            <div className={`${classes.grid_submitBtn_container} ${classes.item} ${classes.space}`}>
                 <Btn
                     label={props.submitBtnLabel}  // Add
                     submitValue='submit'

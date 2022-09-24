@@ -17,7 +17,7 @@
         "cancel_btn submit_btn" !important;
     }
 
-    .grid_date_item {
+    .grid_date_container {
         display: grid !important;
         justify-content: center !important;
         grid-gap: 1rem;
@@ -45,34 +45,34 @@
 }
 
 
-.grid_title_item {
+.grid_title_container {
     grid-area: title;
 }
 
-.grid_episode_season_item {
+.grid_episode_season_container {
     grid-area: episode_season;
     display: flex;
     gap: 1rem;
 }
 
-.grid_stars_item {
+.grid_stars_container {
     grid-area: stars;
     display: grid;
     justify-content: center;
 }
 
-.grid_date_item {
+.grid_date_container {
     grid-area: date;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.grid_cancelBtn_item {
+.grid_cancelBtn_container {
     grid-area: cancel_btn;
 }
 
-.grid_submitBtn_item {
+.grid_submitBtn_container {
     grid-area: submit_btn;
 }
 
