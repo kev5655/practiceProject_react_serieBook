@@ -6,12 +6,16 @@ import Card from "../../../ui/Card";
 import classes from './DetailSerie.module.css'
 import Popup from "reactjs-popup";
 
-const DetailSeriePanle = (props) => {
+const DetailSerie = (props) => {
     const [openPopUp, setOpenPopUp] = useState(true);
 
     const onClose = () => {
-        setOpenPopUp(false)
-        props.onClickOutside()
+        setOpenPopUp(false);
+        props.onClickOutside();
+    }
+
+    const isUnknown = (value) => {
+        return value !== null && value !== 0 && value !== undefined && value !== '';
     }
 
     return (
@@ -19,35 +23,34 @@ const DetailSeriePanle = (props) => {
             <Card className={classes.card}
                   id='detailSerie'
             >
-                <p>Id: {props.id}</p>
-                <p>{props.title}</p>
-                <p>{props.session} Session</p>
-                <p>{props.episode} Episode</p>
-                <p>StartDate: {props.startDate.toLocaleString()}</p>
-                <p>EndDate: {props.endDate.toLocaleString()}</p>
-                <p>CreatedDate: {props.createdDate.toLocaleString()}</p>
-                <p>stars: {props.stars}</p>
+                <p className={classes.gird_title}>{props.serie.title}</p>
+
+                <p className={classes.grid_desc_session}>Session</p>
+                <p className={classes.grid_value_session}> {props.serie.session} </p>
+
+                <p className={classes.gird_desc_episode}>Episode</p>
+                {isUnknown(props.serie.episode) ?
+                    <p className={classes.gird_value_episode}>{props.serie.episode}</p> :
+                    <p className={classes.gird_value_episode}>unknown</p>}
+
+                <p className={classes.gird_desc_startDate}>StartDate</p>
+                {isUnknown(props.serie.startDate) ?
+                    <p className={classes.grid_value_startDate}>{props.serie.startDate.toLocaleString()}</p> :
+                    <p className={classes.grid_value_startDate}>unknown</p>}
+
+                <p className={classes.gird_desc_endDate}>EndDate:</p>
+                {isUnknown(props.serie.endDate) ?
+                    <p className={classes.grid_value_endDate}>{props.serie.endDate.toLocaleString()}</p> :
+                    <p className={classes.grid_value_endDate}>unknown</p>}
+
+                <p className={classes.grid_desc_createdDate}>CreatedDate:</p>
+                <p className={classes.grid_value_createdDate}>{props.serie.createdDate.toLocaleString()}</p>
+                <p className={classes.grid_stars}>stars: {props.serie.stars}</p>
             </Card>
         </Popup>
     )
 }
 
-
-const DetailSerie = (props) => {
-
-    return (
-        <DetailSeriePanle
-            id={props.serie.id}
-            title={props.serie.title}
-            session={props.serie.session}
-            episode={props.serie.episode}
-            startDate={props.serie.startDate}
-            endDate={props.serie.endDate}
-            createdDate={props.serie.createdDate}
-            stars={props.serie.stars}
-            onClickOutside={props.onClickOutside}
-        />
-    )
-}
-
 export default DetailSerie;
+
+// <p>Id: {props.serie.id}</p>

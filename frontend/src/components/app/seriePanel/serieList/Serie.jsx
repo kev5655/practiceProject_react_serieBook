@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 
 import classes from './Serie.module.css'
 
@@ -13,6 +13,10 @@ const Serie = (props) => {
         let array = new Array(length).fill(1)
         array = array.fill(0, fillUp)
         return array;
+    }
+
+    const validEpisode = () => {
+        return props.episode !== null && props.episode !== 0 && props.episode !== undefined;
     }
 
     const onClickHandler = (e) => {
@@ -48,7 +52,7 @@ const Serie = (props) => {
                 <div className={classes.serie_firstRow}>
                     <p className={classes.serie_firstRow_title}>{props.title}</p>
                     <p className={classes.serie_firstRow_text}>{props.session}S</p>
-                    <p className={classes.serie_firstRow_text}>{props.episode}E</p>
+                    {validEpisode() && <p className={classes.serie_firstRow_text}>{props.episode}E</p> }
                 </div>
 
                 <div>

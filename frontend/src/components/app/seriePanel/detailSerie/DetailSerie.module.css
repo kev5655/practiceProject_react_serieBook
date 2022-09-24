@@ -7,11 +7,71 @@
     transform: translate(-50%, -50%);
     background-color: #777777;
     z-index: 100;
-    display: flex;
-    flex-direction: column;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-gap: 1rem;
+
+    grid-template-areas:
+        "title title"
+        "descSession valueSession"
+        "descEpisode valueEpisode"
+        "descStartDate decsEndDate"
+        "valueStartDate valueEndDate"
+        "descCreatedDate valueCreatedDate"
+        "stars stars"
+
 }
 
-#root {
+.gird_title {
+    grid-area: title;
+    font-weight: bold;
+    color: #780000;
+    text-align: center;
 }
 
+.grid_desc_session {
+    grid-area: descSession;
+}
+
+.grid_value_session {
+    grid-area: valueSession;
+}
+
+.gird_desc_episode {
+    grid-area: descEpisode;
+}
+
+.gird_value_episode {
+    grid-area: valueEpisode;
+}
+
+.gird_desc_startDate {
+    grid-area: descStartDate;
+}
+
+.gird_desc_endDate {
+    grid-area: decsEndDate;
+}
+
+.grid_value_startDate {
+    grid-area: valueStartDate;
+}
+
+.grid_value_endDate {
+    grid-area: valueEndDate;
+}
+
+.grid_desc_createdDate {
+    grid-area: descCreatedDate;
+}
+
+.grid_value_createdDate {
+    grid-area: valueCreatedDate;
+}
+
+.grid_stars {
+    grid-area: stars;
+}
 

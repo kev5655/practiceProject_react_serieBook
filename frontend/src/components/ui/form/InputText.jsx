@@ -37,9 +37,7 @@ const InputText = (props) => {
     const onChangeHandler = (e) => {
         const value = e.target.value;
         setText(value)
-        if(value !== ""){
-            props.onChange(value)
-        }
+        props.onChange(value)
     };
 
     return (

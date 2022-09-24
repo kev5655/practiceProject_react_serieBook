@@ -14,7 +14,7 @@ const InputDatepicker = (props) => {
     let defaultDayValue = undefined;
     let defaultMonthValue = undefined;
     let defaultYearValue = undefined;
-    if (! (props.value === undefined || props.value === '')) {
+    if (! (props.value === undefined || props.value === '' || props.value === null)) {
         defaultDayValue = date.getDate();
         defaultMonthValue = date.getMonth();
         defaultYearValue = date.getFullYear();

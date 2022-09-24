@@ -97,11 +97,16 @@ const Panel = () => {
             response = await fetchData('/api/series', 'Post', null, 'application/x-www-form-urlencoded;charset=UTF-8')
 
             response.forEach((serie) => {
-                let splitUpDate = serie.startDate.split("/")
-                serie.startDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                let splitUpDate;
+                if (serie.startDate !== ''){
+                    splitUpDate = serie.startDate.split("/")
+                    serie.startDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                }
 
-                splitUpDate = serie.endDate.split("/")
-                serie.endDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                if (serie.endDate) {
+                    splitUpDate = serie.endDate.split("/")
+                    serie.endDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                }
 
                 splitUpDate = serie.createdDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
                 serie.createdDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
