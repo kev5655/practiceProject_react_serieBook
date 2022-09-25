@@ -131,7 +131,7 @@ const Panel = () => {
                                                               onEditSerie={editSerieHandler}
             />}
 
-            {state === ACTIVE_PANEL.MANAGE_SERIE && <ManageSeriePanel title='Edit Serie'
+            {state === ACTIVE_PANEL.MANAGE_SERIE && <ManageSeriePanel title={editSerie !== undefined ? 'Edit Serie' : "Add Serie"}
                                                                       editingSerie={editSerie}
                                                                       onManagedSerie={addSerieHandler}
                                                                       onCancel={onCancelHandler}
