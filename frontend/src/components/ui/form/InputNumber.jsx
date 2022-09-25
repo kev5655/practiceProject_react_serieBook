@@ -24,7 +24,7 @@ const InputNumber = (props) => {
 
     return(
         <input
-            className={`${classes.passwordInput} ${classesNumber.input}`}
+            className={`${classes.input} ${classesNumber.input}`}
             type='number'
             min='1'
             name="pwd"

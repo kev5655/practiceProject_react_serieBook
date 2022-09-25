@@ -1,4 +1,4 @@
-.passwordInput {
+.input {
     all: unset;
     box-sizing: border-box;
     display: inline;
@@ -16,16 +16,16 @@
     border-radius: 4px;
 }
 
-.passwordInput:hover {
+.input:hover {
     border-color: #c1121f;
 }
 
-.passwordInput:focus {
+.input:focus {
     border-width: 2.5px;
     border-color: #c1121f;
 }
 
-.passwordInput::placeholder {
+.input::placeholder {
     color: #555555;
     text-align: left;
 }

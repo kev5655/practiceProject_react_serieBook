@@ -1,34 +1,6 @@
 import React, {useState} from 'react'
-import TextField from "@mui/material/TextField";
 
-import {styled} from "@mui/joy";
-
-
-const CssTextField = styled(TextField)({
-    "& input::placeholder": {
-        fontFamily:"\"JetBrains Mono\", sans-serif"
-    },
-    '& label.Mui-focused': {
-        color: '#c1121f',
-        borderWidth: '0.15rem'
-    },
-    '& .MuiInput-underline:after': {
-        borderBottomColor: '#c1121f',
-        borderWidth: '0.15rem'
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: '#780000',
-        },
-        '&:hover fieldset': {
-            borderColor: '#c1121f',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: '#c1121f',
-            borderWidth: '0.15rem'
-        },
-    },
-});
+import classes from "./Input.module.css"
 
 const InputText = (props) => {
     
@@ -41,17 +13,15 @@ const InputText = (props) => {
     };
 
     return (
-        <>
-            <CssTextField
-                placeholder={props.placeholder}
-                value={text}
-                type='text'
-                margin='none'
-                size='small'
-                fullWidth={true}
-                onChange={onChangeHandler}
-            />
-        </>
+        <input
+            className={`${classes.input}`}
+            type='text'
+            name='textField'
+            maxLength='50'
+            value={text}
+            placeholder={props.placeholder}
+            onChange={onChangeHandler}
+        />
     );
 }
 

@@ -25,7 +25,7 @@ const InputPassword = (props) => {
     return (
         <>
             <input
-                className={classes.passwordInput}
+                className={classes.input}
                 type={inputType}
                 name="pwd"
                 maxLength="50"
