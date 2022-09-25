@@ -1,13 +1,23 @@
-import React, {useRef, useEffect, useState} from 'react'
-import ReactDOM from 'react-dom';
+import React, {useState} from 'react'
+
+import Popup from "reactjs-popup";
+
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 import Card from "../../../ui/Card";
 
 import classes from './DetailSerie.module.css'
-import Popup from "reactjs-popup";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
 
 const DetailSerie = (props) => {
     const [openPopUp, setOpenPopUp] = useState(true);
+
+    const createArray = (fillUp, length) => {
+        let array = new Array(length).fill(1)
+        array = array.fill(0, fillUp)
+        return array;
+    }
 
     const onClose = () => {
         setOpenPopUp(false);
@@ -23,29 +33,55 @@ const DetailSerie = (props) => {
             <Card className={classes.card}
                   id='detailSerie'
             >
-                <p className={classes.gird_title}>{props.serie.title}</p>
+                <header className={classes.header}>
+                    <p className={classes.header_title}>{props.serie.title}</p>
+                </header>
+                <section className={classes.gird}>
+                    <div className={classes.grid_container_session}>
+                        <p>Session</p>
+                        <p>{props.serie.session} </p>
+                    </div>
+                    <div className={classes.gird_container_episode}>
+                        <p>Episode</p>
+                        {isUnknown(props.serie.episode) ?
+                            <p>{props.serie.episode}</p> :
+                            <p>unknown</p>}
+                    </div>
 
-                <p className={classes.grid_desc_session}>Session</p>
-                <p className={classes.grid_value_session}> {props.serie.session} </p>
+                    <div className={classes.grid_stars}>
+                        {createArray(props.serie.stars, 5).map((value, i) => {
+                            if (value === 1) {
+                                return (<StarRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
+                            } else {
+                                return (<StarOutlineRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
+                            }
+                        })}
+                    </div>
 
-                <p className={classes.gird_desc_episode}>Episode</p>
-                {isUnknown(props.serie.episode) ?
-                    <p className={classes.gird_value_episode}>{props.serie.episode}</p> :
-                    <p className={classes.gird_value_episode}>unknown</p>}
+                    <div className={classes.dateGrid}>
+                        <p className={classes.dateGrid_desc_startDate}>Start Date</p>
+                        <p className={classes.dateGrid_desc_endDate}>End Date</p>
 
-                <p className={classes.gird_desc_startDate}>StartDate</p>
-                {isUnknown(props.serie.startDate) ?
-                    <p className={classes.grid_value_startDate}>{props.serie.startDate.toLocaleString()}</p> :
-                    <p className={classes.grid_value_startDate}>unknown</p>}
-
-                <p className={classes.gird_desc_endDate}>EndDate:</p>
-                {isUnknown(props.serie.endDate) ?
-                    <p className={classes.grid_value_endDate}>{props.serie.endDate.toLocaleString()}</p> :
-                    <p className={classes.grid_value_endDate}>unknown</p>}
-
-                <p className={classes.grid_desc_createdDate}>CreatedDate:</p>
-                <p className={classes.grid_value_createdDate}>{props.serie.createdDate.toLocaleString()}</p>
-                <p className={classes.grid_stars}>stars: {props.serie.stars}</p>
+                        <div className={` ${classes.dateGrid_value_startDate} ${classes.skewCard}`}>
+                            <div className={classes.skewToZero}>
+                                {isUnknown(props.serie.startDate) ?
+                                    <p>{props.serie.startDate.toLocaleDateString()}</p> :
+                                    <p>unknown</p>}
+                            </div>
+                        </div>
+                        <div className={` ${classes.dateGrid_value_endDate} ${classes.skewCard}`}>
+                            <div className={classes.skewToZero}>
+                                {isUnknown(props.serie.endDate) ?
+                                    <p>{props.serie.endDate.toLocaleDateString()}</p> :
+                                    <p>unknown</p>}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.grid_container_createdDate}>
+                        <p>CreatedDate:</p>
+                        <p>{props.serie.createdDate.toLocaleString()}</p>
+                    </div>
+                </section>
             </Card>
         </Popup>
     )
@@ -53,4 +89,7 @@ const DetailSerie = (props) => {
 
 export default DetailSerie;
 
-// <p>Id: {props.serie.id}</p>
+
+//<p>Id: {props.serie.id}</p>
+
+// <ArrowRightAltIcon/>
