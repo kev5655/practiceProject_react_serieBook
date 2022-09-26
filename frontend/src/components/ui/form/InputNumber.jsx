@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import classes from "./Input.module.css";
-import classesNumber from "./InputNumber.module.css"
+
+import inputStyles from "./Input.module.css";
+
 
 
 const InputNumber = (props) => {
@@ -24,7 +25,8 @@ const InputNumber = (props) => {
 
     return(
         <input
-            className={`${classes.input} ${classesNumber.input}`}
+            className={`${inputStyles.input} 
+                ${props.error && inputStyles.error}`}
             type='number'
             min='1'
             name="pwd"

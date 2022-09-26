@@ -8,6 +8,7 @@ import Info from "../../ui/info/Info";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import classes from './ManageSeriePanel.module.css'
+import iconStyles from '../../styles/Icon.module.css'
 
 const emptySerie = {
     id: '',
@@ -52,8 +53,9 @@ const ManageSeriePanel = (props) => {
             <header className={classes.card_header}>
                 <h1>{props.title}</h1> {/* Global Styling in App.css */}
                 {isEditing() && <DeleteIcon
+                    fontSize="small"
                     onClick={onActivateDeletion}
-                    className={classes.icon_hover}/>}
+                    className={iconStyles.icon_hover}/>}
             </header>
 
             {

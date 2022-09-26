@@ -1,6 +1,7 @@
 
 
 .header_card{
+    padding: 0;
     box-shadow: inset 10px 10px 40px #5d5d5d,
     inset -10px -10px 40px #777777;
 }
