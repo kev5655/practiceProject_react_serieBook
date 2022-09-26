@@ -14,7 +14,7 @@ const InputText = (props) => {
 
     return (
         <input
-            className={`${classes.input}`}
+            className={`${classes.input} ${props.error && classes.error}`}
             type='text'
             name='textField'
             maxLength='50'

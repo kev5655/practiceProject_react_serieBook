@@ -23,11 +23,16 @@ const ManageSerieForm = forwardRef ((props, ref) => {
     const [enteredEndDate, setEnteredEndDate] = useState({value: serie.endDate, isValid: serie.isEdit});
     const [enteredStars, setEnteredStars] = useState({value: serie.stars})
 
+    const [errorTitle, isErrorTitle] = useState(false);
+    const [errorSession, isErrorSession] = useState(false);
+
     //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
+        isErrorTitle(false);
         setEnteredTitle({value: value, isValid: value !== ""});
     }
     const sessionHandler = (value) => {
+        isErrorSession(false);
         setEnteredSession({value: value, isValid: true});
     }
     const episodeHandler = (value) => {
@@ -57,6 +62,9 @@ const ManageSerieForm = forwardRef ((props, ref) => {
             }
             manageSerie.isEdit = props.isEdit;
             props.onManagedSerie(manageSerie);
+        }  else {
+            isErrorTitle(!enteredTitle.isValid)
+            isErrorSession(!enteredSession.isValid);
         }
     }
 
@@ -69,6 +77,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
             startDate: enteredStartDate.value,
             endDate: enteredEndDate.value,
             createdDate: serie.createdDate ?? new Date(Date.now()),
+            lastModifiedDate: new Date(Date.now()),
             stars: enteredStars.value,
         };
     }
@@ -104,6 +113,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
                 <InputText
                     placeholder='Serie Name'
                     value={enteredTitle.value}
+                    error={errorTitle}
                     onChange={titleHandler}/>
             </div>
 
@@ -111,6 +121,7 @@ const ManageSerieForm = forwardRef ((props, ref) => {
                 <InputNumber
                     placeholder='Staffel'
                     value={enteredSession.value}
+                    error={errorSession}
                     onChange={sessionHandler}/>
                 <InputNumber
                     placeholder='Folge'
