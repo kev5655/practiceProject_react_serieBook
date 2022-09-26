@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 import inputStyles from './Input.module.css'
+import {SORT_PARAMS} from "../../app/seriePanel/header/FilterAndSort";
 
 const InputDropDown = (props) => {
+
+    const [enteredSelected, setEnteredSelected] = useState(JSON.stringify(SORT_PARAMS.BY_LAST_MODIFIED));
 
     let list = []
     Object.keys(props.optionList).forEach(function (key, index) {
@@ -12,7 +15,10 @@ const InputDropDown = (props) => {
     })
 
     const onChange = (e) => {
-        props.onChange(e.target.value);
+        setEnteredSelected(e.target.value);
+        let object = JSON.parse(e.target.value);
+        console.log("Selected: " + e.target.value);
+        props.onChange(object);
     }
 
     return (
@@ -23,10 +29,11 @@ const InputDropDown = (props) => {
             </label>
             <select id={props.list}
                     className={inputStyles.input}
-                    onChange={onChange}>
+                    onChange={onChange}
+                    value={enteredSelected}>
                 {
                     list.map((option, key) => (
-                        <option value={option} key={key}>{option.value}</option>
+                        <option value={JSON.stringify(option)} key={key}>{option.value}</option>
                     ))
                 }
             </select>

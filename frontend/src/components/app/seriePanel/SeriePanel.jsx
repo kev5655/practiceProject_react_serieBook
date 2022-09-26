@@ -14,13 +14,14 @@ const SeriePanel = (props) => {
 
     const [serieList, setSerieList] = useState(props.serieList);
     const [isFilterActive, setFilterActive] = useState(false);
-    
-    useEffect(() => {
-        setSerieList(props.serieList)
-    }, [props.serieList])
+
+    //useEffect(() => {
+    //    setSerieList(props.serieList)
+    //}, [props.serieList])
 
 
     const onCompileHandler = (compiledSerie) => {
+        console.log("compile SerieList")
         setSerieList(compiledSerie);
     }
 
@@ -28,24 +29,25 @@ const SeriePanel = (props) => {
         setFilterActive(true)
     }
 
-    return (
-        <>
+    return (<>
 
-            <Card className={classes.header_card}>
-                <Header onFilter={onFilterClickHandler}
-                        openAddForm={props.openAddForm}/>
-                { isFilterActive && <FilterAndSort serieList={props.serieList} onCompileSeire={onCompileHandler}/> }
-            </Card>
+        <Card className={classes.header_card}>
+            <Header onFilter={onFilterClickHandler}
+                    openAddForm={props.openAddForm}/>
+            <FilterAndSort
+                isFilterActive={isFilterActive}
+                serieList={props.serieList}
+                onCompileSeire={onCompileHandler}/>
+        </Card>
 
-            <Card className={classes.serieList_card}>
-                <SerieList editSerie={props.onEditSerie} serieList={serieList}/>
-            </Card>
+        <Card className={classes.serieList_card}>
+            <SerieList editSerie={props.onEditSerie} serieList={serieList}/>
+        </Card>
 
-            <footer>
+        <footer>
 
-            </footer>
-        </>
-    );
+        </footer>
+    </>);
 }
 
 export default SeriePanel;

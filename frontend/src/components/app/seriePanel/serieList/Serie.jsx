@@ -49,6 +49,7 @@ const Serie = (props) => {
             startDate: props.startDate,
             endDate: props.endDate,
             createdDate: props.createdDate,
+            lastModifiedDate: props.lastModifiedDate,
             stars: props.stars,
         })
     }
