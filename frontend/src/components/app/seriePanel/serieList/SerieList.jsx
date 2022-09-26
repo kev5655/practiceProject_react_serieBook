@@ -33,6 +33,7 @@ const SerieList = (props) => {
                        startDate={serie.startDate}
                        endDate={serie.endDate}
                        createdDate={serie.createdDate}
+                       lastModifiedDate={serie.lastModifiedDate}
                        stars={serie.stars}
                        editSerie={props.editSerie}
                        onClick={onSerieClickHandler}

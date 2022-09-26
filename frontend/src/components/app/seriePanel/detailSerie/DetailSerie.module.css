@@ -24,7 +24,7 @@
         "episode stars"
         "gridDate gridDate"
         "gridDate gridDate"
-        "createdDate createdDate"
+        "uneditableDate uneditableDate"
 }
 
 .header {
@@ -79,24 +79,26 @@
         "valueStartDate valueEndDate"
 }
 
-.dateGrid_desc_startDate {
+.dateGrid_item_desc_startDate {
     grid-area: descStartDate;
-    text-align: center;
-    box-shadow: 0px 10px 10px -10px rgba(255,255,255,1);
+    /* box-shadow: 0px 10px 10px -10px rgba(255,255,255,1); */
 }
 
-.dateGrid_desc_endDate {
+.dateGrid_item_desc_endDate {
     grid-area: descEndDate;
-    text-align: center;
-    border-bottom: 1px solid black;
-
 }
 
-.dateGrid_value_startDate {
+.dateGrid_desc_date {
+    text-align: center;
+    margin: 0 3rem;
+    border-bottom: 1px solid black;
+}
+
+.dateGrid_item_value_startDate {
     grid-area: valueStartDate;
 }
 
-.dateGrid_value_endDate {
+.dateGrid_item_value_endDate {
     grid-area: valueEndDate;
 }
 
@@ -106,21 +108,22 @@
     justify-content: center;
     height: 2rem;
     margin: 0 2rem;
-    background-color: rgb(255,255,255,1);
+    /* background-color: rgb(255,255,255,1);
     box-shadow: 0px 5px 20px 6px rgba(255,255,255,0.75);
     transform: skew(20deg);
 }
 
 
 .skewToZero {
-    transform: skew(-20deg);
+    /* transform: skew(-20deg); */
 }
 
 
 .grid_container_createdDate {
-    grid-area: createdDate;
+    grid-area: uneditableDate;
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    text-align: end;
     gap: 1rem;
     margin-top: 2rem;
     font-size: 0.9rem;

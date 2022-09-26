@@ -26,6 +26,7 @@ public class Serie {
     private Date startDate;
     private Date endDate;
     private Timestamp createdDate;
+    private Timestamp lastModifiedDate;
     private int stars;
 
     @ManyToOne

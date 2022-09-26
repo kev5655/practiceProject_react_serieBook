@@ -111,6 +111,9 @@ const Panel = () => {
                 splitUpDate = serie.createdDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
                 serie.createdDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
 
+                splitUpDate = serie.lastModifiedDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
+                serie.lastModifiedDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
+
                 delete serie.username;
             })
             console.log("Fetch Series: ", response)

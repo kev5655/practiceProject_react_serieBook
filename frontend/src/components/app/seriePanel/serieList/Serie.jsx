@@ -1,8 +1,10 @@
 import React from "react";
 
 import classes from './Serie.module.css'
+import iconStyles from '../../../styles/Icon.module.css'
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import EditIcon from '@mui/icons-material/Edit';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
@@ -16,7 +18,11 @@ const Serie = (props) => {
     }
 
     const validEpisode = () => {
-        return props.episode !== null && props.episode !== 0 && props.episode !== undefined;
+        let isNull = props.episode === null;
+        let isIntNull = props.episode === 0;
+        let isUndefined = props.episode === undefined;
+        let isStringNull = props.episode === "";
+        return !isNull && !isIntNull && !isUndefined && !isStringNull;
     }
 
     const onClickHandler = (e) => {
@@ -28,6 +34,7 @@ const Serie = (props) => {
             startDate: props.startDate,
             endDate: props.endDate,
             createdDate: props.createdDate,
+            lastModifiedDate: props.lastModifiedDate,
             stars: props.stars,
         })
     }
@@ -65,9 +72,11 @@ const Serie = (props) => {
                     })}
                 </div>
             </div>
-            <MoreHorizIcon
+
+            <EditIcon
+                fontSize="small"
                 onClick={editSerieHandler}
-                className={classes.serie_editIcon_hover}/>
+                className={iconStyles.icon_hover}/>
         </article>
     );
 }

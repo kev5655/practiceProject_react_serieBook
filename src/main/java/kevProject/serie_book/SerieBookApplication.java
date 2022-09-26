@@ -43,20 +43,25 @@ public class SerieBookApplication {
 			appUserService.addRoleToUser("admin", "ROLE_ADMIN");
 			appUserService.addRoleToUser("kevin", "ROLE_USER");
 
-			serieService.saveSerie(new Serie(null, "Attack On Titan", 10, 23,
+			serieService.saveSerie(new Serie(null, "Attack On Titan", 4, 33,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new java.sql.Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "One Piece", 10, 23,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "One Piece", 10, 23,
+			serieService.saveSerie(new Serie(null, "One Piece", 15, 989,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()),
+					new Timestamp(System.currentTimeMillis()), 4, admin));
+			serieService.saveSerie(new Serie(null, "One Piece", 15, 989,
+					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "CyberPunk", 10, 23,
+			serieService.saveSerie(new Serie(null, "CyberPunk", 1, 10,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Naruto", 10, 23,
+			serieService.saveSerie(new Serie(null, "Naruto", 17, 1124,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, user));
 		};
 	}

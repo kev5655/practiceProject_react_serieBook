@@ -105,6 +105,7 @@ class SerieResponse {
     private String startDate;
     private String endDate;
     private String createdDate;
+    private String lastModifiedDate;
     private int stars;
     private String username;
 
@@ -118,6 +119,7 @@ class SerieResponse {
         if(serie.getEndDate() == null) this.endDate = "";
         else this.endDate = serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.createdDate = serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
+        this.lastModifiedDate = serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
         this.stars = serie.getStars();
         this.username = serie.getAppUser().toString();
     }

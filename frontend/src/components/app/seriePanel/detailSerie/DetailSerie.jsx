@@ -13,6 +13,7 @@ import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
 const DetailSerie = (props) => {
     const [openPopUp, setOpenPopUp] = useState(true);
 
+
     const createArray = (fillUp, length) => {
         let array = new Array(length).fill(1)
         array = array.fill(0, fillUp)
@@ -59,17 +60,19 @@ const DetailSerie = (props) => {
                     </div>
 
                     <div className={classes.dateGrid}>
-                        <p className={classes.dateGrid_desc_startDate}>Start Date</p>
-                        <p className={classes.dateGrid_desc_endDate}>End Date</p>
+                        <p className={`${classes.dateGrid_item_desc_startDate} ${classes.dateGrid_desc_date}`}>Start
+                            Date</p>
+                        <p className={` ${classes.dateGrid_item_desc_endDate} ${classes.dateGrid_desc_date} `}>End
+                            Date</p>
 
-                        <div className={` ${classes.dateGrid_value_startDate} ${classes.skewCard}`}>
+                        <div className={` ${classes.dateGrid_item_value_startDate} ${classes.skewCard}`}>
                             <div className={classes.skewToZero}>
                                 {isUnknown(props.serie.startDate) ?
                                     <p>{props.serie.startDate.toLocaleDateString()}</p> :
                                     <p>unknown</p>}
                             </div>
                         </div>
-                        <div className={` ${classes.dateGrid_value_endDate} ${classes.skewCard}`}>
+                        <div className={` ${classes.dateGrid_item_value_endDate} ${classes.skewCard}`}>
                             <div className={classes.skewToZero}>
                                 {isUnknown(props.serie.endDate) ?
                                     <p>{props.serie.endDate.toLocaleDateString()}</p> :
@@ -78,8 +81,14 @@ const DetailSerie = (props) => {
                         </div>
                     </div>
                     <div className={classes.grid_container_createdDate}>
-                        <p>CreatedDate:</p>
-                        <p>{props.serie.createdDate.toLocaleString()}</p>
+                        <div>
+                            <p>Created Date: </p>
+                            <p>{props.serie.createdDate.toLocaleString()}</p>
+                        </div>
+                        <div>
+                            <p>Last Modification: </p>
+                            <p>{props.serie.lastModifiedDate.toLocaleString()}</p>
+                        </div>
                     </div>
                 </section>
             </Card>
