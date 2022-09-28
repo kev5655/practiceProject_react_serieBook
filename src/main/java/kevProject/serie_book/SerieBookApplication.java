@@ -51,18 +51,18 @@ public class SerieBookApplication {
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
 					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "One Piece", 15, 989,
+			serieService.saveSerie(new Serie(null, "Game Of Thrones", 8, 73,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
 					new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "CyberPunk", 1, 10,
+			serieService.saveSerie(new Serie(null, "Sherlock", 4, 14,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
 					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Naruto", 17, 1124,
+					new Timestamp(System.currentTimeMillis()), 3, user));
+			serieService.saveSerie(new Serie(null, "Chernobyl", 1, 5,
 					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
 					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 4, user));
+					new Timestamp(System.currentTimeMillis()), 2, user));
 		};
 	}
 

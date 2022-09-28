@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import ReactDOM from "react-dom";
 
 import Popup from 'reactjs-popup';
 
@@ -26,7 +25,7 @@ const InfoPanel = (props) => {
         <Popup open={openPopup} closeOnDocumentClick onClose={onCancel}>
             <Card className={classes.card}>
                 <div className={classes.label}>
-                    <p>Wollen sie die Serie löschen</p>
+                    <p>Do you want to delete the series</p>
                 </div>
                 <div className={classes.buttons}>
                     <Btn label="Cancel"
