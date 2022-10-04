@@ -102,19 +102,19 @@ const Panel = () => {
                 let splitUpDate;
                 if (serie.startDate !== '') {
                     splitUpDate = serie.startDate.split("/")
-                    serie.startDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                    serie.startDate = new Date(splitUpDate[2], splitUpDate[1] - 1, splitUpDate[0]);
                 }
 
                 if (serie.endDate) {
                     splitUpDate = serie.endDate.split("/")
-                    serie.endDate = new Date(splitUpDate[2], splitUpDate[1], splitUpDate[0]);
+                    serie.endDate = new Date(splitUpDate[2], splitUpDate[1] - 1, splitUpDate[0]);
                 }
 
                 splitUpDate = serie.createdDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
-                serie.createdDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
+                serie.createdDate = new Date(splitUpDate[0], splitUpDate[1] - 1, splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
 
                 splitUpDate = serie.lastModifiedDate.replaceAll(" ", "/").replaceAll(":", "/").split("/")
-                serie.lastModifiedDate = new Date(splitUpDate[0], splitUpDate[1], splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
+                serie.lastModifiedDate = new Date(splitUpDate[0], splitUpDate[1] - 1, splitUpDate[2], splitUpDate[3], splitUpDate[4], splitUpDate[5])
 
                 delete serie.username;
             })

@@ -60,7 +60,6 @@ public class SerieController {
     // ToDo Check if serie Title unique
     @PutMapping(Url.serieUpdate)
     public ResponseEntity<SerieResponse> updateSerie(@RequestHeader Map<String, String> headers, @RequestBody Serie serie) {
-        log.info("Update Serie {}", serie);
         //Serie updatedSerie = serieService.getSerie(serie.getId());
         Serie updatedSerie = serieService.getSerieById(serie.getId());
         AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
@@ -73,6 +72,7 @@ public class SerieController {
         updatedSerie.setStars(serie.getStars());
         updatedSerie.setAppUser(appUser);
 
+        log.info("Update Serie {}", updatedSerie);
         serieService.updateSerie(updatedSerie);
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieUpdate).toUriString());
