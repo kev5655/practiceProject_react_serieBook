@@ -37,9 +37,10 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         if(user == null){
             log.error("User not found in the database {}", username);
             throw new UsernameNotFoundException("User not found in the database");
-        }else {
-            log.info("User found in the database: {}", username);
         }
+//        else {
+//            log.info("User found in the database: {}", username);
+//        }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
@@ -78,7 +79,7 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Override
     public AppUser getAppUser(String username) {
-        log.info("Fetching user {}", username);
+        //log.info("Fetching user {}", username);
         return appUserRepo.findByUsername(username);
     }
 

@@ -20,7 +20,7 @@ public class JwtUtils {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         String username = decodedJWT.getSubject();
-        log.info("username {} and toke {}", username, token); //ToDo Remove Logging for Production
+        //log.info("username {} and toke {}", username, token); //ToDo Remove Logging for Production
         return appUserService.getAppUser(username);
     }
 
