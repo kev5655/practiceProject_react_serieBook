@@ -37,32 +37,35 @@ public class SerieBookApplication {
 
 			AppUser admin = new AppUser(null, "admin", "admin@admin.com", "1234", new ArrayList<>(), new ArrayList<>());
 			AppUser user = new AppUser(null, "kevin", "kevin@kevin.com", "1234", new ArrayList<>(), new ArrayList<>());
+			AppUser fabienne = new AppUser(null, "fabienne", "kevin@kevin.com", "1234", new ArrayList<>(), new ArrayList<>());
 			appUserService.saveAppUser(admin);
 			appUserService.saveAppUser(user);
+			appUserService.saveAppUser(fabienne);
 			appUserService.addRoleToUser("admin", "ROLE_USER");
 			appUserService.addRoleToUser("admin", "ROLE_ADMIN");
 			appUserService.addRoleToUser("kevin", "ROLE_USER");
+			appUserService.addRoleToUser("fabienne", "ROLE_USER");
 
-			serieService.saveSerie(new Serie(null, "Attack On Titan", 4, 33,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "One Piece", 15, 989,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 4, admin));
-			serieService.saveSerie(new Serie(null, "Game Of Thrones", 8, 73,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 4, user));
-			serieService.saveSerie(new Serie(null, "Sherlock", 4, 14,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 3, user));
-			serieService.saveSerie(new Serie(null, "Chernobyl", 1, 5,
-					Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
-					new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis()), 2, user));
+			//serieService.saveSerie(new Serie(null, "Attack On Titan", 4, 33,
+			//		Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+			//		new Timestamp(System.currentTimeMillis()),
+			//		new Timestamp(System.currentTimeMillis()), 4, admin));
+			//serieService.saveSerie(new Serie(null, "One Piece", 15, 989,
+			//		Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+			//		new Timestamp(System.currentTimeMillis()),
+			//		new Timestamp(System.currentTimeMillis()), 4, admin));
+			//serieService.saveSerie(new Serie(null, "Game Of Thrones", 8, 73,
+			//		Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+			//		new Timestamp(System.currentTimeMillis()),
+			//		new Timestamp(System.currentTimeMillis()), 4, user));
+			//serieService.saveSerie(new Serie(null, "Sherlock", 4, 14,
+			//		Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+			//		new Timestamp(System.currentTimeMillis()),
+			//		new Timestamp(System.currentTimeMillis()), 3, user));
+			//serieService.saveSerie(new Serie(null, "Chernobyl", 1, 5,
+			//		Date.valueOf("2011-01-01"), Date.valueOf("2022-02-02"),
+			//		new Timestamp(System.currentTimeMillis()),
+			//		new Timestamp(System.currentTimeMillis()), 2, user));
 		};
 	}
 
