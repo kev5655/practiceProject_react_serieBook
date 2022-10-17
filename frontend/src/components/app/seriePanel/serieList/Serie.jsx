@@ -26,6 +26,7 @@ const Serie = (props) => {
     }
 
     const onClickHandler = (e) => {
+        e.preventDefault();
         props.onClick({
             id: props.id,
             title: props.title,

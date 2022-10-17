@@ -20,7 +20,8 @@ const DetailSerie = (props) => {
         return array;
     }
 
-    const onClose = () => {
+    const onClose = (event) => {
+        event.preventDefault();
         setOpenPopUp(false);
         props.onClickOutside();
     }

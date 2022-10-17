@@ -1,5 +1,5 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-var data = require("fs").readFileSync("Serien.csv", "utf8")
+let data = require("fs").readFileSync("Serien.csv", "utf8");
 
 function findStars (value) {
     if(value.indexOf("*") === -1) return null;
@@ -28,11 +28,11 @@ let saveSerieIntoDB = async (addSerie) => {
 
 async function fetchData(url, methode, body, contentType) {
     let rawResponse = await fetch(
-        "" + url, { //http://192.168.1.138:8081 http://localhost:8081
+        "" + url, { //http://localhost:8081 http://localhost:8081
             method: methode,
             headers: {
                 'Content-Type': contentType,
-                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY1MTQ4NDczfQ._5l35-AdNqk945Keo00uLcPhQUM08QPQHs1l9R0Z16Q"
+                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY2MDMxMzQxfQ.fuj8-TgaqT196fxRmC_iC9T-AGq-XdsOOsgfmu3Xjds"
             },
             body: body
         });

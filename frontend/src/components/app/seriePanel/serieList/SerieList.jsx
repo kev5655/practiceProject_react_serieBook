@@ -18,7 +18,9 @@ const SerieList = (props) => {
     }
 
     const onOutSideClickHandler = () => {
-        globalBlur.deactivateBlur();
+        setTimeout(() => {
+            globalBlur.deactivateBlur();
+        }, 250);
     }
 
 
