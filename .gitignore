@@ -550,7 +550,7 @@ README.html
 ${project.build.directory}
 
 # Config of Spring Boot
-application.properties
+application-prod.properties
 security/
 
 # Docker

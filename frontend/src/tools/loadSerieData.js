@@ -19,7 +19,7 @@ function findDates (rawCSV) {
 }
 
 let saveSerieIntoDB = async (addSerie) => {
-    let response = await fetchData("http://192.168.1.138:8081/api/serie/add",
+    let response = await fetchData("http://localhost:8081/api/serie/add",
         "Post",
         JSON.stringify(addSerie),
         'application/json')
@@ -32,7 +32,7 @@ async function fetchData(url, methode, body, contentType) {
             method: methode,
             headers: {
                 'Content-Type': contentType,
-                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY0NjY2NDUwfQ.s0igy2UaVb1s3clVYx-VDGkLiOnxxh_diwceKzIiDl8"
+                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY1MTQ4NDczfQ._5l35-AdNqk945Keo00uLcPhQUM08QPQHs1l9R0Z16Q"
             },
             body: body
         });

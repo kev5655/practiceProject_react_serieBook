@@ -8,7 +8,7 @@ import Btn from "../form/Btn";
 import classes from "./Info.module.css";
 
 
-const InfoPanel = (props) => {
+const Info = (props) => {
     const [openPopup, setOpenPopup] = useState(true);
 
     const onCancel = () => {
@@ -42,15 +42,6 @@ const InfoPanel = (props) => {
             </Card>
         </Popup>
     );
-}
-
-
-const Info = (props) => {
-    return (
-        <InfoPanel
-            onCancel={props.onCancel}
-            onAccept={props.onAccept}/>
-    )
 }
 
 export default Info;
