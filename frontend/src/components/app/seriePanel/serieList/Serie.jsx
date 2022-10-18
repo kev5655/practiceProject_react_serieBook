@@ -1,12 +1,12 @@
 import React from "react";
 
-import classes from './Serie.module.css'
-import iconStyles from '../../../styles/Icon.module.css'
-
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
+
+import IconBtn from "../../../ui/form/IconBtn";
+
+import classes from './Serie.module.css'
 
 
 const Serie = (props) => {
@@ -74,11 +74,8 @@ const Serie = (props) => {
                     })}
                 </div>
             </div>
-
-            <EditIcon
-                fontSize="small"
-                onClick={editSerieHandler}
-                className={iconStyles.icon_hover}/>
+            <IconBtn icon={EditIcon}
+                     onClick={editSerieHandler}/>
         </article>
     );
 }

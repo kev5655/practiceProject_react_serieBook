@@ -1,14 +1,14 @@
 import React, {useRef, useState} from 'react'
 
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import ManageSerieForm from "./ManageSerieForm";
 import Card from "../../ui/Card";
-import Info from "../../ui/info/Info";
-
-import DeleteIcon from '@mui/icons-material/Delete';
+import InfoPopup from "../../ui/popup/InfoPopup";
+import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './ManageSeriePanel.module.css'
-import iconStyles from '../../styles/Icon.module.css'
+
 
 const emptySerie = {
     id: '',
@@ -52,14 +52,12 @@ const ManageSeriePanel = (props) => {
         <Card className={classes.card}>
             <header className={classes.card_header}>
                 <h1>{props.title}</h1> {/* Global Styling in App.css */}
-                {isEditing() && <DeleteIcon
-                    fontSize="small"
-                    onClick={onActivateDeletion}
-                    className={iconStyles.icon_hover}/>}
+                {isEditing() && <IconBtn icon={DeleteIcon}
+                                         onClick={onActivateDeletion}/>}
             </header>
 
             {
-                activeDeletion && <Info
+                activeDeletion && <InfoPopup
                     onCancel={onCancelDeletionClickHandler}
                     onAccept={onAcceptDeletionClickHandler}/>
             }

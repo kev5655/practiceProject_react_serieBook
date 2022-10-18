@@ -4,6 +4,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import classes from './Input.module.css'
+import IconBtn from "./IconBtn";
 
 
 const InputPassword = (props) => {
@@ -33,20 +34,20 @@ const InputPassword = (props) => {
                 onChange={onChangeHandler}
             />
             {
-                inputType === "password" && <VisibilityIcon
+
+                inputType === "password" && <IconBtn
+                    icon={VisibilityIcon}
                     className={classes.icon}
-                    onClick={onHideClickHandler}
-                />
+                    onClick={onHideClickHandler}/>
             }
             {
-                inputType === "text" && <VisibilityOffIcon
+                inputType === "text" && <IconBtn
+                    icon={VisibilityOffIcon}
                     className={classes.icon}
-                    onClick={onVisibleClickHandler}
-                />
+                    onClick={onVisibleClickHandler}/>
             }
         </>
     );
 }
 
 export default InputPassword;
-
