@@ -18,54 +18,34 @@ const Serie = (props) => {
     }
 
     const validEpisode = () => {
-        let isNull = props.episode === null;
-        let isIntNull = props.episode === 0;
-        let isUndefined = props.episode === undefined;
-        let isStringNull = props.episode === "";
+        let isNull = props.serie.episode === null;
+        let isIntNull = props.serie.episode === 0;
+        let isUndefined = props.serie.episode === undefined;
+        let isStringNull = props.serie.episode === "";
         return !isNull && !isIntNull && !isUndefined && !isStringNull;
     }
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        props.onClick({
-            id: props.id,
-            title: props.title,
-            session: props.session,
-            episode: props.episode,
-            startDate: props.startDate,
-            endDate: props.endDate,
-            createdDate: props.createdDate,
-            lastModifiedDate: props.lastModifiedDate,
-            stars: props.stars,
-        })
+        props.onClick(props.serie)
     }
 
     const editSerieHandler = (e) => {
         e.stopPropagation();
-        props.editSerie({
-            id: props.id,
-            title: props.title,
-            session: props.session,
-            episode: props.episode,
-            startDate: props.startDate,
-            endDate: props.endDate,
-            createdDate: props.createdDate,
-            lastModifiedDate: props.lastModifiedDate,
-            stars: props.stars,
-        })
+        props.editSerie(props.serie);
     }
 
     return (
         <article className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
-                    <p className={classes.serie_firstRow_title}>{props.title}</p>
-                    <p className={classes.serie_firstRow_text}>{props.session}S</p>
-                    {validEpisode() && <p className={classes.serie_firstRow_text}>{props.episode}E</p> }
+                    <p className={classes.serie_firstRow_title}>{props.serie.title}</p>
+                    <p className={classes.serie_firstRow_text}>{props.serie.session}S</p>
+                    {validEpisode() && <p className={classes.serie_firstRow_text}>{props.serie.episode}E</p> }
                 </div>
 
                 <div>
-                    {createArray(props.stars, 5).map((value, i) => {
+                    {createArray(props.serie.stars, 5).map((value, i) => {
                         if (value === 1) {
                             return (<StarRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
                         } else {

@@ -28,15 +28,7 @@ const SerieList = (props) => {
         <>
             {props.serieList.map((serie) => (
                 <Serie key={serie.id}
-                       id={serie.id}
-                       title={serie.title}
-                       session={serie.session}
-                       episode={serie.episode}
-                       startDate={serie.startDate}
-                       endDate={serie.endDate}
-                       createdDate={serie.createdDate}
-                       lastModifiedDate={serie.lastModifiedDate}
-                       stars={serie.stars}
+                       serie={serie}
                        editSerie={props.editSerie}
                        onClick={onSerieClickHandler}
                 />
