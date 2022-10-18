@@ -5,10 +5,10 @@ import Popup from 'reactjs-popup';
 import Card from "../Card";
 import Btn from "../form/Btn";
 
-import classes from "./Info.module.css";
+import classes from "./InfoPopup.module.css";
 
 
-const Info = (props) => {
+const InfoPopup = (props) => {
     const [openPopup, setOpenPopup] = useState(true);
 
     const onCancel = () => {
@@ -44,4 +44,4 @@ const Info = (props) => {
     );
 }
 
-export default Info;
+export default InfoPopup;

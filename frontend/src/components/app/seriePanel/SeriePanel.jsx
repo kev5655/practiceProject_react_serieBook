@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import SerieList from "./serieList/SerieList";
 
@@ -10,18 +10,10 @@ import classes from './SeriePanel.module.css'
 import FilterAndSort from "./header/FilterAndSort";
 
 const SeriePanel = (props) => {
-
-
     const [serieList, setSerieList] = useState(props.serieList);
     const [isFilterActive, setFilterActive] = useState(false);
 
-    //useEffect(() => {
-    //    setSerieList(props.serieList)
-    //}, [props.serieList])
-
-
     const onCompileHandler = (compiledSerie) => {
-        console.log("compile SerieList")
         setSerieList(compiledSerie);
     }
 

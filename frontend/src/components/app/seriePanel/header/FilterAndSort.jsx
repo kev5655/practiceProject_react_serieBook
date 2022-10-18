@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
+
 import SearchIcon from '@mui/icons-material/Search';
 
 import InputText from "../../../ui/form/InputText";
 import InputDropDown from "../../../ui/form/InputDropDown";
-import Btn from "../../../ui/form/Btn";
 import {searchSerie, sortSerie} from "../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
@@ -19,6 +19,7 @@ export const SORT_PARAMS = {
     BY_END_DATE: {value: 'by End Date', id: 8, valueName: 'endDate'},
 }
 
+
 const FilterAndSort = (props) => {
 
     let startSerieList = props.serieList;
@@ -27,12 +28,10 @@ const FilterAndSort = (props) => {
     let searchInput = "";
     let sortParam = SORT_PARAMS.BY_LAST_MODIFIED;
 
-    //const [searchString, setSearchString] = useState("");
-    //const [sortParams, setSortParams] = useState(SORT_PARAMS.BY_ABC)
 
     useEffect(() => {
-        console.log("useEffect: ", props.serieList)
         onEnteredSortParam(sortParam)
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -51,15 +50,9 @@ const FilterAndSort = (props) => {
 
     const onCompilingSerie = () => {
         let serieList = searchSerie(startSerieList, searchInput)
-        //console.log("After Search: ", serieList);
-        //console.log("by ", searchInput)
         serieList = sortSerie(serieList, sortParam)
-        console.log("After Sorting: ", serieList)
-        console.log("by " + JSON.stringify(sortParam))
-        console.log()
         props.onCompileSeire(serieList);
     }
-
 
     return (
         isActive &&
@@ -85,10 +78,3 @@ const FilterAndSort = (props) => {
 }
 
 export default FilterAndSort;
-
-/*
-<div className={classes.button}>
-                        <Btn label='Update'
-                             onClick={onCompilingSerie}/>
-                    </div>
- */

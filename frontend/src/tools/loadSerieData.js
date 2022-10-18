@@ -32,7 +32,7 @@ async function fetchData(url, methode, body, contentType) {
             method: methode,
             headers: {
                 'Content-Type': contentType,
-                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY2MDMxMzQxfQ.fuj8-TgaqT196fxRmC_iC9T-AGq-XdsOOsgfmu3Xjds"
+                'Authorization': "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZpbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiIvYXBpL2xvZ2luIiwiZXhwIjoxNjY2MDk5NzE3fQ.AyfY-NALFu4C5qaHw8YYV5Aptv792K2nXBFoKxD8bf0"
             },
             body: body
         });

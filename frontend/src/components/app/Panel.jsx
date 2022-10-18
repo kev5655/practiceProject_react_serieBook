@@ -40,8 +40,6 @@ const Panel = () => {
             setSeries(editedSeries)
         } else {
             setSeries((prevSerie) => {
-                console.log(newSerie)
-                console.log(prevSerie);
                 return [newSerie, ...prevSerie];
             });
         }
@@ -54,9 +52,9 @@ const Panel = () => {
     }
 
     const editSerieHandler = (editSerie) => {
-        console.log(series)
-        editSerie = Object.assign(editSerie, {isEdit: true})
+        editSerie = Object.assign(editSerie, {isEdit: true});
         setEditSerie(editSerie);
+        console.log("Edit Serie: ",editSerie);
         setState(ACTIVE_PANEL.MANAGE_SERIE)
     }
 
@@ -81,7 +79,6 @@ const Panel = () => {
         setLoggedIn(false);
         setJwtToken("");
         setRefreshToken("");
-        console.log(getJwtToken());
     }
 
 

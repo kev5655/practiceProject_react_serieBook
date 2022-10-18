@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 
 import Serie from "./Serie";
-import DetailSerie from "../detailSerie/DetailSerie"
+import DetailSerie from "../DetailSerie"
 import BlurEffect from "../../../storage/blurEffect";
 
 

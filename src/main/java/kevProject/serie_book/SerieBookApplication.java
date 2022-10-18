@@ -68,5 +68,4 @@ public class SerieBookApplication {
 			//		new Timestamp(System.currentTimeMillis()), 2, user));
 		};
 	}
-
 }

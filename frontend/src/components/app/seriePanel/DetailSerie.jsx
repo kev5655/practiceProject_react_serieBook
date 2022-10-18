@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 
 import Popup from "reactjs-popup";
 
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+//import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
-import Card from "../../../ui/Card";
+import Card from "../../ui/Card";
 
 import classes from './DetailSerie.module.css'
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
@@ -98,8 +98,3 @@ const DetailSerie = (props) => {
 }
 
 export default DetailSerie;
-
-
-//<p>Id: {props.serie.id}</p>
-
-// <ArrowRightAltIcon/>
