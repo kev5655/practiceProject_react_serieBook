@@ -47,8 +47,13 @@ public class AppUserController {
 
     @PostMapping(Url.userSave)
     public ResponseEntity<AppUser>saveUsers(@RequestBody AppUser user){
+        AppUser appUser = appUserService.saveAppUser(user);
+        if(appUser == null){
+            return ResponseEntity.badRequest().build();
+        }
+        appUserService.addRoleToUser(user.getUsername(), "ROLE_USER");
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(appUserService.saveAppUser(user));
+        return ResponseEntity.created(uri).body(appUser);
     }
 
     @PostMapping(Url.roleSave)

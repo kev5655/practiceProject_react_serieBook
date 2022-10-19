@@ -50,6 +50,9 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Override
     public AppUser saveAppUser(AppUser user) {
+        if(appUserRepo.findByUsername(user.getUsername()) != null){
+            return null;
+        }
         log.info("Saving new user: {} to the database", user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return appUserRepo.save(user);
