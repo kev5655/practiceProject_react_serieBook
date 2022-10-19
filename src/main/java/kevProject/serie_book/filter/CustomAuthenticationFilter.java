@@ -38,21 +38,21 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
-
+    // ToDo Refactoring
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256(SecurityVariables.HMAC256_KEY.getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE)) // 10 Minutes
-                .withIssuer(request.getRequestURI().toString())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE))
+                .withIssuer(request.getRequestURI())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.REFRESH_TOKEN_LIVE)) // 60 Minutes
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.REFRESH_TOKEN_LIVE))
                 .withIssuer(request.getRequestURI().toString())
                 .withClaim(SecurityVariables.AUTHORITIES_NAME, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
@@ -69,6 +69,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     //ToDo brute force attack abfragen
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        log.info("could not log in: " + failed.getMessage());
+        log.info("Request: " + request.toString() + " Response: " + response.toString());
+
         super.unsuccessfulAuthentication(request, response, failed);
     }
 }

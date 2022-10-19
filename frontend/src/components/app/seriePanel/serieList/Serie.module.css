@@ -5,7 +5,7 @@
     border-top: 1px #6a6a6a solid;
     border-bottom: 1px #6a6a6a solid;
     box-shadow:  10px 10px 40px #5d5d5d,
-    -10px -10px 40px #777777;
+                -10px -10px 40px #777777;
     border-radius: 1rem;
     display: flex;
     align-items: center;
