@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from "../../ui/Card";
 
 import classes from "./LoginPanel.module.css";
@@ -10,14 +10,21 @@ import {fetchData, convertJsonTo_x_www_form_urlencoded} from '../../utils/api';
 
 const LoggingPanel = (props) => {
 
+    const [isLoggingFailed, setLoggingFailed] = useState(false);
+
     const loggingHandler = async (logging) => {
         const body = convertJsonTo_x_www_form_urlencoded(logging)
 
         let response = await fetchData('/api/login', 'Post', body, 'application/x-www-form-urlencoded;charset=UTF-8');
 
-        setJwtToken(response.access_token)
-        setRefreshToken(response.refresh_token)
-        props.onLogging()
+        if(response === 401){
+            setLoggingFailed(true);
+        } else {
+            setJwtToken(response.access_token)
+            setRefreshToken(response.refresh_token)
+            props.onLogging()
+        }
+
     }
 
 
@@ -28,6 +35,7 @@ const LoggingPanel = (props) => {
             </header>
             <LoggingForm
                 onLogging={loggingHandler}
+                loggingFailed={isLoggingFailed}
             />
         </Card>
     );

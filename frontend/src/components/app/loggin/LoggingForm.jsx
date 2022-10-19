@@ -42,6 +42,9 @@ const LoggingForm = (props) => {
                     onChange={passwordHandler}
                 />
             </div>
+            {
+                props.loggingFailed && <p className={classes.form_errorMsg}>Logging Failed, Try again</p>
+            }
             <div className={classes.form_button}>
                 <Btn
                     label="Logging"

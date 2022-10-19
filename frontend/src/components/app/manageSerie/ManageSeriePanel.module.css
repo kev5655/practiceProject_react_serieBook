@@ -2,6 +2,7 @@
     padding: 0;
     background: #868686;
     border-radius: 1rem;
+    box-shadow:  10px 10px 40px #4a4a4a;
 }
 
 .card_header {

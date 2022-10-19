@@ -17,6 +17,12 @@ export async function fetchData(url, methode, body, contentType) {
         } catch (exception) {
             return null;
         }
+    } else {
+        let response = await rawResponse.json();
+        console.log(response.status);
+        if(rawResponse.status === 401){
+            return 401;
+        }
     }
     throw new Error("Failed Fetch Data from Url: " + url + " / " + methode + " / " + body);
 }
