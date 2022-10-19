@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
-import inputStyles from './Input.module.css'
 import {SORT_PARAMS} from "../../app/seriePanel/header/FilterAndSort";
+
+import classes from './InputDropDown.module.css'
+import inputStyles from './Input.module.css'
 
 const InputDropDown = (props) => {
 
@@ -22,32 +23,18 @@ const InputDropDown = (props) => {
     }
 
     return (
-        <>
-            <label>
-                <p>{props.label}</p>
-                <FilterAltIcon fontSize='small'/>
-            </label>
-            <select id={props.list}
-                    className={inputStyles.input}
-                    onChange={onChange}
-                    value={enteredSelected}>
-                {
-                    list.map((option, key) => (
-                        <option value={JSON.stringify(option)} key={key}>{option.value}</option>
-                    ))
-                }
-            </select>
-        </>
+        <select id={props.list}
+                className={`${inputStyles.input} ${classes.option}`}
+                onChange={onChange}
+                value={enteredSelected}>
+            {
+                list.map((option, key) => (
+                    <option value={JSON.stringify(option)} key={key}>{option.value}</option>
+                ))
+            }
+        </select>
     );
 }
 
 
 export default InputDropDown;
-
-/*
-<input list={props.list}
-                       name={props.list + 'Selection'}
-                        className={inputStyles.input}/>
-
-
- */

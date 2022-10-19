@@ -7,6 +7,7 @@ import InputDropDown from "../../../ui/form/InputDropDown";
 import {searchSerie, sortSerie} from "../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 export const SORT_PARAMS = {
     BY_ABC: {value: 'by ABC', id: 1, valueName: 'title'},
@@ -59,7 +60,7 @@ const FilterAndSort = (props) => {
         <section className={classes.card}>
             <div className={classes.flex_container}>
                 <div className={classes.search_container}>
-                    <label>
+                    <label className={classes.lable}>
                         <p>Search</p>
                         <SearchIcon fontSize='small'/>
                     </label>
@@ -67,8 +68,11 @@ const FilterAndSort = (props) => {
                         onChange={onEnteredSearchString}/>
                 </div>
                 <div className={classes.sort_container}>
-                    <InputDropDown label='Sort'
-                                   list='sort'
+                    <label className={classes.lable}>
+                        <p>Sort</p>
+                        <FilterAltIcon fontSize='small'/>
+                    </label>
+                    <InputDropDown list='sort'
                                    onChange={onEnteredSortParam}
                                    optionList={SORT_PARAMS}/>
                 </div>
