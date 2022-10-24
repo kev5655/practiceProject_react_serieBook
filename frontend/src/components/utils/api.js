@@ -1,5 +1,7 @@
 import {getJwtToken} from "./jwt";
 
+//ToDo wen kein contentType standard wählen json
+
 // 'application/x-www-form-urlencoded;charset=UTF-8'
 export async function fetchData(url, methode, body, contentType) {
     let rawResponse = await fetch(
