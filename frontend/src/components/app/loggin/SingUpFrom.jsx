@@ -8,23 +8,26 @@ import {fetchData} from "../../utils/api";
 
 import classes from "./SingUpForm.module.css";
 
+const NOT_FOUND = -1;
+
 const SingUpFrom = (props) => {
 
     const [enteredUsername, setEnteredUsername] = useState({value: "", valid: true});
     const [enteredEmail, setEnteredEmail] = useState({value: "", valid: true}); //{value: "", valid: false}
     const [enteredPassword, setEnteredPassword] = useState({value: "", valid: true});
-    const [error, setError] = useState({value: false, msg: ""});
+    const [errorDisplayer, setErrorDisplayer] = useState({value: false, type: null, msg: ""});
+
 
     const usernameHandler = (enteredValue) => {
-        //setEnteredUsername(prevState => ({...prevState, value: enteredValue}))
-        setEnteredUsername({value: enteredValue, valid: enteredUsername.valid})
+        setEnteredUsername(prevState => ({...prevState, value: enteredValue}))
+        //setEnteredUsername({value: enteredValue, valid: enteredUsername.valid})
     }
 
     useEffect(() => {
         const identifier = setTimeout(async () => {
             let body = JSON.stringify({username: enteredUsername.value});
             let response = await fetchData('/api/user/available/', 'Post', body, 'application/json');
-            console.log("useEffect");
+            console.log("Is User Valid: " + response.isUserAvailable);
             //setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
             setEnteredUsername({value: enteredUsername.value, valid: response.isUserAvailable});
         }, 500);
@@ -35,52 +38,65 @@ const SingUpFrom = (props) => {
     }, [enteredUsername.value]);
 
     const emailHandler = (enteredValue) => {
-        //setEnteredEmail(prevState => ({...prevState, value: enteredValue}));
-        setEnteredEmail({value: enteredValue, ...enteredEmail})
+        setEnteredEmail(prevState => ({...prevState, value: enteredValue}));
+        //setEnteredEmail({value: enteredValue, ...enteredEmail})
     }
 
     const passwordHandler = (enteredValue) => {
-        //setEnteredPassword(prevState => ({...prevState, value: enteredValue}))
-        setEnteredPassword({value: enteredValue, valid: enteredPassword.valid})
+        setEnteredPassword(prevState => ({...prevState, value: enteredValue}))
+        //setEnteredPassword({value: enteredValue, valid: enteredPassword.valid})
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
-        validateForm();
+        let error = validateForm();
         const loggingValue = {
             username: enteredUsername,
             password: enteredPassword,
             email: enteredEmail
         }
-        if(enteredUsername.valid && enteredPassword.valid && enteredEmail.valid){
+        console.log("error is", error);
+        if(! error.available){
             console.log("Sing Up user: ", loggingValue);
-            setError({value: false, msg:""});
-            props.onSingUp(loggingValue);
-        } else if(!enteredUsername.valid) {
-            setError({value: true, msg:"User Name ist not Available"});
-        } else if(!enteredPassword.valid) {
-             setError({value: true, msg:"Password is to short"});
+            setErrorDisplayer({value: false, msg:""});
+            //props.onSingUp(loggingValue);
         } else {
-            setError({value: true, msg:"Incorrect Email"});
+            setErrorDisplayer({value: true, msg: error.msgs.length === 1 ? error.msgs[0] : "Please enter the correct information"});
         }
     }
 
     const validateForm = () => {
-        let isValid = enteredUsername.value !== "";
-        //setEnteredUsername(prevState => ({...prevState, valid: isValid}));
-        //setEnteredUsername({...enteredUsername, valid: isValid})
-        setEnteredUsername({value: enteredUsername.value, valid: isValid});
+        let error = {available: false, msgs: []};
+        if(enteredUsername.value === ""){
+            console.log("Username is Empty");
+            setEnteredUsername(prevState => ({...prevState, valid: false}));
+            error.available = true;
+            error.msgs.push("Username is Empty");
+        } else {
+            setEnteredUsername(prevState => ({...prevState, valid: true}));
+        }
 
-        isValid = enteredEmail.value.indexOf('@') !== -1;
-        //setEnteredEmail(prevState => ({...prevState, valid: false}));
-        // setEnteredEmail({...setEnteredEmail, valid: isValid})
-        setEnteredEmail({value: enteredEmail.value, valid: false})
-        setEnteredEmail({})
+        if(enteredEmail.value.indexOf('@') === NOT_FOUND){
+            console.log("Email is Incorrect");
+            setEnteredEmail(prevState => ({...prevState, valid: false}));
+            console.log(error.msg)
+            error.available = true;
+            error.msgs.push("Incorrect Email");
+        } else {
+            setEnteredEmail(prevState => ({...prevState, valid: true}));
+        }
 
-        isValid = enteredPassword.value > 4;
-        //setEnteredPassword(prevState => ({...prevState, valid: false}));
-        //setEnteredPassword({...enteredPassword, valid: enteredPassword.value > 4})
-        setEnteredPassword({value: enteredPassword.value, valid: isValid});
+
+        if(enteredPassword.value.length < 4){
+            console.log("Password ist to Short");
+            setEnteredPassword(prevState => ({...prevState, valid: false}));
+            error.available = true;
+            error.msgs.push("Password is to short");
+        } else {
+            setEnteredPassword(prevState => ({...prevState, valid: true}));
+        }
+
+        return error
     }
 
     return(
@@ -104,7 +120,7 @@ const SingUpFrom = (props) => {
                 />
             </div>
             {
-                error.value && <p className={classes.form_errorMsg}>{error.msg}</p>
+                errorDisplayer.value && <p className={classes.form_errorMsg}>{errorDisplayer.msg}</p>
             }
             <div className={classes.form_button}>
                 <Btn
