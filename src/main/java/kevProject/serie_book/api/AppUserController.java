@@ -13,6 +13,8 @@ import kevProject.serie_book.utils.JwtUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,14 +48,28 @@ public class AppUserController {
     }
 
     @PostMapping(Url.userSave)
-    public ResponseEntity<AppUser>saveUsers(@RequestBody AppUser user){
+    public ResponseEntity<?>saveUsers(@RequestBody AppUser user, HttpServletResponse response) throws IOException {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         AppUser appUser = appUserService.saveAppUser(user);
         if(appUser == null){
-            return ResponseEntity.badRequest().build();
+            Map<String, String> error = new HashMap<>();
+            error.put("error_message", HttpStatus.UNAUTHORIZED.toString());
+            response.setContentType(APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
         appUserService.addRoleToUser(user.getUsername(), "ROLE_USER");
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+
         return ResponseEntity.created(uri).body(appUser);
+    }
+
+    @PostMapping(Url.userAvailable)
+    public ResponseEntity<?>isUserAvailable(@RequestBody userAvailableForm from){
+        AppUser appUser = appUserService.getAppUser(from.getUsername());
+        log.info("isUserAvailable: {} {}", from.getUsername(), appUser == null ? "yes" : "no");
+        Map<String, Boolean> body = new HashMap<>();
+        body.put("isUserAvailable", appUser == null);
+        return ResponseEntity.ok().body(body);
     }
 
     @PostMapping(Url.roleSave)
@@ -117,4 +133,9 @@ public class AppUserController {
 class RoleToUserFrom {
     private String username;
     private String rolename;
+}
+
+@Data
+class userAvailableForm {
+    private String username;
 }

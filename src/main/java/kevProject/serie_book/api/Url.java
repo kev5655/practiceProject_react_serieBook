@@ -5,6 +5,7 @@ public class Url {
     // AppUserController
     public static final String users = "/users";
     public static final String userSave = "/user/save";
+    public static final String userAvailable = "/user/available";
     public static final String roleSave = "/role/save";
     public static final String roleAddtouser = "/role/addtouser";
     public static final String tokenRefresh = "/token/refresh";
