@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 
 import SeriePanel from "./seriePanel/SeriePanel";
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
-import LoggingPanel from "./loggin/LoggingPanel";
+import AuthenticationPanel from "./loggin/AuthenticationPanel";
 
 import {getJwtToken, setJwtToken, setRefreshToken} from "../utils/jwt"
 import {fetchData} from "../utils/api";
@@ -77,6 +77,7 @@ const Panel = () => {
 
     const onLogoutHandler = () => {
         setLoggedIn(false);
+        setSeries([]);
         setJwtToken("");
         setRefreshToken("");
     }
@@ -89,6 +90,7 @@ const Panel = () => {
             setState(ACTIVE_PANEL.LOGGING);
         }
     }, [loggedIn]);
+
 
     let getSeries = async () => {
         let response;
@@ -140,7 +142,7 @@ const Panel = () => {
                                   onCancel={onCancelHandler}
                                   onDeletion={onDeletionHandler}
                 />}
-            {state === ACTIVE_PANEL.LOGGING && <LoggingPanel
+            {state === ACTIVE_PANEL.LOGGING && <AuthenticationPanel
                 onLogging={onLoggingHandler}/>}
         </main>
     )
