@@ -12,7 +12,8 @@ Each user can create his own account and save his own series, while he remains l
 > If you want the security configuration you can contact me
 
 ## Installation
-> In the frontend order, execute the installation command
+> In the frontend folder, execute the installation command
+
 `npm install`
 
 
@@ -24,13 +25,18 @@ Each user can create his own account and save his own series, while he remains l
 
 ### Running the frontend
 > Switch to the frontend folder
+
 `cd ./frontend`
 
 > Running the frontend
+
 `npm start`
 
 ## Deploy on Docker
 
-> In root Folder run:
+> In root folder run:
+
 `mvn package -Dmaven.test.skip=true`
 `docker compose up`
+
+`mvn clean package -Dmaven.test.skip=true && docker compose up --build`
