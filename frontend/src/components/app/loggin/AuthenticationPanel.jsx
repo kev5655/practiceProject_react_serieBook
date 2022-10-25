@@ -5,7 +5,7 @@ import classes from "./AuthenticationPanel.module.css";
 import LoggingForm from "./LoggingForm";
 
 import {setJwtToken, setRefreshToken} from '../../utils/jwt';
-import {fetchData, convertJsonTo_x_www_form_urlencoded} from '../../utils/api';
+import {convertJsonTo_x_www_form_urlencoded, fetchData} from '../../utils/api';
 import SingUpFrom from "./SingUpFrom";
 import Btn from "../../ui/form/Btn";
 
@@ -31,7 +31,7 @@ const AuthenticationPanel = (props) => {
 
     const singUpHandler = async (singUp) => {
         let body = JSON.stringify(singUp);
-        let response = await fetchData('/api/user/save', 'Post', body, 'application/json');
+        let response = await fetchData('/api/user/save', 'Post', body);
 
         console.log("SingUp Response ", response);
         const loggingValue = {

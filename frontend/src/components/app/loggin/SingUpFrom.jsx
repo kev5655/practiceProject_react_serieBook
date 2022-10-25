@@ -15,7 +15,7 @@ const SingUpFrom = (props) => {
     const [enteredUsername, setEnteredUsername] = useState({value: "", valid: true});
     const [enteredEmail, setEnteredEmail] = useState({value: "", valid: true}); //{value: "", valid: false}
     const [enteredPassword, setEnteredPassword] = useState({value: "", valid: true});
-    const [errorDisplayer, setErrorDisplayer] = useState({value: false, type: null, msg: ""});
+    const [errorDisplayer, setErrorDisplayer] = useState({value: false, msg: ""});
 
 
     const usernameHandler = (enteredValue) => {
@@ -26,7 +26,7 @@ const SingUpFrom = (props) => {
     useEffect(() => {
         const identifier = setTimeout(async () => {
             let body = JSON.stringify({username: enteredUsername.value});
-            let response = await fetchData('/api/user/available/', 'Post', body, 'application/json');
+            let response = await fetchData('/api/user/available/', 'Post', body);
             console.log("Is User Valid: " + response.isUserAvailable);
             //setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
             setEnteredUsername({value: enteredUsername.value, valid: response.isUserAvailable});

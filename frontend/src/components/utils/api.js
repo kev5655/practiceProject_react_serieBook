@@ -4,15 +4,23 @@ import {getJwtToken} from "./jwt";
 
 // 'application/x-www-form-urlencoded;charset=UTF-8'
 export async function fetchData(url, methode, body, contentType) {
+    let headers = {}
+    if (contentType !== undefined) {
+        headers['Content-Type'] = contentType;
+    } else {
+        headers['Content-Type'] = "application/json";
+    }
+    if (getJwtToken() !== null){
+        headers['Authorization'] = "Bearer " + getJwtToken();
+    }
+
     let rawResponse = await fetch(
         "" + url, { //http://192.168.1.138:8081 http://localhost:8081
             method: methode,
-            headers: {
-                'Content-Type': contentType,
-                'Authorization': "Bearer " + getJwtToken()
-            },
+            headers: headers,
             body: body
         });
+
     if (rawResponse.ok) {
         try {
             return await rawResponse.json()
