@@ -20,7 +20,6 @@ const SingUpFrom = (props) => {
 
     const usernameHandler = (enteredValue) => {
         setEnteredUsername(prevState => ({...prevState, value: enteredValue}))
-        //setEnteredUsername({value: enteredValue, valid: enteredUsername.valid})
     }
 
     useEffect(() => {
@@ -28,8 +27,7 @@ const SingUpFrom = (props) => {
             let body = JSON.stringify({username: enteredUsername.value});
             let response = await fetchData('/api/user/available/', 'Post', body);
             console.log("Is User Valid: " + response.isUserAvailable);
-            //setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
-            setEnteredUsername({value: enteredUsername.value, valid: response.isUserAvailable});
+            setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
         }, 500);
 
         return () => {
@@ -39,29 +37,28 @@ const SingUpFrom = (props) => {
 
     const emailHandler = (enteredValue) => {
         setEnteredEmail(prevState => ({...prevState, value: enteredValue}));
-        //setEnteredEmail({value: enteredValue, ...enteredEmail})
     }
 
     const passwordHandler = (enteredValue) => {
         setEnteredPassword(prevState => ({...prevState, value: enteredValue}))
-        //setEnteredPassword({value: enteredValue, valid: enteredPassword.valid})
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
         let error = validateForm();
         const loggingValue = {
-            username: enteredUsername,
-            password: enteredPassword,
-            email: enteredEmail
+            username: enteredUsername.value,
+            password: enteredPassword.value,
+            email: enteredEmail.value
         }
         console.log("error is", error);
         if(! error.available){
             console.log("Sing Up user: ", loggingValue);
             setErrorDisplayer({value: false, msg:""});
-            //props.onSingUp(loggingValue);
+            props.onSingUp(loggingValue);
         } else {
-            setErrorDisplayer({value: true, msg: error.msgs.length === 1 ? error.msgs[0] : "Please enter the correct information"});
+            let errorMsg = error.msgs.length === 1 ? error.msgs[0] : "Please enter the correct information";
+            setErrorDisplayer({value: true, msg: errorMsg});
         }
     }
 
