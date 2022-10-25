@@ -4,6 +4,8 @@ import Serie from "./Serie";
 import DetailSerie from "../DetailSerie"
 import BlurEffect from "../../../storage/blurEffect";
 
+import classes from './SerieList.module.css'
+
 
 const SerieList = (props) => {
 
@@ -33,6 +35,10 @@ const SerieList = (props) => {
                        onClick={onSerieClickHandler}
                 />
             ))}
+            {
+                props.serieList.length < 1 &&
+                    <div className={classes.noSeries}><p>Please add a series via the plus </p></div>
+            }
             {globalBlur.isBlur && <DetailSerie
                 serie={detailSerie}
                 onClickOutside={onOutSideClickHandler}
