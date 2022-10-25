@@ -47,13 +47,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE))
                 .withIssuer(request.getRequestURI())
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim(SecurityVariables.AUTHORITIES_NAME, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.REFRESH_TOKEN_LIVE))
-                .withIssuer(request.getRequestURI().toString())
+                .withIssuer(request.getRequestURI())
                 .withClaim(SecurityVariables.AUTHORITIES_NAME, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         Map<String, String> tokens = new HashMap<>();

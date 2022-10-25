@@ -2,6 +2,8 @@ package kevProject.serie_book.api;
 
 public class Url {
 
+    public static final String api = "/api";
+
     // AppUserController
     public static final String users = "/users";
     public static final String userSave = "/user/save";

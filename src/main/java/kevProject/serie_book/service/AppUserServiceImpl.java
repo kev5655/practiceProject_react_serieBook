@@ -38,9 +38,6 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
             log.error("User not found in the database {}", username);
             throw new UsernameNotFoundException("User not found in the database");
         }
-//        else {
-//            log.info("User found in the database: {}", username);
-//        }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));

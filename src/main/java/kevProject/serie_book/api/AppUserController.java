@@ -9,14 +9,11 @@ import kevProject.serie_book.model.AppRole;
 import kevProject.serie_book.model.AppUser;
 import kevProject.serie_book.security.SecurityVariables;
 import kevProject.serie_book.service.AppUserService;
-import kevProject.serie_book.utils.JwtUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -36,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping(Url.api)
 @RequiredArgsConstructor
 public class AppUserController {
 
@@ -49,7 +46,7 @@ public class AppUserController {
 
     @PostMapping(Url.userSave)
     public ResponseEntity<?>saveUsers(@RequestBody AppUser user, HttpServletResponse response) throws IOException {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.userSave).toUriString());
         AppUser appUser = appUserService.saveAppUser(user);
         if(appUser == null){
             Map<String, String> error = new HashMap<>();
@@ -74,7 +71,7 @@ public class AppUserController {
 
     @PostMapping(Url.roleSave)
     public ResponseEntity<AppRole>saveRole(@RequestBody AppRole role){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.roleSave).toUriString());
         if(role.isValid()){
             return ResponseEntity.created(uri).body(appUserService.saveAppRole(role));
         }else {
@@ -104,8 +101,7 @@ public class AppUserController {
 
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // 10 Minutes
-                        .withIssuer(request.getRequestURI().toString())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE))                        .withIssuer(request.getRequestURI())
                         .withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
