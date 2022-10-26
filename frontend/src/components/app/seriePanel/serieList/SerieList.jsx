@@ -37,7 +37,7 @@ const SerieList = (props) => {
             ))}
             {
                 props.serieList.length < 1 &&
-                    <div className={classes.noSeries}><p>Please add a series via the plus </p></div>
+                    <div className={classes.noSeries}><p>Please add a series via the plus symbol</p></div>
             }
             {globalBlur.isBlur && <DetailSerie
                 serie={detailSerie}

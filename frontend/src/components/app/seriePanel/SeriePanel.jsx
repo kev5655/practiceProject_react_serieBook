@@ -10,6 +10,7 @@ import classes from './SeriePanel.module.css'
 import FilterAndSort from "./header/FilterAndSort";
 
 const SeriePanel = (props) => {
+    console.log("incomming Series: ", props.serieList);
     const [serieList, setSerieList] = useState(props.serieList);
     const [isFilterActive, setFilterActive] = useState(false);
 
