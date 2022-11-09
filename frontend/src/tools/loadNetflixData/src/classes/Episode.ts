@@ -1,5 +1,3 @@
-import {EpisodeGroup} from "./EpisodeGroup.js";
-
 export class Episode {
     private allDataArray: string[];
     private name: string;
@@ -12,6 +10,7 @@ export class Episode {
         this.name = this.generateName();
         this.data = this.generateData();
         this.date = this.generateDate(this.allDataArray[this.allDataArray.length - 1]);
+        //console.log(this.date.toLocaleDateString())
         Episode.episodes.push(this);
     }
 
@@ -26,7 +25,7 @@ export class Episode {
         return dataArray;
     }
 
-    generateName = ():string => {
+    generateName = (): string => {
         let name: string = this.allDataArray[0];
         if (name.length < this.minLengthOfName) {
             console.error("WARN Name is to short: " + name + " adding: " + this.allDataArray[1])
@@ -36,7 +35,7 @@ export class Episode {
     }
 
     generateData = (): string[] => {
-        const data: string[] = this.allDataArray;
+        const data: string[] = [...this.allDataArray];
         data.shift();
         data.pop();
         return data;
@@ -47,11 +46,16 @@ export class Episode {
         let year: number = parseInt("20" + timeArray[2]);
         let month: number = parseInt(timeArray[1]) - 1;
         let day: number = parseInt(timeArray[0]);
-        return new Date(year, month, day);
+        let date = new Date(year, month, day);
+        if (date.toString() !== "Invalid Date") {
+            return date;
+        }
+        let errorStr = "Invalid Date " + date + " Raw: d:" + day + " m: " + month + " y: " + year;
+        throw new Error(errorStr);
     }
 
     getName = (): string => {
-        return  this.name;
+        return this.name;
     }
 
     getData = (): string[] => {
@@ -62,7 +66,7 @@ export class Episode {
         return this.date;
     }
 
-    getEpisodes = ():Episode[] => {
+    getEpisodes = (): Episode[] => {
         return Episode.episodes;
     }
 

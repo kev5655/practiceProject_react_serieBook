@@ -44,14 +44,14 @@ const main = () => {
 
     for (const episodeElement of episodeRaw) {
         const episode: Episode = new Episode(episodeElement, minLengthOfSerieName);
-        EpisodeGroup.getInstace(episode);
+        EpisodeGroup.getInstance(episode);
     }
     // @ts-ignore
     // let episodeGroups: EpisodeGroup[] = episode.getEpisodeGroups()
     // episodeGroups.forEach(group => new Serie(group))
 
     //let foundedGroup: EpisodeGroup = episode.getEpisodeGroupByName("Black Lagoon")
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Fullmetal Alchemist");
+    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Tokyo Ghoul");
 
     new Serie(foundedGroup)
 

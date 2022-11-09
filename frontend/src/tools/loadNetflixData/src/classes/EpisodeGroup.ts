@@ -1,13 +1,12 @@
 import {Episode} from "./Episode";
 
-
 export class EpisodeGroup {
     private name: string;
     private data: string[][];
     private dates: Date[];
     private static episodeGroups: EpisodeGroup[] = [];
 
-    private constructor(episode: Episode) { //private name: string, data: string[], date: Date
+    private constructor(episode: Episode) {
         this.name = episode.getName()
         this.data = [];
         this.data.push(episode.getData());
@@ -16,7 +15,7 @@ export class EpisodeGroup {
         EpisodeGroup.episodeGroups.push(this);
     }
 
-    static getInstace = (episode: Episode): EpisodeGroup => {
+    static getInstance = (episode: Episode): EpisodeGroup => {
         const foundedEpisode: EpisodeGroup | undefined = this.findGroupByName(episode.getName());
         if(foundedEpisode !== undefined){
             foundedEpisode.addDataToArray(episode.getData())
@@ -30,12 +29,16 @@ export class EpisodeGroup {
         return this.name;
     }
 
-    getMinDate = ():Date => {
-        return Math.min.apply(null, this.dates);
+    getFirstDate = ():Date => {
+        return new Date(Math.min.apply(null, this.dates));
     }
 
-    getMaxDate = ():Date => {
-        return Math.max.apply(null, this.dates);
+    getLastDate = ():Date => {
+        return new Date(Math.max.apply(null, this.dates));
+    }
+
+    getDates = ():Date[] => {
+        return this.dates;
     }
 
     getData = ():string[][] => {

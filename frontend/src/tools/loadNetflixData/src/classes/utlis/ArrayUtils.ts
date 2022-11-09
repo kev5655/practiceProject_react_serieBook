@@ -29,5 +29,16 @@ export class ArrayUtils {
         return changedArray;
     }
 
-
+    public static countDuplicate = (arr: string[] | null[]): any => {
+        let counts: any = {};
+        if(arr === undefined) arr = [];
+        for (const key of arr) {
+            if (key === null) {
+                //console.error("Arr has null values: ", key);
+                continue;
+            }
+            counts[key] = (counts[key] || 0) + 1;
+        }
+        return counts;
+    }
 }

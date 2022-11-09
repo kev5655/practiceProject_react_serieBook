@@ -1,5 +1,6 @@
 import {EpisodeGroup} from "./EpisodeGroup";
 import {Sessions} from "./Sessions.js";
+import {Episode} from "./Episode";
 
 
 export class Serie {
@@ -20,16 +21,19 @@ export class Serie {
     constructor(episodeGroup: EpisodeGroup) {
         Serie.index++;
         this.name = episodeGroup.getName();
-        this.startDate = episodeGroup.getMinDate();
-        this.endDate = episodeGroup.getMaxDate();
+        this.startDate = episodeGroup.getFirstDate();
+        this.endDate = episodeGroup.getLastDate();
         this.createdDate = new Date(Date.now());
         this.lastModifiedDate = new Date(Date.now());
 
         //this.session = this.generateSession(episodeGroup.getData())
         console.log(Serie.index + " Data of: " + this.name + " data: ");
         console.log(episodeGroup.getData());
-        this.session = new Sessions().findHighestSession(episodeGroup.getData());
+        this.session = new Sessions().findHighest(episodeGroup.getData());
         console.log("Session Number: " + this.session)
+        this.episode = new Sessions().countEpisodeOfLastSession(episodeGroup.getData(), episodeGroup.getDates(), episodeGroup);
+        console.log("Episode Number: " + this.episode);
+
         Serie.series.push(this);
     }
 
