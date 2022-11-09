@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import SeriePanel from "./seriePanel/SeriePanel";
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import AuthenticationPanel from "./loggin/AuthenticationPanel";
 
-import {getJwtToken, setJwtToken, setRefreshToken} from "../utils/jwt"
-import {fetchData} from "../utils/api";
+import { getJwtToken, setJwtToken, setRefreshToken } from "../utils/jwt"
+import { fetchData } from "../utils/api";
 
 import classes from './Panel.module.css'
 import BlurEffect from "../storage/blurEffect";
@@ -48,9 +48,9 @@ const Panel = () => {
     }
 
     const editSerieHandler = (editSerie) => {
-        editSerie = Object.assign(editSerie, {isEdit: true});
+        editSerie = Object.assign(editSerie, { isEdit: true });
         setEditSerie(editSerie);
-        console.log("Edit Serie: ",editSerie);
+        console.log("Edit Serie: ", editSerie);
         setState(ACTIVE_PANEL.MANAGE_SERIE)
     }
 
@@ -80,7 +80,7 @@ const Panel = () => {
 
 
     useEffect(() => {
-        if(loggedIn){
+        if (loggedIn) {
             console.log("Load Series");
             getSeries().then(() => setIsLoaded(true));
         } else {
@@ -125,26 +125,26 @@ const Panel = () => {
 
 
     return (
-         <main className={`${globalBlur.isBlur && classes.blur}`}>
-            <input type='button' value="Logout" onClick={onLogoutHandler}/>
-             {/*console.log("Compile HTML", series)*/}
-             {console.log("State: ", state)}
+        <main className={`${globalBlur.isBlur && classes.blur}`}>
+            <input type='button' value="Logout" onClick={onLogoutHandler} />
+            {/*console.log("Compile HTML", series)*/}
+            {console.log("State: ", state)}
             {(state === ACTIVE_PANEL.SERIE_LIST) && //&& isLoaded
                 <SeriePanel serieList={series}
-                            openAddForm={openAddFromHandler}
-                            onEditSerie={editSerieHandler}
-            />}
+                    openAddForm={openAddFromHandler}
+                    onEditSerie={editSerieHandler}
+                />}
 
 
             {(state === ACTIVE_PANEL.MANAGE_SERIE) && //&& isLoaded
                 <ManageSeriePanel title={editSerie !== undefined ? 'Edit Serie' : "Add Serie"}
-                                  editingSerie={editSerie}
-                                  onManagedSerie={addSerieHandler}
-                                  onCancel={onCancelHandler}
-                                  onDeletion={onDeletionHandler}
+                    editingSerie={editSerie}
+                    onManagedSerie={addSerieHandler}
+                    onCancel={onCancelHandler}
+                    onDeletion={onDeletionHandler}
                 />}
             {state === ACTIVE_PANEL.LOGGING &&
-                <AuthenticationPanel onLogging={onLoggingHandler}/>}
+                <AuthenticationPanel onLogging={onLoggingHandler} />}
         </main>
     )
 }

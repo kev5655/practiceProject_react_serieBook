@@ -46,8 +46,10 @@ export class EpisodeGroup {
         return EpisodeGroup.episodeGroups
     }
 
-    static getEpisodeByName = (name: string):EpisodeGroup | undefined => {
-        return this.findGroupByName(name);
+    static getEpisodeByName = (name: string): EpisodeGroup => {
+        let episodeGroup: EpisodeGroup | undefined = this.findGroupByName(name);
+        if(episodeGroup === undefined) throw new Error("Episodegroup not Found by name: " + name);
+        return episodeGroup;
     }
 
     private static findGroupByName = (name: string): EpisodeGroup | undefined => {

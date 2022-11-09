@@ -51,7 +51,7 @@ const main = () => {
     // episodeGroups.forEach(group => new Serie(group))
 
     //let foundedGroup: EpisodeGroup = episode.getEpisodeGroupByName("Black Lagoon")
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Shaman King");
+    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Fullmetal Alchemist");
 
     new Serie(foundedGroup)
 
