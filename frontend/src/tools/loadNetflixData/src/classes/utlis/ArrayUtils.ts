@@ -11,18 +11,13 @@ export class ArrayUtils {
         return maxColumLength;
     }
 
-    public static generate2DArray = (row: number, colum: number, fillUp: any): any[][] => {
-        // let array2D: any[][] = new Array(row)
-        // array2D.forEach((array, index) => {
-        //     array[index] = new Array(colum);
-        // })
+    public static generate2DArray = (row: number, colum: number, fillUp: any): string[][] | null[][] => {
         return Array(row).fill(null).map(() => Array(colum).fill(fillUp))
 
     }
 
-    public static changeRowAndColum = (array2D: string[][]): string[][] => {
-        //let changedArray: string[][] = new Array(ArrayUtils.countLongestColum(array2D));
-        let changedArray = ArrayUtils.generate2DArray(
+    public static changeRowWithColum = (array2D: string[][]): string[][] | null[][] => {
+        let changedArray: string[][] | null[][] = ArrayUtils.generate2DArray(
             ArrayUtils.countLongestColum(array2D), array2D.length, null
         );
         array2D.forEach((array, index1) => {
