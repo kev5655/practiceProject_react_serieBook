@@ -87,68 +87,7 @@ export class ArrayUtils {
     //    return globalMap;
     //}
 
-    public static countLastEpisode = (arr2D: (string | Date)[][]): any => {
-        let arr: (unknown)[][] = ArrayUtils.changeRowWithColum(arr2D);
-        let lastEpisode: string[] = ArrayUtils.findFistDateIndex(arr);
-        let haveDuplicated: boolean = false;
 
-        for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < arr[i].length; j++) {
-                if (lastEpisode[i] === arr[i][j]) {
-                    haveDuplicated = true;
-                }
-
-            }
-            if(! haveDuplicated){
-                console.log(arr, arr[i].length  + 1)
-                return arr[i].length  + 1;
-            }
-            haveDuplicated = false;
-            for (let j = 0; j < arr[i].length; j++) { // Remove Element
-                if (lastEpisode[i] !== arr[i][j]) {
-                    for (let k = 0; k < arr.length; k++) {
-                        arr[k].splice(j, 1);
-                    }
-                    //console.log("Arr: ", arr);
-                }
-            }
-        }
-        console.log(arr)
-
-    }
-
-    private static findFistDateIndex = (arr: (unknown)[][]): string[] => {
-
-        console.log(arr);
-        let lastIndex: number = arr.length - 1;
-        let columIndex: number = Infinity;
-        let minDate: Date = new Date(0);
-
-        for (let i = 0; i < arr[lastIndex].length; i++) {
-            let date: unknown = arr[lastIndex][i];
-            if (date instanceof Date) {
-                if (minDate.getTime() < date.getTime()) {
-                    minDate = date;
-                    columIndex = i;
-                }
-            } else if (date === null) {
-                i--;
-                lastIndex--;
-            } else { // date ist type of string
-                i--;
-                lastIndex++;
-            }
-        }
-
-        let newestEpisode: string[] = [];
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i][columIndex] === null) continue;
-            if (arr[i][columIndex] instanceof Date) continue;
-            newestEpisode.push((arr[i][columIndex] as string));
-            arr[i].splice(columIndex, 1);
-        }
-        return newestEpisode;
-    }
 
 
 }
