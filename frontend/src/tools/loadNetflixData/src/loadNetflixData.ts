@@ -30,6 +30,7 @@ import * as fs from "fs";
 import {Episode} from "./classes/Episode.js";
 import {EpisodeGroup} from "./classes/EpisodeGroup.js";
 import {Serie} from "./classes/Serie.js";
+import {ArrayUtils} from "./classes/utlis/ArrayUtils.js";
 
 let minLengthOfSerieName: number = 3;
 
@@ -50,10 +51,17 @@ const main = () => {
     // let episodeGroups: EpisodeGroup[] = episode.getEpisodeGroups()
     // episodeGroups.forEach(group => new Serie(group))
 
-    //let foundedGroup: EpisodeGroup = episode.getEpisodeGroupByName("Black Lagoon")
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Tokyo Ghoul");
+    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("The Seven Deadly Sins");
 
     new Serie(foundedGroup)
+    let arr: Array<Array<string|Date>> = [
+        ["A","B","C","D", new Date(2005,0,1)],
+        ["A","B","C","F", new Date(2004,0,1)],
+        ["A","B","G", new Date(2003,0,1)],
+        ["A","H","I" , new Date(2002,0,1)],
+        ["B","J", new Date(2001,0,1)]
+    ];
+    //ArrayUtils.countLastEpisode(arr);
 
 
     //let jsons: string[] = episodeGroups.map(group => JSON.stringify(group))

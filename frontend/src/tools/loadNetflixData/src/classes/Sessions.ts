@@ -6,8 +6,7 @@ export class Sessions {
 
     private searchParams: string[] = ["Staffel", "Teil", "Season"];
 
-    constructor() {
-    }
+    constructor() {}
 
     public findHighest = (serieData: string[][]): number => {
         //return this.findHighestSessionByNumber(serieData) ??
@@ -16,18 +15,20 @@ export class Sessions {
 
     deepIndexEpisode: number = 0;
 
-    public countEpisodeOfLastSession(serieData: string[][], serieDates: Date[], episodeGroup: EpisodeGroup) {
-        let lastDate: Date = episodeGroup.getLastDate();
+    public countEpisodeOfLastSession(data: string[][], serieDates: Date[]): number {
+        const serieData: Array<Array<string|Date>> = new Array();
+        data.forEach((value, index1) => {
+            serieData.push(value);
+        })
 
-        let lastEpisodes: string[][] | null[][] = ArrayUtils.changeRowWithColum(
-            this.extractLastestEpisode(serieData, serieDates, lastDate)
-        );
-        //let counter: any = ArrayUtils.countDuplicate(lastEpisodes[0]);
+        serieData.forEach((value, index) => {
+            value.push(serieDates[index]);
+        })
 
-        console.log(lastEpisodes)
-        let lastEpisodeArr: string[] | null[] = this.iterateToUnique(lastEpisodes);
-        console.log("Pleas count this: ", lastEpisodeArr);
-        return this.countEpisode(lastEpisodeArr)
+        let number: number = ArrayUtils.countLastEpisode(serieData);
+
+        return number;
+
     }
 
     private extractLastestEpisode = (serieData: string[][], serieDates: Date[], lastDate: Date): string[][] => {
@@ -55,7 +56,7 @@ export class Sessions {
 
     }
 
-    private countEpisode = (arr: string[]): number => {
+    private countEpisode = (arr: string[] | null[]): number => {
         let n: number = 0;
         arr.forEach((value) => {
             if(value !== null){
@@ -99,14 +100,14 @@ export class Sessions {
     private findHighestSessionByCount = (data: string[][]): number => {
         console.log("Find Highest Session by Counting");
         let number: number = 0;
-        let changedData: string[][] | null[][] = ArrayUtils.changeRowWithColum(data);
-        number = this.countSession(changedData);
+        let changedData: unknown[][] | null[][] = ArrayUtils.changeRowWithColum(data);
+        number = this.countSession(changedData as (string|null)[][]); //as Array<Array<string|null>>
         return number;
     }
 
     deepIndexSession: number = 0;
-    private countSession = (arr2D: string[][] | null[][]): number => {
-        let arr: string[] | null[] = arr2D[this.deepIndexSession];
+    private countSession = (arr2D: (string|null)[][]): number => {
+        let arr: (string|null)[] = arr2D[this.deepIndexSession];
         let counts: any = ArrayUtils.countDuplicate(arr);
         let n: number = 0;
 

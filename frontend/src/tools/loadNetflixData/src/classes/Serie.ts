@@ -31,7 +31,7 @@ export class Serie {
         console.log(episodeGroup.getData());
         this.session = new Sessions().findHighest(episodeGroup.getData());
         console.log("Session Number: " + this.session)
-        this.episode = new Sessions().countEpisodeOfLastSession(episodeGroup.getData(), episodeGroup.getDates(), episodeGroup);
+        this.episode = new Sessions().countEpisodeOfLastSession(episodeGroup.getData(), episodeGroup.getDates());
         console.log("Episode Number: " + this.episode);
 
         Serie.series.push(this);
