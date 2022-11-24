@@ -28,11 +28,11 @@ export class Serie {
 
         //this.session = this.generateSession(episodeGroup.getData())
         console.log(Serie.index + " Data of: " + this.name + " data: ");
-        console.log(episodeGroup.getData());
+        console.table(episodeGroup.getData());
         this.session = new Sessions().findHighest(episodeGroup.getData());
         console.log("Session Number: " + this.session)
         this.episode = new Sessions().countEpisodeOfLastSession(episodeGroup.getData(), episodeGroup.getDates());
-        console.log("Episode Number: " + this.episode);
+        console.log("Session Number: " + this.session + " Episode Number: " + this.episode);
 
         Serie.series.push(this);
     }

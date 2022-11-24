@@ -28,7 +28,7 @@ export class ArrayUtils {
 
         return changedArray;
     }
-
+    //ToDo add Type for return
     public static countDuplicate = (arr: (string|null)[]): any => {
         let counts: any = {};
         if (arr === undefined) arr = [];

@@ -8,7 +8,10 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "removeComments": false,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "lib": [
+      "ES2021.String" // For replaceAll() function
+    ]
   },
   "exclude": [
     "source",

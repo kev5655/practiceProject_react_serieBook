@@ -15,14 +15,16 @@ export class Episode {
     }
 
     private generateArray = (allData: string): string[] => {
-        let dataArray: string[] = allData.split(","); // Split by ,
-        dataArray = dataArray.map((data) => {
-            let temp = data.slice(0, -1);
-            return temp.slice(1);
-        })
-        let data = dataArray.join(":");
-        dataArray = data.split(":");
-        return dataArray;
+        allData = this.replaceAll(allData, '"', "");
+        return allData.split(/[:,]/); // Split by " and ,
+    }
+
+    private replaceAll = (str : string, match: string, replacement: string) => {
+        return str.replace(new RegExp(this.escapeRegExp(match), 'g'), ()=>replacement);
+    }
+
+    private escapeRegExp = (data: string) => {
+        return data.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
     }
 
     generateName = (): string => {

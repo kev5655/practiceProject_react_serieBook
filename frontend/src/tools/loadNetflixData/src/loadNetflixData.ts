@@ -51,9 +51,9 @@ const main = () => {
     // let episodeGroups: EpisodeGroup[] = episode.getEpisodeGroups()
     // episodeGroups.forEach(group => new Serie(group))
 
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("The Seven Deadly Sins");
+    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("The Walking Dead");
 
-    new Serie(foundedGroup)
+    new Serie(foundedGroup);
     let arr: Array<Array<string|Date>> = [
         ["A","B","C","D", new Date(2005,0,1)],
         ["A","B","C","F", new Date(2004,0,1)],

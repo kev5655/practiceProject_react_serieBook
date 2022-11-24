@@ -1,5 +1,4 @@
 import {ArrayUtils} from "./utlis/ArrayUtils.js";
-import {EpisodeGroup} from "./EpisodeGroup";
 
 
 export class Sessions {
@@ -13,11 +12,11 @@ export class Sessions {
         return this.findHighestSessionByCount(serieData);
     }
 
-    deepIndexEpisode: number = 0;
 
+    // Count Episode
     public countEpisodeOfLastSession(data: string[][], serieDates: Date[]): number {
         const serieData: Array<Array<string|Date>> = [];
-        data.forEach((value, index1) => {
+        data.forEach((value) => {
             serieData.push(value);
         })
 
@@ -25,47 +24,28 @@ export class Sessions {
             value.push(serieDates[index]);
         })
 
-        let number: number = this.countLastEpisode(serieData);
-
-        return number;
-
+        return this.countLastEpisode(serieData);
     }
 
     private countLastEpisode = (arr2D: (string | Date)[][]): any => {
         let arr: (unknown)[][] = ArrayUtils.changeRowWithColum(arr2D);
-        let lastEpisode: string[] = this.findFistDateIndex(arr);
-        let haveDuplicated: boolean = false;
+        let lastEpisode: string[] = this.findLastEpisode(arr);
+        console.log("Serie Data");
+        console.table(ArrayUtils.changeRowWithColum(arr));
+        console.log("Last Episode");
+        console.table(lastEpisode);
 
-        for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < arr[i].length; j++) {
-                if(arr[i][j] instanceof Date) continue;
-                if(arr[i][j] === null) continue
-                if (lastEpisode[i] === arr[i][j]) {
-                    haveDuplicated = true;
-                }
+        this.deleteEverythingExceptLastSession(lastEpisode, arr);
+        console.log("Last Session Data");
+        console.table(ArrayUtils.changeRowWithColum(arr));
 
-            }
-            if(! haveDuplicated){
-                console.log(arr, arr[i].length  + 1)
-                return arr[i].length  + 1;
-            }
-            haveDuplicated = false;
-            for (let j = 0; j < arr[i].length; j++) { // Remove Element
-                if (lastEpisode[i] !== arr[i][j]) {
-                    for (let k = 0; k < arr.length; k++) {
-                        arr[k].splice(j, 1);
-                    }
-                    j--;
-                }
-            }
+        for (let i = 0; i < arr.length - 1; i++) {
+            if(arr[i].length !== arr[i + 1].length) throw new Error("Array's are have not the same length");
         }
-        console.log(arr)
-
+        return arr[0].length;
     }
 
-    private findFistDateIndex = (arr: (unknown)[][]): string[] => {
-
-        console.log(arr);
+    private findLastEpisode = (arr: (unknown)[][]): string[] => {
         let lastIndex: number = arr.length - 1;
         let columIndex: number = Infinity;
         let minDate: Date = new Date(0);
@@ -85,52 +65,46 @@ export class Sessions {
                 lastIndex++;
             }
         }
+        if(columIndex === Infinity) throw new Error("columIndex is Infinity")
 
         let newestEpisode: string[] = [];
         for (let i = 0; i < arr.length; i++) {
             if (arr[i][columIndex] === null) continue;
             if (arr[i][columIndex] instanceof Date) continue;
             newestEpisode.push((arr[i][columIndex] as string));
-            arr[i].splice(columIndex, 1);
         }
         return newestEpisode;
     }
 
-    private extractLastestEpisode = (serieData: string[][], serieDates: Date[], lastDate: Date): string[][] => {
-        let lastEpisodes: string[][] = [];
-        serieData.forEach((data, index) => {
-            if (serieDates[index].toLocaleString() === lastDate.toLocaleString()) {
-                console.log("Data: ", serieDates[index].toLocaleString(), data.toString());
-                lastEpisodes.push(data);
+    private deleteEverythingExceptLastSession = (lastEpisode: string[], arr: (unknown)[][]) => {
+        for (let i = 0; i < arr.length; i++) {
+            let isAllCountsSingle = true;
+            const counts = ArrayUtils.countDuplicate(<(string|null)[]>arr[i]);
+            for (const key in counts) {
+                if (counts[key] > 1) { // If there is a single occurrence, the number of seasons is incremented
+                    isAllCountsSingle = false
+                }
             }
-        });
-        return lastEpisodes;
-    }
+            if(isAllCountsSingle) {
+                return
+            }
 
-    private iterateToUnique = (arr2D: string[][] | null[][]): string[] | null[] => {
-        let counter: any = ArrayUtils.countDuplicate(arr2D[this.deepIndexEpisode]);
-
-        for (const key in counter) {
-            if (counter[key] > 1) {
-                this.deepIndexEpisode++;
-                this.iterateToUnique(arr2D)
+            for (let j = 0; j < arr[i].length; j++) {
+                if(arr[i][j] instanceof Date) continue;
+                if(arr[i][j] === null) continue;
+                let element: string = <string>arr[i][j];
+                let number: number = counts[element]
+                if(number > 1 && element !== lastEpisode[i]){
+                    for (let k = 0; k < arr.length; k++) {
+                        arr[k].splice(j, 1);
+                    }
+                    j--;
+                }
             }
         }
-        console.log(counter);
-        return arr2D[this.deepIndexEpisode];
-
     }
 
-    private countEpisode = (arr: string[] | null[]): number => {
-        let n: number = 0;
-        arr.forEach((value) => {
-            if(value !== null){
-                n++;
-            }
-        });
-        return n;
-    }
-
+    // Count Sessions by search Params
     private findHighestSessionByNumber = (serieData: string[][]): number | null => {
         console.log("Find Highest Session by Number");
         let numbers: number[] = [];
@@ -162,6 +136,7 @@ export class Sessions {
         return parseInt(strNumber);
     }
 
+    // Count Sessions by counting same Elements
     private findHighestSessionByCount = (data: string[][]): number => {
         console.log("Find Highest Session by Counting");
         let number: number = 0;
@@ -173,6 +148,12 @@ export class Sessions {
     deepIndexSession: number = 0;
     private countSession = (arr2D: (string|null)[][]): number => {
         let arr: (string|null)[] = arr2D[this.deepIndexSession];
+        for (let i = this.deepIndexSession -1 ; i >= 0; i--) {
+            for (let j = 0; j < arr.length; j++) {
+                if(arr2D[i][j] === null || arr[j] === null) continue;
+                arr[j] = <string>arr2D[i][j] + <string>arr[j];
+            }
+        }
         let counts: any = ArrayUtils.countDuplicate(arr);
         let n: number = 0;
 
