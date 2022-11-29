@@ -30,7 +30,6 @@ import * as fs from "fs";
 import {Episode} from "./classes/Episode.js";
 import {EpisodeGroup} from "./classes/EpisodeGroup.js";
 import {Serie} from "./classes/Serie.js";
-import {ArrayUtils} from "./classes/utlis/ArrayUtils.js";
 
 let minLengthOfSerieName: number = 3;
 
@@ -47,13 +46,16 @@ const main = () => {
         const episode: Episode = new Episode(episodeElement, minLengthOfSerieName);
         EpisodeGroup.getInstance(episode);
     }
-    // @ts-ignore
-    // let episodeGroups: EpisodeGroup[] = episode.getEpisodeGroups()
-    // episodeGroups.forEach(group => new Serie(group))
 
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("The Walking Dead");
+    // let episodeGroups: EpisodeGroup[] = EpisodeGroup.getEpisodeGroups()
 
-    new Serie(foundedGroup);
+    // episodeGroups.forEach(group => new Serie(group).print())
+
+    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("AJIN");
+    new Serie(foundedGroup).print();
+
+
+
     let arr: Array<Array<string|Date>> = [
         ["A","B","C","D", new Date(2005,0,1)],
         ["A","B","C","F", new Date(2004,0,1)],
@@ -135,7 +137,7 @@ const filterSeries = (listOfEntity: string[]):string[] => {
 }
 
 const removeDuplicate = (listOfEntity: string []): string[] => {
-    return listOfEntity.sort().filter(function (item, index, ary) {
+    return listOfEntity.filter(function (item, index, ary) {
         return !index || item.split(",")[0] !== ary[index - 1].split(",")[0]
     });
 }

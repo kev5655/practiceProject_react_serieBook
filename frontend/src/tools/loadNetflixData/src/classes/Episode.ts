@@ -1,17 +1,22 @@
+
+
 export class Episode {
-    private allDataArray: string[];
-    private name: string;
-    private data: string[];
-    private date: Date = new Date();
-    private static episodes: Episode[] = [];
+    private readonly allDataArray: string[];
+    private readonly name: string;
+    private readonly data: string[];
+    private readonly date: Date = new Date();
 
     constructor(private allData: string, private minLengthOfName: number) {
         this.allDataArray = this.generateArray(allData);
         this.name = this.generateName();
         this.data = this.generateData();
         this.date = this.generateDate(this.allDataArray[this.allDataArray.length - 1]);
-        //console.log(this.date.toLocaleDateString())
-        Episode.episodes.push(this);
+    }
+
+    static filterLastDate = (episodes: Episode[]): Date => {
+        let dates: Date[] = []
+        episodes.forEach(episode => dates.push(episode.getDate()))
+        return new Date(Math.max.apply(null, dates));
     }
 
     private generateArray = (allData: string): string[] => {
@@ -68,9 +73,8 @@ export class Episode {
         return this.date;
     }
 
-    getEpisodes = (): Episode[] => {
-        return Episode.episodes;
+    getAllData = () => {
+        return this.allDataArray;
     }
-
 
 }

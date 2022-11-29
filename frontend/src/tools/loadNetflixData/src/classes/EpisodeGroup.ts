@@ -1,10 +1,14 @@
-import {Episode} from "./Episode";
+import {Episode} from "./Episode.js";
 
 export class EpisodeGroup {
-    private name: string;
-    private data: string[][];
-    private dates: Date[];
-    private static episodeGroups: EpisodeGroup[] = [];
+
+    private readonly name: string;
+    private readonly data: string[][];
+    private readonly dates: Date[];
+    private episodes: Episode[] = []
+    private static _episodeGroups: EpisodeGroup[] = [];
+
+    private rawData: string[][] = [];
 
     private constructor(episode: Episode) {
         this.name = episode.getName()
@@ -12,7 +16,9 @@ export class EpisodeGroup {
         this.data.push(episode.getData());
         this.dates = [];
         this.dates.push(episode.getDate())
-        EpisodeGroup.episodeGroups.push(this);
+        this.episodes.push(episode)
+        this.rawData.push(episode.getAllData())
+        EpisodeGroup._episodeGroups.push(this);
     }
 
     static getInstance = (episode: Episode): EpisodeGroup => {
@@ -20,6 +26,8 @@ export class EpisodeGroup {
         if(foundedEpisode !== undefined){
             foundedEpisode.addDataToArray(episode.getData())
             foundedEpisode.addDateToArray(episode.getDate());
+            foundedEpisode.addAllDataToArray(episode.getAllData())
+            foundedEpisode.addEpisodeToEpisodes(episode);
             return foundedEpisode;
         }
         return new EpisodeGroup(episode)
@@ -45,8 +53,24 @@ export class EpisodeGroup {
         return this.data;
     }
 
+    getDataAndDates = ():(string|Date)[][] => {
+        let dataAndDates: (string|Date)[][] = []
+        this.episodes.forEach((episode) => {
+            dataAndDates.push([...episode.getData(), episode.getDate()])
+        })
+        return dataAndDates;
+    }
+
+    getEpisodes = ():Episode[] => {
+        return this.episodes;
+    }
+
     getEpisodeGroups = ():EpisodeGroup[] => {
-        return EpisodeGroup.episodeGroups
+        return EpisodeGroup._episodeGroups
+    }
+
+    getRawData = (): string[][] => {
+        return this.rawData;
     }
 
     static getEpisodeByName = (name: string): EpisodeGroup => {
@@ -55,8 +79,12 @@ export class EpisodeGroup {
         return episodeGroup;
     }
 
+    static getEpisodeGroups(): EpisodeGroup[] {
+        return this._episodeGroups;
+    }
+
     private static findGroupByName = (name: string): EpisodeGroup | undefined => {
-        return EpisodeGroup.episodeGroups.find((group) => {
+        return EpisodeGroup._episodeGroups.find((group) => {
            return group.getName() === name
         });
     }
@@ -68,4 +96,13 @@ export class EpisodeGroup {
     addDateToArray = (date: Date) => {
         this.dates.push(date);
     }
+
+    addAllDataToArray = (allData: string[]) => {
+        this.rawData.push(allData)
+    }
+
+    addEpisodeToEpisodes = (episode: Episode) => {
+        this.episodes.push((episode))
+    }
+
 }

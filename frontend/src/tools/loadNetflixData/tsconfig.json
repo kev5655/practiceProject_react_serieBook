@@ -9,9 +9,6 @@
     "strictNullChecks": true,
     "removeComments": false,
     "moduleResolution": "Node",
-    "lib": [
-      "ES2021.String" // For replaceAll() function
-    ]
   },
   "exclude": [
     "source",
