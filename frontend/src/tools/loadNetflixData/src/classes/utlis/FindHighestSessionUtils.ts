@@ -46,6 +46,7 @@ export class FindHighestSessionUtils {
         let number: number;
         let changedData: unknown[][] | null[][] = ArrayUtils.changeRowWithColum(episodeGroup.getData());
         number = this.countSession(changedData as (string|null)[][]);
+        FindHighestSessionUtils.deepIndex = 0;
         return number;
     }
 

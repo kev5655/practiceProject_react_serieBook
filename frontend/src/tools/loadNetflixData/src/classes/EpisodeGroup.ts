@@ -1,4 +1,5 @@
 import {Episode} from "./Episode.js";
+import {ifError} from "assert";
 
 export class EpisodeGroup {
 
@@ -6,7 +7,7 @@ export class EpisodeGroup {
     private readonly data: string[][];
     private readonly dates: Date[];
     private episodes: Episode[] = []
-    private static _episodeGroups: EpisodeGroup[] = [];
+    private static episodeGroups: EpisodeGroup[] = [];
 
     private rawData: string[][] = [];
 
@@ -18,12 +19,12 @@ export class EpisodeGroup {
         this.dates.push(episode.getDate())
         this.episodes.push(episode)
         this.rawData.push(episode.getAllData())
-        EpisodeGroup._episodeGroups.push(this);
+        EpisodeGroup.episodeGroups.push(this);
     }
 
     static getInstance = (episode: Episode): EpisodeGroup => {
         const foundedEpisode: EpisodeGroup | undefined = this.findGroupByName(episode.getName());
-        if(foundedEpisode !== undefined){
+        if (foundedEpisode !== undefined) {
             foundedEpisode.addDataToArray(episode.getData())
             foundedEpisode.addDateToArray(episode.getDate());
             foundedEpisode.addAllDataToArray(episode.getAllData())
@@ -32,41 +33,68 @@ export class EpisodeGroup {
         }
         return new EpisodeGroup(episode)
     }
+    //ToDo Problem bie Black Lagoon
+    shrinkData = () => {
+        let minLength = Infinity;
+        this.data.forEach((data) => {
+            if (minLength >= data.length) {
+                minLength = data.length
+            }
+        })
+        let allDataHasTheSameLength = false
+        while (!allDataHasTheSameLength) {
+            allDataHasTheSameLength = true
+            this.data.forEach((data, index) => {
+                let nextData = this.data[index] ?? [""]
+                if (data.length > minLength ) { //&& data[0] !== nextData[0]
+                    data[data.length - 2] = data[data.length - 2] + "," + data[data.length - 1]
+                    data.pop()
+                }
+                if (data.length !== minLength) {
+                    allDataHasTheSameLength = false
+                }
+            })
+        }
+        this.rawData = this.rawData.map((raw, index) => {
+            return raw = [this.name, ...this.data[index], this.dates[index].toLocaleString()]
+        })
 
-    getName = ():string => {
+    }
+
+    getName = (): string => {
         return this.name;
     }
 
-    getFirstDate = ():Date => {
+    getFirstDate = (): Date => {
         return new Date(Math.min.apply(null, this.dates));
     }
 
-    getLastDate = ():Date => {
+    getLastDate = (): Date => {
         return new Date(Math.max.apply(null, this.dates));
     }
 
-    getDates = ():Date[] => {
+    getDates = (): Date[] => {
         return this.dates;
     }
 
-    getData = ():string[][] => {
+    getData = (): string[][] => {
         return this.data;
     }
 
-    getDataAndDates = ():(string|Date)[][] => {
-        let dataAndDates: (string|Date)[][] = []
+    getDataAndDates = (): (string | Date)[][] => {
+        let dataAndDates: (string | Date)[][] = []
         this.episodes.forEach((episode) => {
             dataAndDates.push([...episode.getData(), episode.getDate()])
         })
         return dataAndDates;
     }
 
-    getEpisodes = ():Episode[] => {
+    getEpisodes = (): Episode[] => {
         return this.episodes;
     }
 
-    getEpisodeGroups = ():EpisodeGroup[] => {
-        return EpisodeGroup._episodeGroups
+    getEpisodeGroups = (): EpisodeGroup[] => {
+        return EpisodeGroup.episodeGroups
     }
 
     getRawData = (): string[][] => {
@@ -75,17 +103,17 @@ export class EpisodeGroup {
 
     static getEpisodeByName = (name: string): EpisodeGroup => {
         let episodeGroup: EpisodeGroup | undefined = this.findGroupByName(name);
-        if(episodeGroup === undefined) throw new Error("Episodegroup not Found by name: " + name);
+        if (episodeGroup === undefined) throw new Error("Episodegroup not Found by name: " + name);
         return episodeGroup;
     }
 
     static getEpisodeGroups(): EpisodeGroup[] {
-        return this._episodeGroups;
+        return this.episodeGroups;
     }
 
     private static findGroupByName = (name: string): EpisodeGroup | undefined => {
-        return EpisodeGroup._episodeGroups.find((group) => {
-           return group.getName() === name
+        return EpisodeGroup.episodeGroups.find((group) => {
+            return group.getName() === name
         });
     }
 

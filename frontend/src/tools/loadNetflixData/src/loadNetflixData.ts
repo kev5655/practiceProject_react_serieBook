@@ -35,7 +35,7 @@ let minLengthOfSerieName: number = 3;
 
 const main = () => {
     console.log("Start Prog");
-    const entity = deleteArrayElement(readCsvFile('./rsc/NetflixViewingHistory_Kevin.csv'), 0);
+    const entity = deleteArrayElement(readCsvFile('./rsc/NetflixViewingHistory_Fabienne.csv'), 0); //./rsc/NetflixViewingHistory_Kevin.csv
     let episodeRaw: string[] = filterSeries(entity);
     episodeRaw = removeDuplicate(episodeRaw);
 
@@ -47,12 +47,16 @@ const main = () => {
         EpisodeGroup.getInstance(episode);
     }
 
-    // let episodeGroups: EpisodeGroup[] = EpisodeGroup.getEpisodeGroups()
+    let episodeGroups: EpisodeGroup[] = EpisodeGroup.getEpisodeGroups()
 
-    // episodeGroups.forEach(group => new Serie(group).print())
+    episodeGroups.forEach(group =>{
+        // group.shrinkData()
+        new Serie(group).print()
+    })
 
-    const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("AJIN");
-    new Serie(foundedGroup).print();
+    // const foundedGroup: EpisodeGroup = EpisodeGroup.getEpisodeByName("Blue Period");
+    // foundedGroup.shrinkData()
+    // new Serie(foundedGroup).print();
 
 
 
@@ -137,9 +141,12 @@ const filterSeries = (listOfEntity: string[]):string[] => {
 }
 
 const removeDuplicate = (listOfEntity: string []): string[] => {
-    return listOfEntity.filter(function (item, index, ary) {
-        return !index || item.split(",")[0] !== ary[index - 1].split(",")[0]
-    });
+    let seen = new Set();
+    let list = listOfEntity.reverse()
+    return list.filter(item => {
+        let withOutDate = item.slice(0, -11)
+        return seen.has(withOutDate) ? false : seen.add(withOutDate);
+    }).reverse()
 }
 
 main();

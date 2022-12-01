@@ -21,7 +21,12 @@ export class Episode {
 
     private generateArray = (allData: string): string[] => {
         allData = this.replaceAll(allData, '"', "");
-        return allData.split(/[:,]/); // Split by " and ,
+        const lastCommaIndex = allData.lastIndexOf(",");
+        const fistStr = allData.slice(0, lastCommaIndex);
+        const lastStr = allData.slice(lastCommaIndex + 1)
+        const arr = [...fistStr.split(":"), lastStr]
+        return arr;
+        //return allData.split(/[:,]/); // Split by " and ,
     }
 
     private replaceAll = (str : string, match: string, replacement: string) => {

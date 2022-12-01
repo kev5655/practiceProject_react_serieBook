@@ -15,7 +15,7 @@ export class FindHighestEpisodeUtils {
         // console.log("Serie Data");
         // console.table(ArrayUtils.changeRowWithColum(arr));
         // console.log("Last Episode");
-        console.table(lastEpisode);
+        // console.table(lastEpisode);
 
         this.deleteEverythingExceptLastSession(lastEpisode, arr);
         // console.log("Last Session Data");
@@ -82,6 +82,9 @@ export class FindHighestEpisodeUtils {
                     j--;
                 }
             }
+            // if(i > 0){
+            //     console.table(arr)
+            // }
         }
     }
 }
