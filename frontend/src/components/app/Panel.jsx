@@ -126,7 +126,7 @@ const Panel = () => {
 
     return (
         <main className={`${globalBlur.isBlur && classes.blur}`}>
-            <input type='button' value="Logout" onClick={onLogoutHandler} />
+            {/* <input type='button' value="Logout" onClick={onLogoutHandler} /> */}
             {/*console.log("Compile HTML", series)*/}
             {console.log("State: ", state)}
             {(state === ACTIVE_PANEL.SERIE_LIST) && //&& isLoaded
