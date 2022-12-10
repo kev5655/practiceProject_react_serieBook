@@ -19,7 +19,7 @@ const SeriePanel = (props) => {
     }
 
     const onFilterClickHandler = () => {
-        setFilterActive(true)
+        setFilterActive(!isFilterActive)
     }
 
     return (<>
