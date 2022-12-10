@@ -1,3 +1,30 @@
+@media only screen and (max-width: 500px) {
+    .gird {
+        margin: 0.5rem !important;
+        grid-gap: 1rem !important;
+
+        grid-template-areas:
+        "session session"
+        "episode episode"
+        "stars stars"
+        "gridDate gridDate"
+        "gridDate gridDate"
+        "uneditableDate uneditableDate" !important
+    }
+
+    .gird_container_episode {
+        padding: 0 2rem !important;
+    }
+
+    .grid_stars {
+        padding-bottom: 0 !important;
+    }
+
+    .dateGrid_desc_date{
+        margin: 0 0.5rem !important;
+    }
+
+}
 
 .card {
     position: fixed;
@@ -9,7 +36,7 @@
     border-radius: 1rem;
     background-color: #777777;
     z-index: 100;
-    box-shadow: 9px 10px 25px 6px rgba(53,53,53,0.75);
+    box-shadow: 9px 10px 25px 6px rgba(53, 53, 53, 0.75);
 }
 
 .gird {
@@ -48,14 +75,14 @@
     grid-area: session;
     display: flex;
     justify-content: space-between;
-    padding: 0rem 3rem;
+    padding: 0 2rem;
 }
 
 .gird_container_episode {
     grid-area: episode;
     display: flex;
     justify-content: space-between;
-    padding: 0rem 3rem 2rem 3rem;
+    padding: 0 2rem 2rem 2rem;
 }
 
 .grid_stars {
