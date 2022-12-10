@@ -20,7 +20,7 @@ const AuthenticationPanel = (props) => {
 
         let response = await fetchData('/api/login', 'Post', body, 'application/x-www-form-urlencoded;charset=UTF-8');
 
-        if(response === 401){
+        if (response === 401) {
             setLoggingFailed(true);
         } else {
             setJwtToken(response.access_token)
@@ -55,24 +55,29 @@ const AuthenticationPanel = (props) => {
         <Card className={classes.card}>
             <header className={classes.card_header}>
                 <h1>Logging</h1> {/* Global Styling in App.css */}
-                { hasAccount && <Btn label="Registration"
+                {hasAccount && <Btn label="Registration"
+                                    className={{
+                                        height: '50%',
+                                        width: '8rem'
+                                    }}
+                                    onClick={switchToSingUpClickHandler}/>}
+                {!hasAccount && <Btn label="Logging"
                                      className={{
                                          height: '50%',
                                          width: '8rem'
                                      }}
-                                     onClick={switchToSingUpClickHandler}/>}
-                { !hasAccount && <Btn label="Logging"
-                                      className={{
-                                          height: '50%',
-                                          width: '8rem'
-                                      }}
-                                      onClick={switchToLoggingClickHandler}/>}
+                                     onClick={switchToLoggingClickHandler}/>}
             </header>
-            { hasAccount && <LoggingForm
+            {hasAccount && <> <LoggingForm
                 onLogging={loggingHandler}
                 loggingFailed={isLoggingFailed}
-            />}
-            { !hasAccount && <SingUpFrom onSingUp={singUpHandler}/>
+            />
+                <div className={classes.defaultsLogin}>
+                    <p>Default Username: test</p>
+                    <p>Default Password: 1234</p>
+                </div>
+            </>}
+            {!hasAccount && <SingUpFrom onSingUp={singUpHandler}/>
             }
         </Card>
     );
