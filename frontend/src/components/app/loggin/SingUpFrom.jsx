@@ -4,7 +4,7 @@ import InputText from "../../ui/form/InputText";
 import InputPassword from "../../ui/form/InputPassword";
 import Btn from "../../ui/form/Btn";
 
-import {fetchData} from "../../../utils/api";
+// import {fetchData} from "../../../utils/api";
 
 import classes from "./SingUpForm.module.css";
 
@@ -25,9 +25,9 @@ const SingUpFrom = (props) => {
     useEffect(() => {
         const identifier = setTimeout(async () => {
             let body = JSON.stringify({username: enteredUsername.value});
-            let response = await fetchData('/api/user/available/', 'Post', body);
-            console.log("Is User Valid: " + response.isUserAvailable);
-            setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
+            // let response = await fetchData('/api/user/available/', 'Post', body);
+            // console.log("Is User Valid: " + response.isUserAvailable);
+            // setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
         }, 500);
 
         return () => {

@@ -6,7 +6,7 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 import InputNumber from "../../ui/form/InputNumber";
-import {fetchData} from "../../../utils/api"
+// import {fetchData} from "../../../utils/api"
 
 import classes from "./ManageSerieForm.module.css";
 
@@ -84,27 +84,27 @@ const ManageSerieForm = forwardRef ((props, ref) => {
 
 
     useImperativeHandle(ref, () => ({
-        async deleteSerie(){
-            await fetchData("/api/serie/delete",
-                "Delete",
-                JSON.stringify(getSerieDate()),
-                'application/json')
-        }
+        // async deleteSerie(){
+        //     await fetchData("/api/serie/delete",
+        //         "Delete",
+        //         JSON.stringify(getSerieDate()),
+        //         'application/json')
+        // }
     }));
 
     let updateSerieIntoDB = async (updateSerie) => {
-        await fetchData("/api/serie/update",
-            "Put",
-            JSON.stringify(updateSerie),
-            'application/json')
+        // await fetchData("/api/serie/update",
+        //     "Put",
+        //     JSON.stringify(updateSerie),
+        //     'application/json')
     }
 
     let saveSerieIntoDB = async (addSerie) => {
-        let response = await fetchData("/api/serie/add",
-            "Post",
-            JSON.stringify(addSerie),
-            'application/json')
-        return response.id
+        // let response = await fetchData("/api/serie/add",
+        //     "Post",
+        //     JSON.stringify(addSerie),
+        //     'application/json')
+        // return response.id
     }
 
     return (
