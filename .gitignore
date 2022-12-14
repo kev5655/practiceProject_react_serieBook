@@ -551,6 +551,7 @@ ${project.build.directory}
 
 # Config of Spring Boot
 application-prod.properties
+application-dev.properties
 security/
 
 # Docker
