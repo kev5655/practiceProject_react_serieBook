@@ -4,46 +4,42 @@ import Card from "../../ui/Card";
 import classes from "./AuthenticationPanel.module.css";
 import LoggingForm from "./LoggingForm";
 
-import {setJwtToken, setRefreshToken} from '../../utils/jwt';
-import {convertJsonTo_x_www_form_urlencoded, fetchData} from '../../utils/api';
 import SingUpFrom from "./SingUpFrom";
 import Btn from "../../ui/form/Btn";
+import {useDispatch, useSelector} from "react-redux";
+import {authRequest} from "../../../store/authenticate-action";
+import {useNavigate} from "react-router-dom";
 
 
 const AuthenticationPanel = (props) => {
-
+    const dispatch = useDispatch();
+    const isLoginFailed = useSelector((state) => state.auth.loginFailed)
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const navigate = useNavigate()
     const [hasAccount, setHasAccount] = useState(true);
-    const [isLoggingFailed, setLoggingFailed] = useState(false);
 
+    if(isAuth){
+        navigate('/series')
+    }
     const loggingHandler = async (logging) => {
-        const body = convertJsonTo_x_www_form_urlencoded(logging)
-
-        let response = await fetchData('/api/login', 'Post', body, 'application/x-www-form-urlencoded;charset=UTF-8');
-
-        if (response === 401) {
-            setLoggingFailed(true);
-        } else {
-            setJwtToken(response.access_token)
-            setRefreshToken(response.refresh_token)
-            props.onLogging()
-        }
+        dispatch(authRequest(logging))
     }
 
     const singUpHandler = async (singUp) => {
-        let body = JSON.stringify(singUp);
-        let response = await fetchData('/api/user/save', 'Post', body);
-
-        console.log("SingUp Response ", response);
-        const loggingValue = {
-            username: singUp.username,
-            password: singUp.password
-        }
-        await loggingHandler(loggingValue);
+        // let body = JSON.stringify(singUp);
+        // let response = await fetchData('/api/user/save', 'Post', body);
+        //
+        // console.log("SingUp Response ", response);
+        // const loggingValue = {
+        //     username: singUp.username,
+        //     password: singUp.password
+        // }
+        // await loggingHandler(loggingValue);
     }
 
     const switchToSingUpClickHandler = () => {
         setHasAccount(false);
-        setLoggingFailed(false);
+        //setLoggingFailed(false);
     }
 
     const switchToLoggingClickHandler = () => {
@@ -70,7 +66,7 @@ const AuthenticationPanel = (props) => {
             </header>
             {hasAccount && <> <LoggingForm
                 onLogging={loggingHandler}
-                loggingFailed={isLoggingFailed}
+                loggingFailed={isLoginFailed}
             />
                 <div className={classes.defaultsLogin}>
                     <p>Default Username: test</p>
