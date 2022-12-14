@@ -4,11 +4,11 @@ import SeriePanel from "./seriePanel/SeriePanel";
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
 import AuthenticationPanel from "./loggin/AuthenticationPanel";
 
-import { getJwtToken, setJwtToken, setRefreshToken } from "../utils/jwt"
-import { fetchData } from "../utils/api";
+import { getJwtToken, setJwtToken, setRefreshToken } from "../../utils/jwt"
+import { fetchData } from "../../utils/api";
 
 import classes from './Panel.module.css'
-import BlurEffect from "../storage/blurEffect";
+import BlurEffect from "../../store/blurEffect";
 
 
 const ACTIVE_PANEL = {

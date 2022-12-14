@@ -6,7 +6,7 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 import InputNumber from "../../ui/form/InputNumber";
-import {fetchData} from "../../utils/api"
+import {fetchData} from "../../../utils/api"
 
 import classes from "./ManageSerieForm.module.css";
 

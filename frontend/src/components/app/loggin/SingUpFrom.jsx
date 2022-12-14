@@ -4,7 +4,7 @@ import InputText from "../../ui/form/InputText";
 import InputPassword from "../../ui/form/InputPassword";
 import Btn from "../../ui/form/Btn";
 
-import {fetchData} from "../../utils/api";
+import {fetchData} from "../../../utils/api";
 
 import classes from "./SingUpForm.module.css";
 
