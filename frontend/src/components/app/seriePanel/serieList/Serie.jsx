@@ -4,12 +4,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
+import {useDispatch} from "react-redux";
+import {seriesAction} from "../../../../store/series-slice";
 import IconBtn from "../../../ui/form/IconBtn";
 
 import classes from './Serie.module.css'
 
 
 const Serie = (props) => {
+    const dispatch = useDispatch();
+
+    const {id : serieId, title, episode, session, stars} = props.serie
 
     const createArray = (fillUp, length) => {
         let array = new Array(length).fill(1)
@@ -18,10 +23,10 @@ const Serie = (props) => {
     }
 
     const validEpisode = () => {
-        let isNull = props.serie.episode === null;
-        let isIntNull = props.serie.episode === 0;
-        let isUndefined = props.serie.episode === undefined;
-        let isStringNull = props.serie.episode === "";
+        let isNull = episode === null;
+        let isIntNull = episode === 0;
+        let isUndefined = episode === undefined;
+        let isStringNull = episode === "";
         return !isNull && !isIntNull && !isUndefined && !isStringNull;
     }
 
@@ -32,20 +37,21 @@ const Serie = (props) => {
 
     const editSerieHandler = (e) => {
         e.stopPropagation();
-        props.editSerie(props.serie);
+        dispatch(seriesAction.selectSerie(serieId))
+        //props.editSerie(props.serie);
     }
 
     return (
         <article className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
-                    <p className={classes.serie_firstRow_title}>{props.serie.title}</p>
-                    <p className={classes.serie_firstRow_text}>{props.serie.session}S</p>
-                    {validEpisode() && <p className={classes.serie_firstRow_text}>{props.serie.episode}E</p> }
+                    <p className={classes.serie_firstRow_title}>{title}</p>
+                    <p className={classes.serie_firstRow_text}>{session}S</p>
+                    {validEpisode() && <p className={classes.serie_firstRow_text}>{episode}E</p> }
                 </div>
 
                 <div>
-                    {createArray(props.serie.stars, 5).map((value, i) => {
+                    {createArray(stars, 5).map((value, i) => {
                         if (value === 1) {
                             return (<StarRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
                         } else {
