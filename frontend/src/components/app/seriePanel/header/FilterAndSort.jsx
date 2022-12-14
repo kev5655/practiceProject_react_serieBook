@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import InputText from "../../../ui/form/InputText";
 import InputDropDown from "../../../ui/form/InputDropDown";
-import {searchSerie, sortSerie} from "../../../utils/searchSort";
+import {searchSerie, sortSerie} from "../../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";

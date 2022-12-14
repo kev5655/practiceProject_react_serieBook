@@ -1,4 +1,4 @@
-import {SORT_PARAMS} from "../app/seriePanel/header/FilterAndSort";
+import {SORT_PARAMS} from "../components/app/seriePanel/header/FilterAndSort";
 
 
 export function searchSerie(serieList, searchInput){
