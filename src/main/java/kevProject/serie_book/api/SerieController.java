@@ -115,13 +115,12 @@ class SerieResponse {
         this.session = serie.getSession();
         this.episode = serie.getEpisode();
         if(serie.getStartDate() == null) this.startDate = "";
-        else this.startDate = serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        else this.startDate = String.valueOf(serie.getStartDate().getTime()); //serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         if(serie.getEndDate() == null) this.endDate = "";
-        else this.endDate = serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        this.createdDate = serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
-        this.lastModifiedDate = serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
+        else this.endDate = String.valueOf(serie.getEndDate().getTime()); //serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.createdDate = String.valueOf(serie.getCreatedDate().getTime()); //serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
+        this.lastModifiedDate = String.valueOf(serie.getLastModifiedDate().getTime()); // serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
         this.stars = serie.getStars();
-        this.username = serie.getAppUser().toString();
     }
 }
 
