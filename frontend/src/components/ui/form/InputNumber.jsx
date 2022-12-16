@@ -38,4 +38,4 @@ const InputNumber = (props) => {
     );
 }
 
-export default InputNumber;
+//export default InputNumber;
