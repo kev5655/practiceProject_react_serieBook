@@ -26,7 +26,6 @@ const ManageSerieForm = forwardRef ((props, ref) => {
     const [errorTitle, isErrorTitle] = useState(false);
     const [errorSession, isErrorSession] = useState(false);
 
-    //TODO Validate Enterte E-Mail
     const titleHandler = (value) => {
         isErrorTitle(false);
         setEnteredTitle({value: value, isValid: value !== ""});

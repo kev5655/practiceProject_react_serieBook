@@ -26,3 +26,11 @@
     justify-content: center;
     gap: 1rem;
 }
+
+.defaultsLogin {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+}
