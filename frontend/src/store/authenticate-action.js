@@ -1,11 +1,11 @@
-import {convertJsonTo_x_www_form_urlencoded} from "../utils/api";
+import {convert_JSObject_To_x_www_form_urlencoded, SingUpError} from "../utils/api";
 import {authActions} from './authenticate-slice'
 import {api} from '../utils/api'
 
 
 export const authRequest = (loggingData) => {
     return async (dispatch) => {
-        const body = convertJsonTo_x_www_form_urlencoded(loggingData)
+        const body = convert_JSObject_To_x_www_form_urlencoded(loggingData)
 
         const {sendRequestFN: sendAuthRequest} = api();
 
@@ -37,8 +37,38 @@ export const authRequest = (loggingData) => {
     }
 }
 
-export const singupRequest = () => {
+export const singUpRequest = (singUpDate) => {
+    return async (dispatch) => {
 
+        const {sendRequestFN: sendAuthRequest} = api();
+
+        const requestConfig = {
+            url: 'http://localhost:8081/api/user/save',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: singUpDate
+        }
+
+        const extractor = () => {
+            authRequest({
+                username: singUpDate.username,
+                password: singUpDate.password})
+        }
+
+        const catchError = (err) => {
+            if(err instanceof SingUpError){
+                dispatch(authActions.singUpFailed({errorText: err.message}))
+            }
+            alert(err.message)
+            console.log(err)
+        }
+
+
+        await sendAuthRequest(requestConfig, extractor, catchError)
+
+    }
 }
 
 export const loadAuth = () => {
