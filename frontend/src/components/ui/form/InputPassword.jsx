@@ -1,19 +1,32 @@
-import React, {useState} from 'react'
+import React, {forwardRef, useImperativeHandle, useState} from 'react'
 
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import classes from './Input.module.css'
 import IconBtn from "./IconBtn";
+import useInput from "../../../hooks/use-input";
 
 
-const InputPassword = (props) => {
+const InputPassword = forwardRef ((props, ref) => {
+    const {initValue, name, maxLength, placeholder, validateFn} = props
 
     const [inputType, setInputType] = useState("password");
+    const {
+        value,
+        isValid,
+        hasError,
+        valueChangeHandler,
+        inputBlurHandler,
+        inputFocusHandler,
+        reset,
+    } = useInput(initValue ?? '', validateFn ?? (() => true));
 
-    const onChangeHandler = (e) => {
-        props.onChange(e.target.value)
-    }
+    useImperativeHandle(ref, () => ({
+        isValid: isValid,
+        value: value,
+        reset: () => reset()
+    }))
 
     const onHideClickHandler = (e) => {
         setInputType("text")
@@ -26,12 +39,15 @@ const InputPassword = (props) => {
     return (
         <>
             <input
-                className={`${classes.input} ${props.error && classes.error}`}
+                className={`${classes.input} ${hasError && classes.error}`}
                 type={inputType}
-                name="pwd"
-                maxLength="50"
-                placeholder="Password"
-                onChange={onChangeHandler}
+                name={name}
+                value={value}
+                maxLength={maxLength ?? 50}
+                placeholder={placeholder ?? ''}
+                onChange={valueChangeHandler}
+                onBlur={inputBlurHandler}
+                onFocus={inputFocusHandler}
             />
             {
 
@@ -48,6 +64,6 @@ const InputPassword = (props) => {
             }
         </>
     );
-}
+})
 
 export default InputPassword;
