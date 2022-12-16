@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux'
+
 import { seriesAction } from './series-slice'
 import {api, TokenError} from "../utils/api";
 import {authActions} from "./authenticate-slice";
 
 
-const backendURL = "http://localhost:8081"
 export const fetchSeries = (access_token) => {
     return async (dispatch) => {
 
@@ -44,6 +43,7 @@ export const fetchSeries = (access_token) => {
             if(err instanceof TokenError){
                 dispatch(authActions.logout())
             }
+            alert(err.message)
             console.error(err)
         }
 
