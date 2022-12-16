@@ -4,7 +4,7 @@ import './App.css';
 import Panel from "./components/app/Panel";
 import {useDispatch, useSelector} from "react-redux";
 import SeriePanel from "./components/app/seriePanel/SeriePanel";
-import AuthenticationPanel from "./components/app/loggin/AuthenticationPanel";
+import AuthenticationPanel from "./components/app/authentication/AuthenticationPanel";
 import {loadAuth} from "./store/authenticate-action";
 import ManageSeriePanel from "./components/app/manageSerie/ManageSeriePanel";
 import AuthRoute from "./components/Router/AuthRoute";
@@ -17,7 +17,7 @@ function App() {
     useEffect(() => {
         dispatch(loadAuth())
     }, [dispatch])
-    // ToDo Fix bug https://www.robinwieruch.de/react-router-private-routes/
+
     return (
         <BrowserRouter>
             <Routes>
