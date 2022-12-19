@@ -1,4 +1,7 @@
-import { useReducer } from 'react';
+import {useEffect, useReducer} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {authActions} from "../store/authenticate-slice";
+import {isUsernameAvailable} from "../store/authenticate-action";
 
 const ACTION = {
     INPUT: 0,
@@ -29,15 +32,33 @@ const inputStateReducer = (state, action) => {
     return inputStateReducer;
 };
 
-const useInput = (initValue, validateValue) => {
+const useInput = (initValue, validator, backendValidator) => {
     const [inputState, dispatch] = useReducer(
         inputStateReducer,
         initialInputState
     );
-
     initialInputState.value = initValue;
+    let dispatchValidator = useDispatch();
+    let backendSaysIsAllowed = useSelector(state => state.auth.isUserAvailable)
 
-    const valueIsValid = validateValue(inputState.value);
+    useEffect(() => {
+        if(backendValidator !== undefined){
+            const identifier = setTimeout(async () => {
+                dispatchValidator(backendValidator({username: inputState.value}))
+            }, 500);
+
+            return () => {
+                clearTimeout(identifier);
+            }
+        }
+    }, [inputState.value])
+
+
+    let valueIsValid = validator.validate(inputState.value);
+    if(backendValidator !== undefined){
+        valueIsValid = valueIsValid && backendSaysIsAllowed;
+        validator.isValid = valueIsValid;
+    }
     const hasError = !valueIsValid && inputState.isTouched && !inputState.isFocus;
 
     const valueChangeHandler = (event) => {
@@ -58,7 +79,7 @@ const useInput = (initValue, validateValue) => {
 
     return {
         value: inputState.value,
-        isValid: valueIsValid,
+        validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
