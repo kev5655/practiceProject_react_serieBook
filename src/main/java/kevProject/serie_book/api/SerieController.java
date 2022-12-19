@@ -8,21 +8,13 @@ import kevProject.serie_book.utils.JwtUtils;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.net.URI;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @RestController
@@ -115,11 +107,11 @@ class SerieResponse {
         this.session = serie.getSession();
         this.episode = serie.getEpisode();
         if(serie.getStartDate() == null) this.startDate = "";
-        else this.startDate = String.valueOf(serie.getStartDate().getTime()); //serie.getStartDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        else this.startDate = String.valueOf(serie.getStartDate().getTime());
         if(serie.getEndDate() == null) this.endDate = "";
-        else this.endDate = String.valueOf(serie.getEndDate().getTime()); //serie.getEndDate().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        this.createdDate = String.valueOf(serie.getCreatedDate().getTime()); //serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getCreatedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
-        this.lastModifiedDate = String.valueOf(serie.getLastModifiedDate().getTime()); // serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern(serie.getLastModifiedDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))));
+        else this.endDate = String.valueOf(serie.getEndDate().getTime());
+        this.createdDate = String.valueOf(serie.getCreatedDate().getTime());
+        this.lastModifiedDate = String.valueOf(serie.getLastModifiedDate().getTime());
         this.stars = serie.getStars();
     }
 }
