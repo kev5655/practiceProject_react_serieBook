@@ -33,6 +33,14 @@ body {
     background: #353535;
 }
 
+main {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
 h1, h2, h3, p, a, title{
     all: unset;
     font-family: "JetBrains Mono", sans-serif;
