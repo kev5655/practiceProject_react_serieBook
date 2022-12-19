@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -8,6 +8,7 @@ import {searchSerie, sortSerie} from "../../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import Input from "../../../ui/form/Input";
 
 export const SORT_PARAMS = {
     BY_ABC: {value: 'by ABC', id: 1, valueName: 'title'},
@@ -25,6 +26,7 @@ const FilterAndSort = (props) => {
 
     let startSerieList = props.serieList;
     const [isActive, setIsActive] = useState(props.isFilterActive);
+    const searchTermRef = useRef(null);
 
     let searchInput = "";
     let sortParam = SORT_PARAMS.BY_LAST_MODIFIED;
@@ -64,8 +66,13 @@ const FilterAndSort = (props) => {
                         <p>Search</p>
                         <SearchIcon fontSize='small'/>
                     </label>
-                    <InputText
-                        onChange={onEnteredSearchString}/>
+                    <Input
+                        type='text'
+                        name='searchTerm'
+                        placeholder='Search Series'
+                        ref={searchTermRef}/>
+                    {/*<InputText*/}
+                    {/*    onChange={onEnteredSearchString}/>*/}
                 </div>
                 <div className={classes.sort_container}>
                     <label className={classes.lable}>

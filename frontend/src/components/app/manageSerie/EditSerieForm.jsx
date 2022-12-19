@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useState} from 'react'
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react'
 
 
 import InputText from "../../ui/form/InputText";
@@ -6,13 +6,16 @@ import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
 import InputNumber from "../../ui/form/InputNumber";
+import {useNavigate} from "react-router-dom";
+import Input from "../../ui/form/Input";
 // import {fetchData} from "../../../utils/api"
 
 import classes from "./ManageSerieForm.module.css";
+import {isNotEmpty} from "../../../utils/Validation";
 
 
 // https://mui.com/material-ui/react-autocomplete/#autocomplete-autofill for LabelPicker
-const ManageSerieForm = forwardRef ((props, ref) => {
+const EditSerieForm = forwardRef ((props, ref) => {
 
     let serie = props.editingSerie
 
@@ -25,6 +28,10 @@ const ManageSerieForm = forwardRef ((props, ref) => {
 
     const [errorTitle, isErrorTitle] = useState(false);
     const [errorSession, isErrorSession] = useState(false);
+
+    const serieNameRef = useRef(null);
+    const sessionRef = useRef(null);
+    const episodeRef = useRef(null);
 
     const titleHandler = (value) => {
         isErrorTitle(false);
@@ -109,23 +116,37 @@ const ManageSerieForm = forwardRef ((props, ref) => {
     return (
         <form className={classes.grid} onSubmit={submitHandler}>
             <div className={`${classes.grid_title_container} ${classes.item}`}>
-                <InputText
-                    placeholder='Serie Name'
-                    value={enteredTitle.value}
-                    error={errorTitle}
-                    onChange={titleHandler}/>
+                <Input tpye='text'
+                       name='SerieName'
+                       placeholder='Serie Name'
+                       validateObj={new isNotEmpty().setErrorText("Series need a name")}
+                       ref={serieNameRef}/>
+                {/*<InputText*/}
+                {/*    placeholder='Serie Name'*/}
+                {/*    value={enteredTitle.value}*/}
+                {/*    error={errorTitle}*/}
+                {/*    onChange={titleHandler}/>*/}
             </div>
 
             <div className={`${classes.grid_episode_season_container} ${classes.item}`}>
-                <InputNumber
-                    placeholder='Staffel'
-                    value={enteredSession.value}
-                    error={errorSession}
-                    onChange={sessionHandler}/>
-                <InputNumber
-                    placeholder='Folge'
-                    value={enteredEpisode.value}
-                    onChange={episodeHandler}/>
+                <Input tpye='number'
+                       name='Session'
+                       placeholder='Session'
+                       validateObj={new isNotEmpty().setErrorText("Series need a session number")}
+                       ref={sessionRef}/>
+                <Input tpye='number'
+                       name='Episode'
+                       placeholder='Episode'
+                       ref={episodeRef}/>
+                {/*<InputNumber*/}
+                {/*    placeholder='Staffel'*/}
+                {/*    value={enteredSession.value}*/}
+                {/*    error={errorSession}*/}
+                {/*    onChange={sessionHandler}/>*/}
+                {/*<InputNumber*/}
+                {/*    placeholder='Folge'*/}
+                {/*    value={enteredEpisode.value}*/}
+                {/*    onChange={episodeHandler}/>*/}
             </div>
 
             <div className={`${classes.grid_stars_container} ${classes.item}`}>
@@ -177,4 +198,4 @@ const ManageSerieForm = forwardRef ((props, ref) => {
     )
 })
 
-export default ManageSerieForm;
+export default EditSerieForm;
