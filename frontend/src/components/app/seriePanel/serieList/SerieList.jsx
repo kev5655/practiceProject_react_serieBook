@@ -5,26 +5,25 @@ import DetailSerie from "../DetailSerie"
 import BlurEffect from "../../../../store/blurEffect";
 
 import classes from './SerieList.module.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {uiAction} from "../../../../store/ui-slice";
 
 
 const SerieList = () => {
 
     const [detailSerie, setDetailSerie] = useState();
     const series = useSelector((state) => state.series.filteredItems)
-
-    const globalBlur = useContext(BlurEffect)
+    const dispatch = useDispatch();
 
 
     const onSerieClickHandler = (serie) => {
-        globalBlur.activateBlur();
+        dispatch(uiAction.enableBlurSerieList())
         setDetailSerie(serie);
     }
 
     const onOutSideClickHandler = () => {
-        setTimeout(() => {
-            globalBlur.deactivateBlur();
-        }, 250);
+        setDetailSerie('');
+        dispatch(uiAction.disableBlurSerieList())
     }
 
 
@@ -38,9 +37,9 @@ const SerieList = () => {
             ))}
             {
                 series.isEmpty &&
-                    <div className={classes.noSeries}><p>Please add a series via the plus symbol</p></div>
+                <div className={classes.noSeries}><p>Please add a series via the plus symbol</p></div>
             }
-            {globalBlur.isBlur && <DetailSerie
+            {detailSerie && <DetailSerie
                 serie={detailSerie}
                 onClickOutside={onOutSideClickHandler}
             />}
