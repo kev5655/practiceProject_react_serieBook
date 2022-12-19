@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import ManageSerieForm from "./ManageSerieForm";
+import EditSerieForm from "./EditSerieForm";
 import Card from "../../ui/Card";
 import InfoPopup from "../../ui/popup/InfoPopup";
 import IconBtn from "../../ui/form/IconBtn";
@@ -62,7 +62,7 @@ const ManageSeriePanel = (props) => {
                     onAccept={onAcceptDeletionClickHandler}/>
             }
             {
-                isEditing() && <ManageSerieForm
+                isEditing() && <EditSerieForm
                     ref={deleteRef}
                     editingSerie={props.editingSerie}
                     cancelBtnLabel='Cancel'
@@ -72,7 +72,7 @@ const ManageSeriePanel = (props) => {
                     onCancel={props.onCancel}/>
             }
             {
-                isAdd() && <ManageSerieForm
+                isAdd() && <EditSerieForm
                     editingSerie={emptySerie}
                     cancelBtnLabel='Cancel'
                     submitBtnLabel='Add'
