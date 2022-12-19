@@ -5,8 +5,8 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
 import {useDispatch} from "react-redux";
-import {seriesAction} from "../../../../store/series-slice";
-import IconBtn from "../../../ui/form/IconBtn";
+import {seriesAction} from "../../../store/series-slice";
+import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './Serie.module.css'
 

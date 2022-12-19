@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 
-import SerieList from "../components/app/seriePanel/serieList/SerieList";
+import SerieList from "../components/app/seriePanel/SerieList";
 
 import './SeriePanel.module.css'
 import Card from "../components/ui/Card";
-import Header from "../components/app/seriePanel/header/Header";
+import Header from "../components/app/seriePanel/Header";
 
 import classes from './SeriePanel.module.css'
-import FilterAndSort from "../components/app/seriePanel/header/FilterAndSort";
+import FilterAndSort from "../components/app/seriePanel/FilterAndSort";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSeries} from "../store/series-action";
 

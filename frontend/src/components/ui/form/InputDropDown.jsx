@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import {SORT_PARAMS} from "../../app/seriePanel/header/FilterAndSort";
+import {SORT_PARAMS} from "../../app/seriePanel/FilterAndSort";
 
 import classes from './InputDropDown.module.css'
 import inputStyles from './Input.module.css'

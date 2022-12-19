@@ -2,13 +2,13 @@ import React, {useEffect, useRef, useState} from 'react'
 
 import SearchIcon from '@mui/icons-material/Search';
 
-import InputText from "../../../ui/form/InputText";
-import InputDropDown from "../../../ui/form/InputDropDown";
-import {searchSerie, sortSerie} from "../../../../utils/searchSort";
+import InputText from "../../ui/form/InputText";
+import InputDropDown from "../../ui/form/InputDropDown";
+import {searchSerie, sortSerie} from "../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Input from "../../../ui/form/Input";
+import Input from "../../ui/form/Input";
 
 export const SORT_PARAMS = {
     BY_ABC: {value: 'by ABC', id: 1, valueName: 'title'},

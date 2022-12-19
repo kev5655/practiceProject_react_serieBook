@@ -3,7 +3,7 @@ import React from "react";
 import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-import IconBtn from "../../../ui/form/IconBtn";
+import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './Header.module.css'
 
