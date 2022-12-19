@@ -57,13 +57,13 @@ const SingUpFrom = (props) => {
                 <Input type='email'
                        name='SingUpEmail'
                        placeholder='Email'
-                       validateObj={new isEmail().setErrorText("Email is not Valid")}
+                       validateObj={new isEmail()}
                        ref={emailRef}/>
             </div>
             <div className={classes.form_password}>
                 <InputPassword name='SingUpPassword'
                                placeholder='Password'
-                               validateObj={new isPassword().setErrorText("Passwort is not Valid")}
+                               validateObj={new isPassword()}
                                ref={passwordRef}/>
             </div>
             {

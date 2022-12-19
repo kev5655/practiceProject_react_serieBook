@@ -1,12 +1,15 @@
 export class defaultValidator {
     errorText = 'defaultError'
+
     validate(value) {
         return true;
     }
-    setErrorText(text){
+
+    setErrorText(text) {
         return this
     }
-    getErrorText(){
+
+    getErrorText() {
         return this.errorText;
     }
 }
@@ -14,16 +17,19 @@ export class defaultValidator {
 export class isNotEmpty {
     errorText = ''
     isValid = false
+
     validate(value) {
         this.isValid = value.trim() !== '';
         return this.isValid;
     }
-    setErrorText(text){
+
+    setErrorText(text) {
         this.errorText = text;
         return this
     }
-    getErrorText(){
-        if(this.isValid) return ""
+
+    getErrorText() {
+        if (this.isValid) return ""
         return this.errorText
     }
 }
@@ -31,61 +37,79 @@ export class isNotEmpty {
 export class isUsername {
     errorText = ''
     isValid = false
+
     validate(value) {
         this.isValid = value.trim() !== '';
         return this.isValid;
     }
-    setErrorText(text){
+
+    setErrorText(text) {
         this.errorText = text;
         return this
     }
-    getErrorText(){
-        if(this.isValid) return ""
+
+    getErrorText() {
+        if (this.isValid) return ""
         return this.errorText
     }
 }
+
 // From https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript
 export class isEmail {
-    errorText = ''
+    errorText = "Email is not Valid"
     isValid = false
-    validate(value){
+
+    validate(value) {
         const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         const match = value.match(validRegex)
         this.isValid = match !== null// && new isNotEmpty().validate;
         return this.isValid;
     }
-    setErrorText(text){
-        this.errorText = text;
-        return this
-    }
-    getErrorText(){
-        if(this.isValid) return ""
+
+    getErrorText() {
+        if (this.isValid) return ""
         return this.errorText
     }
 }
+
 // From https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript
 export class isPassword {
-    errorText = ''
+    errorTexts = new Set()
     isValid = false
-    validate(value){
-        const lowerCaseRegex = /[a-z]/g;
-        const upperCaseRegex = /[A-Z]/g;
-        const numberRegex = /[0-9]/g;
-        const specialChars = /[^A-Za-z0-9]/g;
-        this.isValid = value.match(lowerCaseRegex) !== null
-            && value.match(upperCaseRegex) !== null
-            && value.match(numberRegex) !== null
-            && value.length >= 6
-            && value.match(specialChars) !== null;
+
+    validate(value) {
+        const letterRegex = /[A-Za-z]/g, numberRegex = /[0-9]/g;
+        let letterCase = true, hasNumber = true, hasEnoughLength = true;
+        this.errorTexts.clear();
+        this.errorTexts.add("Passwort must be have");
+        if (!value.match(letterRegex)) {
+            this.errorTexts.add("letter");
+            letterCase = false;
+        }
+        if (!value.match(numberRegex)) {
+            this.errorTexts.add("number");
+            hasNumber = false;
+        }
+        if (value.length < 6) {
+            this.errorTexts.add("more than 6 Characters")
+            hasEnoughLength = false;
+        }
+
+        this.isValid = letterCase && hasNumber && hasEnoughLength;
         return this.isValid;
     }
-    setErrorText(text){
-        this.errorText = text;
-        return this
-    }
-    getErrorText(){
-        if(this.isValid) return ""
-        return this.errorText
+
+    getErrorText() {
+        if (this.isValid) return "";
+        let errorText = '';
+        let arr = Array.from(this.errorTexts);
+        let lastIndex = arr.length - 1;
+        arr.forEach((text, index) => {
+            if(index === 0) return errorText = text
+            if (index === lastIndex && lastIndex > 1) errorText += " and " + text
+            else errorText += ", " + text;
+        });
+        return errorText
     }
 }
 
