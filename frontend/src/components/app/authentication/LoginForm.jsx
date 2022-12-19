@@ -15,7 +15,7 @@ import {isNotEmpty} from "../../../utils/Validation";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
-    const isLoginFailed = useSelector((state) => state.auth.loginFailed);
+    const loginError = useSelector((state) => state.auth.loginError);
     const isAuth = useSelector(state => state.auth.isAuth);
     const navigate = useNavigate();
     const usernameRef = useRef(null);
@@ -61,7 +61,7 @@ const LoginForm = () => {
                     />
                 </div>
                 {
-                    isLoginFailed && <p className={classes.form_errorMsg}>Logging Failed, Try again</p>
+                    loginError.isFailed && <p className={classes.form_errorMsg}>{loginError.errorText}</p>
                 }
                 <div className={classes.defaultsLogin}>
                     <p>Default Username: test</p>

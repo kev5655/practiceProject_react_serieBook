@@ -29,7 +29,8 @@ export const authRequest = (loggingData) => {
         }
 
         const catchError = (err) => {
-            dispatch(authActions.loginFailed())
+            dispatch(authActions.loginFailed({errorText: err.message}))
+            alert(err.message)
         }
 
 
@@ -59,9 +60,6 @@ export const singUpRequest = (singUpDate) => {
         }
 
         const catchError = (err) => {
-            if(err instanceof UnauthorizedError){
-                dispatch(authActions.singUpFailed({errorText: err.message}))
-            }
             dispatch(authActions.singUpFailed({errorText: err.message}))
             alert(err.message)
             console.log(err)

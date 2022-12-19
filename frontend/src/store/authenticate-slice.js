@@ -1,25 +1,25 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-
-const INIT_SingUpError = {
+const INIT_ERROR = {
     isFailed: false,
     errorText: ''
 };
+
 // ToDo update loginFailed to login Error like SingUpError
 const authenticateSlice = createSlice({
     name: 'authentication',
     initialState: {
         isAuth: false,
         isUserAvailable: false,
-        loginFailed: false,
-        singUpError: INIT_SingUpError,
+        loginError: INIT_ERROR,
+        singUpError: INIT_ERROR,
         access_token: null,
         refreshToken: null,
     },
     reducers: {
         login(state, action){
             state.isAuth = true;
-            state.singUpError = INIT_SingUpError;
+            state.singUpError = INIT_ERROR;
             state.access_token = action.payload.access_token;
             state.refreshToken = action.payload.refresh_token;
         },
@@ -28,11 +28,14 @@ const authenticateSlice = createSlice({
             state.access_token = null;
             state.refreshToken = null;
         },
-        loginFailed(state){
-            state.loginFailed = true;
+        loginFailed(state, action){
+            state.loginError.isFailed = true;
+            state.loginError.errorText = action.payload.errorText;
+
         },
         resetLoginFailed(state){
-            state.loginFailed = false;
+            state.loginError.isFailed = false;
+            state.loginError.errorText = '';
         },
         singUpFailed(state, action){
             state.singUpError.isFailed = true;
