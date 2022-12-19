@@ -6,15 +6,18 @@ import LoggingForm from "./LoggingForm";
 
 import SingUpFrom from "./SingUpFrom";
 import Btn from "../../ui/form/Btn";
+import {useDispatch} from "react-redux";
+import {authActions} from "../../../store/authenticate-slice";
 
 // ToDo update setLoginFailed
 const AuthenticationPanel = () => {
-
+    const dispatch = useDispatch();
     const [hasAccount, setHasAccount] = useState(true);
 
-    const switchLoginSingupClickHandler = () => {
+    const switchLoginSingUpClickHandler = () => {
         setHasAccount(!hasAccount);
-        //setLoggingFailed(false);
+        dispatch(authActions.resetLoginFailed())
+        dispatch(authActions.resetSingUpFailed())
     }
 
 
@@ -22,15 +25,17 @@ const AuthenticationPanel = () => {
     return (
         <Card className={classes.card}>
             <header className={classes.card_header}>
-                <h1>Logging</h1> {/* Global Styling in App.css */}
-                <Btn label={ !hasAccount
+                {
+                    hasAccount ? <h1>Login</h1> : <h1>Register</h1>
+                }
+                <Btn label={ hasAccount
                         ? "Registration"
-                        : "Logging" }
+                        : "Login" }
                      className={{
                          height: '50%',
                          width: '8rem'
                      }}
-                     onClick={switchLoginSingupClickHandler}/>
+                     onClick={switchLoginSingUpClickHandler}/>
             </header>
             {hasAccount && <LoggingForm/>}
             {!hasAccount && <SingUpFrom/>
