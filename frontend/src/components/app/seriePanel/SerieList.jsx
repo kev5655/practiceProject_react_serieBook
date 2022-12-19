@@ -1,8 +1,7 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 
 import Serie from "./Serie";
 import DetailSerie from "./DetailSerie"
-import BlurEffect from "../../../../store/blurEffect";
 
 import classes from './SerieList.module.css'
 import {useDispatch, useSelector} from "react-redux";

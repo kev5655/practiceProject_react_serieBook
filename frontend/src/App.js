@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react'
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import './App.css';
-import Panel from "./components/app/Panel";
 import {useDispatch, useSelector} from "react-redux";
 import SeriePanel from "./pages/SeriePanel";
 import AuthenticationPanel from "./pages/AuthenticationPanel";
 import {loadAuth} from "./store/authenticate-action";
-import ManageSeriePanel from "./components/app/manageSerie/ManageSeriePanel";
 import AuthRoute from "./components/Router/AuthRoute";
 import BlurLayout from "./components/layout/BlurLayout";
 
