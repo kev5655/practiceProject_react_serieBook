@@ -1,24 +1,5 @@
+import {ConnectionRefusedError, TokenError, UnauthorizedError} from "./Error";
 
-const BACKEND_ERRORS = {
-    USER_AVAILABLE: "401 UNAUTHORIZED",
-    TOKEN_EXPIRED: 'The Token has expired on'
-}
-
-export class TokenError extends Error {
-    static backendTokenError = [BACKEND_ERRORS.TOKEN_EXPIRED]
-    constructor(message) {
-        super(message);
-        this.name = "TokenError";
-    }
-}
-
-export class SingUpError extends Error {
-    static backendTokenError = [BACKEND_ERRORS.USER_AVAILABLE]
-    constructor(message) {
-        super(message);
-        this.name = "SingUpError"
-    }
-}
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
         if (requestConfig.headers['Content-Type'] === 'application/json') {
@@ -37,16 +18,21 @@ export const api = () => {
 
             const data = await response.json();
             if (data.error_message) {
-                if(TokenError.backendTokenError.find(error => data.error_message.match(error))){
+                alert("Backend has an error: ", data.error_message)
+                if(TokenError.backendErrors.find(error => data.error_message.match(error))){
                     throw new TokenError(data.error_message);
                 }
-                if(SingUpError.backendTokenError.find(error => data.error_message.match(error))){
-                    throw new SingUpError(data.error_message);
+                if(UnauthorizedError.backendErrors.find(error => data.error_message.match(error))){
+                    throw new UnauthorizedError(data.error_message);
                 }
+                alert("Another error in api.js: ", data.error_message);
             }
 
             resolveData(data);
         } catch (err) {
+            if(ConnectionRefusedError.backendErrors.find(error => err.message.match(error))){
+                return error(new ConnectionRefusedError(err.message))
+            }
             error(err);
         }
     };

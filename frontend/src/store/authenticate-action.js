@@ -1,6 +1,7 @@
-import {convert_JSObject_To_x_www_form_urlencoded, SingUpError} from "../utils/api";
+import {convert_JSObject_To_x_www_form_urlencoded} from "../utils/api";
 import {authActions} from './authenticate-slice'
 import {api} from '../utils/api'
+import {UnauthorizedError} from "../utils/Error";
 
 
 export const authRequest = (loggingData) => {
@@ -58,9 +59,10 @@ export const singUpRequest = (singUpDate) => {
         }
 
         const catchError = (err) => {
-            if(err instanceof SingUpError){
+            if(err instanceof UnauthorizedError){
                 dispatch(authActions.singUpFailed({errorText: err.message}))
             }
+            dispatch(authActions.singUpFailed({errorText: err.message}))
             alert(err.message)
             console.log(err)
         }
@@ -89,6 +91,7 @@ export const isUsernameAvailable = (username) => {
         }
 
         const catchError = (err) => {
+            dispatch(authActions.singUpFailed({errorText: err.message}))
             alert(err.message)
             console.log(err)
         }

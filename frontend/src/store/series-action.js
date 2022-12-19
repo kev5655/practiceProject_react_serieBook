@@ -1,7 +1,8 @@
 
 import { seriesAction } from './series-slice'
-import {api, TokenError} from "../utils/api";
+import {api} from "../utils/api";
 import {authActions} from "./authenticate-slice";
+import {TokenError} from "../utils/Error";
 
 
 export const fetchSeries = (access_token) => {
