@@ -10,6 +10,7 @@ const authenticateSlice = createSlice({
     name: 'authentication',
     initialState: {
         isAuth: false,
+        isUserAvailable: false,
         loginFailed: false,
         singUpError: INIT_SingUpError,
         access_token: null,
@@ -33,6 +34,9 @@ const authenticateSlice = createSlice({
         singUpFailed(state, action){
             state.singUpError.isFailed = true
             state.singUpError.errorText = action.payload.errorText
+        },
+        setIsUserAvailable(state, action){
+            state.isUserAvailable = action.payload.isUserAvailable
         }
 
     }

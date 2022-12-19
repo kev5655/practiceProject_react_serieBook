@@ -71,6 +71,33 @@ export const singUpRequest = (singUpDate) => {
     }
 }
 
+export const isUsernameAvailable = (username) => {
+    return async (dispatch) => {
+        const {sendRequestFN: sendIsUserAvailableRequest} = api();
+
+        const requestConfig = {
+            url: 'http://localhost:8081/api/user/available',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: username
+        }
+
+        const extractor = (isUserAvailable) => {
+            dispatch(authActions.setIsUserAvailable(isUserAvailable))
+        }
+
+        const catchError = (err) => {
+            alert(err.message)
+            console.log(err)
+        }
+
+
+        await sendIsUserAvailableRequest(requestConfig, extractor, catchError)
+    }
+}
+
 export const loadAuth = () => {
     return (dispatch) => {
         const refresh_token = sessionStorage.getItem("refreshToken")
