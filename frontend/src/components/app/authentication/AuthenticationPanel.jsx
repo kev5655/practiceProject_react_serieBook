@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Card from "../../ui/Card";
 
 import classes from "./AuthenticationPanel.module.css";
-import LoggingForm from "./LoggingForm";
+import LoginForm from "./LoginForm";
 
 import SingUpFrom from "./SingUpFrom";
 import Btn from "../../ui/form/Btn";
@@ -37,7 +37,7 @@ const AuthenticationPanel = () => {
                      }}
                      onClick={switchLoginSingUpClickHandler}/>
             </header>
-            {hasAccount && <LoggingForm/>}
+            {hasAccount && <LoginForm/>}
             {!hasAccount && <SingUpFrom/>
             }
         </Card>

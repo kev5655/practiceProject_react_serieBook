@@ -13,7 +13,7 @@ import {isNotEmpty} from "../../../utils/Validation";
 // const isNotEmpty = (value) => value.trim() !== '';
 
 
-const LoggingForm = () => {
+const LoginForm = () => {
     const dispatch = useDispatch();
     const isLoginFailed = useSelector((state) => state.auth.loginFailed);
     const isAuth = useSelector(state => state.auth.isAuth);
@@ -82,4 +82,4 @@ const LoggingForm = () => {
     );
 }
 
-export default LoggingForm;
+export default LoginForm;
