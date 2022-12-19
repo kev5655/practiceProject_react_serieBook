@@ -70,8 +70,6 @@ const FilterAndSort = (props) => {
                         name='searchTerm'
                         placeholder='Search Series'
                         ref={searchTermRef}/>
-                    {/*<InputText*/}
-                    {/*    onChange={onEnteredSearchString}/>*/}
                 </div>
                 <div className={classes.sort_container}>
                     <label className={classes.lable}>

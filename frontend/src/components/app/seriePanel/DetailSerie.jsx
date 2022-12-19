@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 
 import Popup from "reactjs-popup";
 
-//import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 import Card from "../../ui/Card";
 
