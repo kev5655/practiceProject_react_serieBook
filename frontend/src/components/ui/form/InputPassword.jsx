@@ -6,25 +6,31 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import classes from './Input.module.css'
 import IconBtn from "./IconBtn";
 import useInput from "../../../hooks/use-input";
+import {defaultValidator} from "../../../utils/Validation";
 
 
 const InputPassword = forwardRef ((props, ref) => {
-    const {initValue, name, maxLength, placeholder, validateFn} = props
+    const {initValue, name, maxLength, placeholder, validateObj} = props
 
     const [inputType, setInputType] = useState("password");
     const {
         value,
-        isValid,
+        validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         reset,
-    } = useInput(initValue ?? '', validateFn ?? (() => true));
+    } = useInput(initValue ?? '', validateObj ?? new defaultValidator());
+
+    const [displayError, setDisplayError] = useState({isError: false, text: ''});
 
     useImperativeHandle(ref, () => ({
-        isValid: isValid,
+        isValid: validator.isValid,
         value: value,
+        onSubmit: () => {
+            setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
+        },
         reset: () => reset()
     }))
 
@@ -61,6 +67,11 @@ const InputPassword = forwardRef ((props, ref) => {
                     icon={VisibilityOffIcon}
                     className={classes.icon}
                     onClick={onVisibleClickHandler}/>
+            }
+            { displayError.isError &&
+                <p>
+                    {displayError.text}
+                </p>
             }
         </>
     );

@@ -2,28 +2,38 @@ import React, {forwardRef, useImperativeHandle, useState} from 'react'
 
 import classes from "./Input.module.css"
 import useInput from "../../../hooks/use-input";
+import {defaultValidator} from "../../../utils/Validation";
+
+
 
 const Input = forwardRef((props, ref) => {
-    const {initValue, type, name, maxLength, minNumber, placeholder, validateFn} = props
+    const {initValue, type, name, maxLength, minNumber, placeholder, validateObj, backendValidator} = props
 
     const {
         value,
-        isValid,
+        validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         reset,
-    } = useInput(initValue ?? '', validateFn ?? (() => true));
+    } = useInput(initValue ?? '', validateObj ?? new defaultValidator(), backendValidator);
+
+    const [displayError, setDisplayError] = useState({isError: false, text: ''});
+
 
     useImperativeHandle(ref, () => ({
-        isValid: isValid,
+        isValid: validator.isValid,
         value: value,
-        reset: () => reset(),
+        onSubmit: () => {
+            setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
+        },
+        reset: () => reset()
     }));
 
 
     return (
+        <>
         <input
             className={`${classes.input} ${hasError && classes.error}`}
             type={type}
@@ -36,6 +46,12 @@ const Input = forwardRef((props, ref) => {
             onBlur={inputBlurHandler}
             onFocus={inputFocusHandler}
         />
+            { displayError.isError &&
+                <p>
+                    {displayError.text}
+                </p>
+            }
+        </>
     );
 })
 
