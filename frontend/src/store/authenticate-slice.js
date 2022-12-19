@@ -18,25 +18,32 @@ const authenticateSlice = createSlice({
     },
     reducers: {
         login(state, action){
-            state.isAuth = true
-            state.singUpError = INIT_SingUpError
-            state.access_token = action.payload.access_token
-            state.refreshToken = action.payload.refresh_token
+            state.isAuth = true;
+            state.singUpError = INIT_SingUpError;
+            state.access_token = action.payload.access_token;
+            state.refreshToken = action.payload.refresh_token;
         },
         logout(state){
-            state.isAuth = false
-            state.access_token = null
-            state.refreshToken = null
+            state.isAuth = false;
+            state.access_token = null;
+            state.refreshToken = null;
         },
         loginFailed(state){
-            state.loginFailed = true
+            state.loginFailed = true;
+        },
+        resetLoginFailed(state){
+            state.loginFailed = false;
         },
         singUpFailed(state, action){
-            state.singUpError.isFailed = true
-            state.singUpError.errorText = action.payload.errorText
+            state.singUpError.isFailed = true;
+            state.singUpError.errorText = action.payload.errorText;
+        },
+        resetSingUpFailed(state){
+            state.singUpError.isFailed = false;
+            state.singUpError.errorText = "";
         },
         setIsUserAvailable(state, action){
-            state.isUserAvailable = action.payload.isUserAvailable
+            state.isUserAvailable = action.payload.isUserAvailable;
         }
 
     }
