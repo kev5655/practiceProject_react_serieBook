@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef} from 'react'
 
-import InputText from "../../ui/form/InputText";
 import InputPassword from "../../ui/form/InputPassword";
 import Input from "../../ui/form/Input";
 import Btn from "../../ui/form/Btn";

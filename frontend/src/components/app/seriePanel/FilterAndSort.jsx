@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react'
 
 import SearchIcon from '@mui/icons-material/Search';
 
-import InputText from "../../ui/form/InputText";
 import InputDropDown from "../../ui/form/InputDropDown";
 import {searchSerie, sortSerie} from "../../../utils/searchSort";
 

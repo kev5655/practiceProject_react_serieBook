@@ -1,5 +1,4 @@
-import React, {useRef, useState} from 'react'
-import InputText from "../../ui/form/InputText";
+import React, {useRef} from 'react'
 import InputPassword from "../../ui/form/InputPassword";
 
 import classes from "./LoggingForm.module.css"
@@ -9,9 +8,6 @@ import {authRequest} from "../../../store/authenticate-action";
 import {useNavigate} from "react-router-dom";
 import Input from "../../ui/form/Input";
 import {isNotEmpty} from "../../../utils/Validation";
-
-// const isNotEmpty = (value) => value.trim() !== '';
-
 
 const LoginForm = () => {
     const dispatch = useDispatch();
