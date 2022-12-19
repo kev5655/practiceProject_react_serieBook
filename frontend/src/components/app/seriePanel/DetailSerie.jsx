@@ -63,29 +63,25 @@ const DetailSerie = (props) => {
 
                     <div className={classes.dateGrid}>
                         <p className={`${classes.dateGrid_item_desc_startDate} ${classes.dateGrid_desc_date}`}>
-                            Date</p>
+                            Start Date</p>
                         <p className={` ${classes.dateGrid_item_desc_endDate} ${classes.dateGrid_desc_date} `}>End
                             Date</p>
 
                         <div className={` ${classes.dateGrid_item_value_startDate} ${classes.skewCard}`}>
-                            <div className={classes.skewToZero}>
-                                {isUnknown(startDate) ?
-                                    <p>{new Date(startDate).toLocaleDateString()}</p> :
-                                    <p>unknown</p>}
-                            </div>
+                            {isUnknown(startDate) ?
+                                <p>{new Date(startDate).toLocaleDateString()}</p> :
+                                <p>unknown</p>}
                         </div>
                         <div className={` ${classes.dateGrid_item_value_endDate} ${classes.skewCard}`}>
-                            <div className={classes.skewToZero}>
-                                {isUnknown(endDate) ?
-                                    <p>{new Date (endDate).toLocaleDateString()}</p> :
-                                    <p>unknown</p>}
-                            </div>
+                            {isUnknown(endDate) ?
+                                <p>{new Date(endDate).toLocaleDateString()}</p> :
+                                <p>unknown</p>}
                         </div>
                     </div>
                     <div className={classes.grid_container_createdDate}>
                         <div>
                             <p>Created Date: </p>
-                            <p>{new Date (createdDate).toLocaleString()}</p>
+                            <p>{new Date(createdDate).toLocaleString()}</p>
                         </div>
                         <div>
                             <p>Last Modification: </p>

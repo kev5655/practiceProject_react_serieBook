@@ -6,7 +6,7 @@ import AuthenticationPanel from "./authentication/AuthenticationPanel";
 
 import { getJwtToken, setJwtToken, setRefreshToken } from "../../utils/jwt"
 
-import classes from './Panel.module.css'
+// import classes from './Panel.module.css'
 import BlurEffect from "../../store/blurEffect";
 
 
