@@ -22,15 +22,15 @@ export const fetchSeries = (access_token) => {
         const extractor = (series) => {
             series.forEach((serie) => {
                 if (serie.startDate) {
-                    serie.startDate = new Date(parseInt(serie.startDate) + 3600000);
+                    serie.startDate = parseInt(serie.startDate) + 3600000;
                 }
 
                 if (serie.endDate) {
-                    serie.endDate = new Date(parseInt(serie.endDate) + 3600000);
+                    serie.endDate = parseInt(serie.endDate) + 3600000;
                 }
 
-                serie.createdDate = new Date(parseInt(serie.createdDate) + 3600000);
-                serie.lastModifiedDate = new Date(parseInt(serie.lastModifiedDate) + 3600000);
+                serie.createdDate = parseInt(serie.createdDate) + 3600000;
+                serie.lastModifiedDate = parseInt(serie.lastModifiedDate) + 3600000;
 
             })
             dispatch(

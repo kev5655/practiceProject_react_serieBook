@@ -11,8 +11,9 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
 
 const DetailSerie = (props) => {
+    const {onClickOutside} = props;
+    const {title, session, episode, stars, startDate, endDate, createdDate, lastModifiedDate} = props.serie;
     const [openPopUp, setOpenPopUp] = useState(true);
-
 
     const createArray = (fillUp, length) => {
         let array = new Array(length).fill(1)
@@ -23,7 +24,7 @@ const DetailSerie = (props) => {
     const onClose = (event) => {
         event.preventDefault();
         setOpenPopUp(false);
-        props.onClickOutside();
+        onClickOutside();
     }
 
     const isUnknown = (value) => {
@@ -36,22 +37,22 @@ const DetailSerie = (props) => {
                   id='detailSerie'
             >
                 <header className={classes.header}>
-                    <p className={classes.header_title}>{props.serie.title}</p>
+                    <p className={classes.header_title}>{title}</p>
                 </header>
                 <section className={classes.gird}>
                     <div className={classes.grid_container_session}>
                         <p>Session</p>
-                        <p>{props.serie.session} </p>
+                        <p>{session} </p>
                     </div>
                     <div className={classes.gird_container_episode}>
                         <p>Episode</p>
-                        {isUnknown(props.serie.episode) ?
-                            <p>{props.serie.episode}</p> :
+                        {isUnknown(episode) ?
+                            <p>{episode}</p> :
                             <p>unknown</p>}
                     </div>
 
                     <div className={classes.grid_stars}>
-                        {createArray(props.serie.stars, 5).map((value, i) => {
+                        {createArray(stars, 5).map((value, i) => {
                             if (value === 1) {
                                 return (<StarRoundedIcon className={classes.serie_secondRow_star} key={i}/>)
                             } else {
@@ -61,22 +62,22 @@ const DetailSerie = (props) => {
                     </div>
 
                     <div className={classes.dateGrid}>
-                        <p className={`${classes.dateGrid_item_desc_startDate} ${classes.dateGrid_desc_date}`}>Start
+                        <p className={`${classes.dateGrid_item_desc_startDate} ${classes.dateGrid_desc_date}`}>
                             Date</p>
                         <p className={` ${classes.dateGrid_item_desc_endDate} ${classes.dateGrid_desc_date} `}>End
                             Date</p>
 
                         <div className={` ${classes.dateGrid_item_value_startDate} ${classes.skewCard}`}>
                             <div className={classes.skewToZero}>
-                                {isUnknown(props.serie.startDate) ?
-                                    <p>{props.serie.startDate.toLocaleDateString()}</p> :
+                                {isUnknown(startDate) ?
+                                    <p>{new Date(startDate).toLocaleDateString()}</p> :
                                     <p>unknown</p>}
                             </div>
                         </div>
                         <div className={` ${classes.dateGrid_item_value_endDate} ${classes.skewCard}`}>
                             <div className={classes.skewToZero}>
-                                {isUnknown(props.serie.endDate) ?
-                                    <p>{props.serie.endDate.toLocaleDateString()}</p> :
+                                {isUnknown(endDate) ?
+                                    <p>{new Date (endDate).toLocaleDateString()}</p> :
                                     <p>unknown</p>}
                             </div>
                         </div>
@@ -84,11 +85,11 @@ const DetailSerie = (props) => {
                     <div className={classes.grid_container_createdDate}>
                         <div>
                             <p>Created Date: </p>
-                            <p>{props.serie.createdDate.toLocaleString()}</p>
+                            <p>{new Date (createdDate).toLocaleString()}</p>
                         </div>
                         <div>
                             <p>Last Modification: </p>
-                            <p>{props.serie.lastModifiedDate.toLocaleString()}</p>
+                            <p>{new Date(lastModifiedDate).toLocaleString()}</p>
                         </div>
                     </div>
                 </section>
