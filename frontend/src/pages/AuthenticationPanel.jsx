@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
-import Card from "../../ui/Card";
+import Card from "../components/ui/Card";
 
 import classes from "./AuthenticationPanel.module.css";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/app/authentication/LoginForm";
 
-import SingUpFrom from "./SingUpFrom";
-import Btn from "../../ui/form/Btn";
+import SingUpFrom from "../components/app/authentication/SingUpFrom";
+import Btn from "../components/ui/form/Btn";
 import {useDispatch} from "react-redux";
-import {authActions} from "../../../store/authenticate-slice";
+import {authActions} from "../store/authenticate-slice";
 
 // ToDo update setLoginFailed
 const AuthenticationPanel = () => {

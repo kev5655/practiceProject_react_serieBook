@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import SeriePanel from "./seriePanel/SeriePanel";
+import SeriePanel from "../../pages/SeriePanel";
 import ManageSeriePanel from "./manageSerie/ManageSeriePanel";
-import AuthenticationPanel from "./authentication/AuthenticationPanel";
+import AuthenticationPanel from "../../pages/AuthenticationPanel";
 
 import { getJwtToken, setJwtToken, setRefreshToken } from "../../utils/jwt"
 
