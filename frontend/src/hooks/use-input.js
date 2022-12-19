@@ -65,7 +65,7 @@ const useInput = (initValue, validator, backendValidator) => {
         dispatch({ type: ACTION.INPUT, value: event.target.value });
     };
 
-    const inputBlurHandler = (event) => {
+    const inputBlurHandler = () => {
         dispatch({ type: ACTION.BLUR });
     };
 
