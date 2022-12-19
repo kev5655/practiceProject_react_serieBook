@@ -8,11 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {authRequest} from "../../../store/authenticate-action";
 import {useNavigate} from "react-router-dom";
 import Input from "../../ui/form/Input";
+import {isNotEmpty} from "../../../utils/Validation";
 
-const isNotEmpty = (value) => value.trim() !== '';
+// const isNotEmpty = (value) => value.trim() !== '';
 
-// ToDo Validate User input by empty values
-// Evtl. use use-input hook
+
 const LoggingForm = () => {
     const dispatch = useDispatch();
     const isLoginFailed = useSelector((state) => state.auth.loginFailed);
@@ -21,15 +21,14 @@ const LoggingForm = () => {
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
 
-    // const [enteredUsername, setEnteredUsername] = useState();
-    const [enteredPassword, setEnteredPassword] = useState();
-
     if (isAuth) {
         navigate('/series')
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
+        usernameRef.current.onSubmit();
+        passwordRef.current.onSubmit();
         if(!usernameRef.current.isValid) return;
         if(!passwordRef.current.isValid) return;
 
@@ -50,20 +49,24 @@ const LoggingForm = () => {
                         type='text'
                         name='Username'
                         placeholder='Username'
-                        validateFn={isNotEmpty}
+                        validateObj={new isNotEmpty().setErrorText("Username is Empty")}
                         ref={usernameRef}/>
                 </div>
                 <div className={classes.form_password}>
                     <InputPassword
                         name='LoginPassword'
                         placeholder='Password'
-                        validateFn={isNotEmpty}
+                        validateObj={new isNotEmpty().setErrorText("Password is Empty")}
                         ref={passwordRef}
                     />
                 </div>
                 {
                     isLoginFailed && <p className={classes.form_errorMsg}>Logging Failed, Try again</p>
                 }
+                <div className={classes.defaultsLogin}>
+                    <p>Default Username: test</p>
+                    <p>Default Password: 1234</p>
+                </div>
                 <div className={classes.form_button}>
                     <Btn
                         label="Logging"
@@ -74,10 +77,7 @@ const LoggingForm = () => {
                     />
                 </div>
             </form>
-            <div className={classes.defaultsLogin}>
-                <p>Default Username: test</p>
-                <p>Default Password: 1234</p>
-            </div>
+
         </>
     );
 }

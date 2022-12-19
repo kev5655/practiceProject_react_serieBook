@@ -5,68 +5,44 @@ import InputPassword from "../../ui/form/InputPassword";
 import Input from "../../ui/form/Input";
 import Btn from "../../ui/form/Btn";
 
-// import {fetchData} from "../../../utils/api";
 
 import classes from "./SingUpForm.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {singUpRequest} from "../../../store/authenticate-action";
+import {isUsernameAvailable, singUpRequest} from "../../../store/authenticate-action";
+import {isEmail, isNotEmpty, isPassword} from "../../../utils/Validation";
 
-const isNotEmpty = (value) => value.trim() !== '';
-// From https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript
-const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?: \.[a-zA-Z0-9-]+)*$/;
-const isEmail = (value) => value.match(validRegex) && isNotEmpty(value);
 
-const lowerCaseRegex = /[a-z]/g;
-const upperCaseRegex = /[A-Z]/g;
-const numberRegex = /[0-9]/g;
-const specialChars = /[^A-Za-z0-9]/g;
-const isPassword = (value) => { return value.match(lowerCaseRegex)
-    && value.match(upperCaseRegex)
-    && value.match(numberRegex)
-    && value.length >= 6
-    && value.match(specialChars);
-
-}
 
 const SingUpFrom = (props) => {
 
-    const [enteredUsername, setEnteredUsername] = useState({value: "", valid: true});
-    const [enteredEmail, setEnteredEmail] = useState({value: "", valid: true}); //{value: "", valid: false}
-    const [enteredPassword, setEnteredPassword] = useState({value: "", valid: true});
-    const [errorDisplayer, setErrorDisplayer] = useState({value: false, msg: ""});
     const dispatch = useDispatch();
     const singUpError = useSelector((state) => state.auth.singUpError);
     const usernameRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
-    const usernameHandler = (enteredValue) => {
-        setEnteredUsername(prevState => ({...prevState, value: enteredValue}))
-    }
 
-    useEffect(() => {
-        const identifier = setTimeout(async () => {
-            let body = JSON.stringify({username: enteredUsername.value});
-            // let response = await fetchData('/api/user/available/', 'Post', body);
-            // console.log("Is User Valid: " + response.isUserAvailable);
-            // setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
-        }, 500);
 
-        return () => {
-            clearTimeout(identifier);
-        };
-    }, [enteredUsername.value]);
 
-    const emailHandler = (enteredValue) => {
-        setEnteredEmail(prevState => ({...prevState, value: enteredValue}));
-    }
+    //  useEffect(() => {
+    //     const identifier = setTimeout(async () => {
+    //         let body = JSON.stringify({username: enteredUsername.value});
+    //         // let response = await fetchData('/api/user/available/', 'Post', body);
+    //         // console.log("Is User Valid: " + response.isUserAvailable);
+    //         // setEnteredUsername(prevState => ({...prevState, valid: response.isUserAvailable}))
+    //     }, 500);
+    //
+    //     return () => {
+    //         clearTimeout(identifier);
+    //     };
+    // }, [enteredUsername.value]);
 
-    const passwordHandler = (enteredValue) => {
-        setEnteredPassword(prevState => ({...prevState, value: enteredValue}))
-    }
 
     const submitHandler = (e) => {
         e.preventDefault()
+        usernameRef.current.onSubmit();
+        emailRef.current.onSubmit();
+        passwordRef.current.onSubmit();
         if(!usernameRef.current.isValid) return;
         if(!emailRef.current.isValid) return;
         if(!passwordRef.current.isValid) return;
@@ -74,8 +50,8 @@ const SingUpFrom = (props) => {
 
         dispatch(singUpRequest({
             username: usernameRef.current.value,
-            password: emailRef.current.value,
-            email: passwordRef.current.value
+            email: emailRef.current.value,
+            password: passwordRef.current.value
         }))
         // let error = validateForm();
         // const loggingValue = {
@@ -150,7 +126,8 @@ const SingUpFrom = (props) => {
                 <Input type='text'
                        name='SingUpUsername'
                        placeholder='Username'
-                       validateFn={isNotEmpty}
+                       validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                       backendValidator={isUsernameAvailable}
                        ref={usernameRef}/>
                 {/*<InputText*/}
                 {/*    error={! enteredUsername.valid}*/}
@@ -161,8 +138,8 @@ const SingUpFrom = (props) => {
                 <Input type='email'
                        name='SingUpEmail'
                        placeholder='Email'
-                       validateFn={isEmail}
-                       ref={passwordRef}/>
+                       validateObj={new isEmail().setErrorText("Email is not Valid")}
+                       ref={emailRef}/>
                 {/*<InputText*/}
                 {/*    error={! enteredEmail.valid}*/}
                 {/*    placeholder='Email'*/}
@@ -171,7 +148,7 @@ const SingUpFrom = (props) => {
             <div className={classes.form_password}>
                 <InputPassword name='SingUpPassword'
                                placeholder='Password'
-                               validateFn={isPassword}
+                               validateObj={new isPassword().setErrorText("Passwort is not Valid")}
                                ref={passwordRef}/>
                 {/*<InputPassword*/}
                 {/*    error={! enteredPassword.valid}*/}
