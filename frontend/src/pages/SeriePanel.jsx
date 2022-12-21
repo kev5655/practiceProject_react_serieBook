@@ -12,7 +12,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchSeries} from "../store/series-action";
 
 const SeriePanel = (props) => {
-    const [isFilterActive, setFilterActive] = useState(false);
     const dispatch = useDispatch();
     const access_token = useSelector((state) => state.auth.access_token)
 
@@ -24,10 +23,6 @@ const SeriePanel = (props) => {
     return (<>
         <Card className={classes.header_card}>
             <Header openAddForm={props.openAddForm}/>
-            {/*<FilterAndSort*/}
-            {/*    isFilterActive={isFilterActive}*/}
-            {/*    serieList={props.serieList}*/}
-            {/*    onCompileSeire={onCompileHandler}/>*/}
         </Card>
 
         <Card className={classes.serieList_card}>

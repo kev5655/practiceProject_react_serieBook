@@ -1,7 +1,5 @@
 import {useEffect, useReducer} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {authActions} from "../store/authenticate-slice";
-import {isUsernameAvailable} from "../store/authenticate-action";
 
 const ACTION = {
     INPUT: 0,

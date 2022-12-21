@@ -10,7 +10,6 @@ import FilterAndSort from "./FilterAndSort";
 
 
 const Header = (props) => {
-
     const [isFilterActive, setFilterActive] = useState(false);
 
     const onFilterClickHandler = () => {

@@ -22,7 +22,7 @@ export const SORT_PARAMS = {
 }
 
 
-const FilterAndSort = (props) => {
+const FilterAndSort = () => {
 
     const dispatch = useDispatch();
 
