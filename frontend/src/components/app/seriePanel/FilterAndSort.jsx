@@ -3,11 +3,12 @@ import React, {useEffect, useRef, useState} from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 
 import InputDropDown from "../../ui/form/InputDropDown";
-import {searchSerie, sortSerie} from "../../../utils/searchSort";
 
 import classes from './FilterAndSort.module.css'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Input from "../../ui/form/Input";
+import {useDispatch} from "react-redux";
+import {searchSerie, sortSeries} from "../../../store/series-action";
 
 export const SORT_PARAMS = {
     BY_ABC: {value: 'by ABC', id: 1, valueName: 'title'},
@@ -23,41 +24,17 @@ export const SORT_PARAMS = {
 
 const FilterAndSort = (props) => {
 
-    let startSerieList = props.serieList;
-    const [isActive, setIsActive] = useState(props.isFilterActive);
-    const searchTermRef = useRef(null);
+    const dispatch = useDispatch();
 
-    let searchInput = "";
-    let sortParam = SORT_PARAMS.BY_LAST_MODIFIED;
-
-
-    useEffect(() => {
-        onEnteredSortParam(sortParam)
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        setIsActive(props.isFilterActive)
-    }, [props.isFilterActive])
-
-    const onEnteredSearchString = (str) => {
-        searchInput = str;
-        onCompilingSerie();
+    const onEnteredSearchParam = (searchParam) => {
+        dispatch(searchSerie(searchParam))
     }
 
-    const onEnteredSortParam = (sort_param) => {
-        sortParam = sort_param;
-        onCompilingSerie();
-    }
-
-    const onCompilingSerie = () => {
-        let serieList = searchSerie(startSerieList, searchInput)
-        serieList = sortSerie(serieList, sortParam)
-        props.onCompileSeire(serieList);
+    const onEnteredSortParam = (sortParam) => {
+        dispatch(sortSeries(sortParam))
     }
 
     return (
-        isActive &&
         <section className={classes.card}>
             <div className={classes.flex_container}>
                 <div className={classes.search_container}>
@@ -69,7 +46,7 @@ const FilterAndSort = (props) => {
                         type='text'
                         name='searchTerm'
                         placeholder='Search Series'
-                        ref={searchTermRef}/>
+                        onChange={onEnteredSearchParam}/>
                 </div>
                 <div className={classes.sort_container}>
                     <label className={classes.lable}>

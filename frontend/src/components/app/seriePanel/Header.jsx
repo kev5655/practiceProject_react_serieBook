@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -6,12 +6,15 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './Header.module.css'
+import FilterAndSort from "./FilterAndSort";
 
 
 const Header = (props) => {
 
+    const [isFilterActive, setFilterActive] = useState(false);
+
     const onFilterClickHandler = () => {
-        props.onFilter();
+        setFilterActive(!isFilterActive);
     }
 
     const switchToAddFromHandler = () => {
@@ -19,15 +22,18 @@ const Header = (props) => {
     }
 
     return (
-        <article className={classes.container}>
-            <h1>Serie Liste</h1> {/* Global Styling in App.css */}
-            <div className={classes.icon_container}>
-                <IconBtn icon={FilterListIcon}
-                         onClick={onFilterClickHandler}/>
-                <IconBtn icon={AddIcon}
-                         onClick={switchToAddFromHandler}/>
-            </div>
-        </article>
+        <>
+            <article className={classes.container}>
+                <h1>Serie Liste</h1> {/* Global Styling in App.css */}
+                <div className={classes.icon_container}>
+                    <IconBtn icon={FilterListIcon}
+                             onClick={onFilterClickHandler}/>
+                    <IconBtn icon={AddIcon}
+                             onClick={switchToAddFromHandler}/>
+                </div>
+            </article>
+            {isFilterActive && <FilterAndSort/>}
+        </>
     )
 }
 

@@ -1,4 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
+import {sortSeries} from "./series-action";
+
 
 
 const seriesSlice = createSlice({
@@ -12,7 +15,7 @@ const seriesSlice = createSlice({
     reducers: {
         loadSerie(state, action){
             state.items = action.payload.items
-            state.filteredItems = action.payload.items
+            //state.filteredItems = action.payload.items
             state.totalQuantity = action.payload.items.length
         },
         addSerie(state, action) {
@@ -25,13 +28,7 @@ const seriesSlice = createSlice({
 
         },
         updateSerie(state, action){
-
-        },
-        sortSeries(state, action) {
-
-        },
-        filterSerie(state, action) {
-
+            state.filteredItems = action.payload.series;
         }
     }
 })

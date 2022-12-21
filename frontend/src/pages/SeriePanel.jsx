@@ -21,23 +21,13 @@ const SeriePanel = (props) => {
     }, [dispatch, access_token])
 
 
-    const onFilterClickHandler = () => {
-        setFilterActive(!isFilterActive)
-    }
-
-    const onCompileHandler = () => {
-
-    }
-
     return (<>
-
         <Card className={classes.header_card}>
-            <Header onFilter={onFilterClickHandler}
-                    openAddForm={props.openAddForm}/>
-            <FilterAndSort
-                isFilterActive={isFilterActive}
-                serieList={props.serieList}
-                onCompileSeire={onCompileHandler}/>
+            <Header openAddForm={props.openAddForm}/>
+            {/*<FilterAndSort*/}
+            {/*    isFilterActive={isFilterActive}*/}
+            {/*    serieList={props.serieList}*/}
+            {/*    onCompileSeire={onCompileHandler}/>*/}
         </Card>
 
         <Card className={classes.serieList_card}>
