@@ -365,7 +365,7 @@ settings.py
 #Java Maven Spring Boot
 
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+!back-end/.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -490,8 +490,8 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
+back-end/.mvn/timing.properties
+back-end/.mvn/wrapper/maven-wrapper.jar
 
 ### Windows ###
 # Windows thumbnail cache files
