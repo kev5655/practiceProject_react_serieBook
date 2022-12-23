@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 
 @Entity
 @Setter
@@ -16,7 +18,7 @@ import java.sql.Timestamp;
 public class Serie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String title;
     private int session;

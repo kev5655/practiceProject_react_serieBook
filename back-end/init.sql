@@ -57,8 +57,8 @@ VALUES (3, 'admin@admin.com',
         '$2a$10$fdz71Su6F8DNpNzf8Jjt5.HND.hR7FZA8EBzDChMEHjOM6ftw6v5C',
         'admin');
 
-# REPLACE INTO app_user(id, email, password, username)
-#     VALUE (4, 'test@test.com', "", 'test');
+REPLACE INTO app_user(id, email, password, username)
+    VALUE (4, 'test@test.com', '$2a$10$eEjwJG.LBfa/S1w0/SSLgOnZZZiRhR5C5tH81etJ5GpxaZaZx9Fxa', 'test');
 
 REPLACE INTO app_user_roles(app_user_id, roles_id)
 VALUES (3, 1);
