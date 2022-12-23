@@ -44,7 +44,7 @@ const FilterAndSort = () => {
                     </label>
                     <Input
                         type='text'
-                        name='searchTerm'
+                        name='searchParam'
                         placeholder='Search Series'
                         onChange={onEnteredSearchParam}/>
                 </div>

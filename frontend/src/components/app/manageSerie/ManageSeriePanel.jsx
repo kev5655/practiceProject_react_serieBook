@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -8,6 +8,8 @@ import InfoPopup from "../../ui/popup/InfoPopup";
 import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './ManageSeriePanel.module.css'
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 
 const emptySerie = {
@@ -21,17 +23,17 @@ const emptySerie = {
     createdDate: null
 }
 
-const ManageSeriePanel = (props) => {
+const ManageSeriePanel = () => {
 
     const [activeDeletion, setActiveDeletion] = useState(false);
-    const deleteRef = useRef();
+    const editSerie = useSelector(state => state.series.selectSerie)
+    const navigate = useNavigate();
 
-    const isEditing = () => {
-        return props.editingSerie !== undefined;
-    }
-    const isAdd = () => {
-        return props.editingSerie === undefined;
-    }
+    useEffect(() => {
+        if (editSerie.id === '') {
+            navigate('/series/add');
+        }
+    }, [editSerie.id])
 
     const onActivateDeletion = () => {
         setActiveDeletion(true);
@@ -39,8 +41,8 @@ const ManageSeriePanel = (props) => {
 
     const onAcceptDeletionClickHandler = () => {
         setActiveDeletion(false);
-        deleteRef.current.deleteSerie();
-        props.onDeletion(props.editingSerie)
+        // deleteRef.current.deleteSerie();
+        // props.onDeletion(props.editingSerie)
     }
 
     const onCancelDeletionClickHandler = () => {
@@ -51,9 +53,9 @@ const ManageSeriePanel = (props) => {
     return (
         <Card className={classes.card}>
             <header className={classes.card_header}>
-                <h1>{props.title}</h1> {/* Global Styling in App.css */}
-                {isEditing() && <IconBtn icon={DeleteIcon}
-                                         onClick={onActivateDeletion}/>}
+                <h1>{editSerie.id !== '' ? "Edit Serie" : "Add Serie"}</h1> {/* Global Styling in App.css */}
+                {editSerie.id !== '' && <IconBtn icon={DeleteIcon}
+                                                 onClick={onActivateDeletion}/>}
             </header>
 
             {
@@ -61,25 +63,7 @@ const ManageSeriePanel = (props) => {
                     onCancel={onCancelDeletionClickHandler}
                     onAccept={onAcceptDeletionClickHandler}/>
             }
-            {
-                isEditing() && <EditSerieForm
-                    ref={deleteRef}
-                    editingSerie={props.editingSerie}
-                    cancelBtnLabel='Cancel'
-                    submitBtnLabel='Editieren'
-                    isEdit={props.editingSerie.isEdit}
-                    onManagedSerie={props.onManagedSerie}
-                    onCancel={props.onCancel}/>
-            }
-            {
-                isAdd() && <EditSerieForm
-                    editingSerie={emptySerie}
-                    cancelBtnLabel='Cancel'
-                    submitBtnLabel='Add'
-                    onManagedSerie={props.onManagedSerie}
-                    isEdit='false'
-                    onCancel={props.onCancel}/>
-            }
+            <EditSerieForm/>
         </Card>
     )
 }

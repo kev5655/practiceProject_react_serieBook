@@ -9,10 +9,12 @@ import {seriesAction} from "../../../store/series-slice";
 import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './Serie.module.css'
+import {useNavigate} from "react-router-dom";
 
 
 const Serie = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {id : serieId, title, episode, session, stars} = props.serie
 
@@ -37,7 +39,8 @@ const Serie = (props) => {
 
     const editSerieHandler = (e) => {
         e.stopPropagation();
-        dispatch(seriesAction.selectSerie(serieId))
+        dispatch(seriesAction.selectSerie({serie: props.serie}))
+        navigate('edit')
         //props.editSerie(props.serie);
     }
 

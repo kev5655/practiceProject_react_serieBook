@@ -7,6 +7,7 @@ import AuthenticationPanel from "./pages/AuthenticationPanel";
 import {loadAuth} from "./store/authenticate-action";
 import AuthRoute from "./components/Router/AuthRoute";
 import BlurLayout from "./components/layout/BlurLayout";
+import ManageSeriePanel from "./components/app/manageSerie/ManageSeriePanel";
 
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
                             </AuthRoute>
                         }
                     />
+                    <Route path='series/add' element={<ManageSeriePanel/>}/>
+                    <Route path='series/edit' element={<ManageSeriePanel/>}/>
                 </Routes>
             </BrowserRouter>
         </BlurLayout>

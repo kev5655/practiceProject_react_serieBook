@@ -5,11 +5,11 @@ import {TokenError} from "../utils/Error";
 import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
 
 
-
-export const fetchSeries = (access_token) => {
-    return async (dispatch) => {
+export const fetchSeries = () => {
+    return async (dispatch, getState) => {
 
         const {sendRequestFN: sendSeriesRequest} = api();
+        const access_token = getState().auth.access_token;
 
         const requestConfig = {
             url: 'http://localhost:8081/api/series',
@@ -35,8 +35,8 @@ export const fetchSeries = (access_token) => {
 
             })
             dispatch(
-                seriesAction.loadSerie({
-                    items: series || []
+                seriesAction.loadSeries({
+                    series: series || []
                 })
             );
             dispatch(sortSeries());
@@ -62,33 +62,41 @@ export const sortSeries = (sortParams = SORT_PARAMS.BY_LAST_MODIFIED) => {
         let sortedSeries = series;
         switch (sortParams.id) {
             case SORT_PARAMS.BY_ABC.id:
-                sortedSeries = sortString(series, SORT_PARAMS.BY_ABC.valueName); break;
+                sortedSeries = sortString(series, SORT_PARAMS.BY_ABC.valueName);
+                break;
             case SORT_PARAMS.BY_STARS.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_STARS.valueName); break;
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_STARS.valueName);
+                break;
             case SORT_PARAMS.BY_SESSION.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_SESSION.valueName); break;
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_SESSION.valueName);
+                break;
             case SORT_PARAMS.BY_EPISODE.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_EPISODE.valueName); break;
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_EPISODE.valueName);
+                break;
             case SORT_PARAMS.BY_LAST_MODIFIED.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_LAST_MODIFIED.valueName); break;
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_LAST_MODIFIED.valueName);
+                break;
             case SORT_PARAMS.BY_CREATED_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_CREATED_DATE.valueName); break;
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_CREATED_DATE.valueName);
+                break;
             case SORT_PARAMS.BY_START_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_START_DATE.valueName); break;
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_START_DATE.valueName);
+                break;
             case SORT_PARAMS.BY_END_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_END_DATE.valueName); break;
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_END_DATE.valueName);
+                break;
             default:
                 console.error("Sort Param not found: ")
                 console.table(sortParams)
                 break
 
         }
-        dispatch(seriesAction.updateSerie({series: sortedSeries}))
+        dispatch(seriesAction.updateFilteredSerie({series: sortedSeries}))
 
     }
 }
 
-function sortString(serieList, valueName) {
+const sortString = (serieList, valueName) => {
     serieList.sort((first, second) => {
         first = first[valueName].toLowerCase();
         second = second[valueName].toLowerCase();
@@ -96,20 +104,20 @@ function sortString(serieList, valueName) {
     })
     return serieList;
 }
-function sortInteger(serieList, valueName) {
+const sortInteger = (serieList, valueName) => {
     serieList.sort((first, second) => {
         return second[valueName] - first[valueName];
     })
     return serieList;
 }
-function sortDate(serieList, valueName) {
+const sortDate = (serieList, valueName) => {
     serieList.sort((first, second) => {
         return new Date(second[valueName]) - new Date(first[valueName]);
     })
     return serieList;
 }
 
-export function searchSerie(searchInput) {
+export const searchSerie = (searchInput) => {
     return (dispatch, getState) => {
         if (searchInput !== "") {
             const series = [...getState().series.items];
@@ -117,8 +125,84 @@ export function searchSerie(searchInput) {
                 let index = serie.title.toLowerCase().search(searchInput.toLowerCase());
                 return -1 !== index;
             })
-            dispatch(seriesAction.updateSerie({series: filteredSeries}));
+            dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
         }
     }
 }
+
+export const addSerie = (newSerie) => {
+    return async (dispatch, getState) => {
+        const {sendRequestFN: sendAddSerieRequest} = api();
+        const access_token = getState().auth.access_token;
+
+        const requestConfig = {
+            url: 'http://localhost:8081/api/serie/add',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: newSerie
+        }
+
+        const extractor = (serie) => {
+            const series = [...getState().series.items];
+            newSerie.id = serie.id;
+            series.push(newSerie)
+            dispatch(seriesAction.loadSeries({series: series}));
+            dispatch(sortSeries());
+        }
+
+        const catchError = (err) => {
+            if (err instanceof TokenError) {
+                dispatch(authActions.logout())
+            }
+            alert(err.message)
+            console.error(err)
+        }
+
+        await sendAddSerieRequest(requestConfig, extractor, catchError)
+    }
+}
+
+export const editSerie = (editedSerie) => {
+    return async (dispatch, getState) => {
+        const {sendRequestFN: sendAddSerieRequest} = api();
+        const access_token = getState().auth.access_token;
+
+        const requestConfig = {
+            url: 'http://localhost:8081/api/serie/update',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: editedSerie
+        }
+
+        const extractor = () => {
+            const series = [...getState().series.items];
+            let updatesSeries = series.map((serie) => {
+                if (serie.id === editedSerie.id) {
+                    return editedSerie
+                }
+                return serie;
+            })
+            dispatch(seriesAction.loadSeries({series: updatesSeries}));
+            dispatch(sortSeries())
+        }
+
+        const catchError = (err) => {
+            if (err instanceof TokenError) {
+                dispatch(authActions.logout())
+            }
+            alert(err.message)
+            console.error(err)
+        }
+
+        await sendAddSerieRequest(requestConfig, extractor, catchError);
+    }
+}
+
+
 

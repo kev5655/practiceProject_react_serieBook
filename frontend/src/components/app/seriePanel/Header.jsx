@@ -7,17 +7,20 @@ import IconBtn from "../../ui/form/IconBtn";
 
 import classes from './Header.module.css'
 import FilterAndSort from "./FilterAndSort";
+import {useNavigate} from "react-router-dom";
 
 
 const Header = (props) => {
     const [isFilterActive, setFilterActive] = useState(false);
+    const navigate = useNavigate();
 
     const onFilterClickHandler = () => {
         setFilterActive(!isFilterActive);
     }
 
     const switchToAddFromHandler = () => {
-        props.openAddForm();
+        // props.openAddForm();
+        navigate('add');
     }
 
     return (

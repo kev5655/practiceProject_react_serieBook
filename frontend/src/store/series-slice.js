@@ -1,28 +1,38 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+
+const INIT_SERIE = {
+    id: '',
+    title: '',
+    episode: '',
+    session: '',
+    stars: '',
+    startDate: '',
+    endDate: '',
+    createdDate: '',
+    lastModifiedDate: ''
+}
+
 const seriesSlice = createSlice({
     name: 'series',
     initialState: {
         items: [],
         filteredItems: [],
-        selectSerie: null,
+        selectSerie: INIT_SERIE,
         totalQuantity: 0,
     },
     reducers: {
-        loadSerie(state, action){
-            state.items = action.payload.items
-            state.totalQuantity = action.payload.items.length
+        loadSeries(state, action) {
+            state.items = action.payload.series
+            state.totalQuantity = action.payload.series.length
         },
-        addSerie(state, action) {
-
+        disselect(state) {
+            state.selectSerie = INIT_SERIE;
         },
-        removeSerie(state, action){
-
+        selectSerie(state, action) {
+            state.selectSerie = action.payload.serie;
         },
-        selectSerie(state, action){
-
-        },
-        updateSerie(state, action){
+        updateFilteredSerie(state, action) {
             state.filteredItems = action.payload.series;
         }
     }
