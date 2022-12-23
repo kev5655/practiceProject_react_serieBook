@@ -1,16 +1,12 @@
 export class defaultValidator {
-    errorText = 'defaultError'
 
+    isValid = true;
     validate(value) {
         return true;
     }
 
-    setErrorText(text) {
-        return this
-    }
-
     getErrorText() {
-        return this.errorText;
+        return '';
     }
 }
 
@@ -19,7 +15,11 @@ export class isNotEmpty {
     isValid = false
 
     validate(value) {
-        this.isValid = value.trim() !== '';
+        if(typeof value === 'number'){
+            this.isValid = value.length !== 0;
+        } else if(typeof value === 'string'){
+            this.isValid = value.trim() !== '';
+        }
         return this.isValid;
     }
 
