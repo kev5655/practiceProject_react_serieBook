@@ -36,7 +36,7 @@ Each user can create his own account and save his own series, while he remains l
 
 > In root folder run:
 
-`mvn package -Dmaven.test.skip=true`
+`mvn package -DskipTests=true`
 `docker compose up`
 
-`mvn clean package -Dmaven.test.skip=true && docker compose up --build`
+`mvn clean package -DskipTests=true && docker compose up --build`

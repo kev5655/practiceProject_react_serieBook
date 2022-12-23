@@ -39,6 +39,11 @@ public class AppUserController {
 
     private final AppUserService appUserService;
 
+    @RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}" })
+    public String getIndex(HttpServletRequest request) {
+        return "/index.html";
+    }
+
     @GetMapping(Url.users)
     public ResponseEntity<List<AppUser>> getUsers(){
         return ResponseEntity.ok().body(appUserService.getAppUsers());
