@@ -1,0 +1,21 @@
+.card {
+    position: fixed;
+    width: unset !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #777777;
+    z-index: 100;
+}
+
+.label {
+    position: relative;
+    margin: 2rem;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0rem 1rem;
+}

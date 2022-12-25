@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.AUTO;
 
 
 @Entity
@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class AppUser {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = AUTO)
     private Long id;
     private String username; // unique
     private String email; // unique

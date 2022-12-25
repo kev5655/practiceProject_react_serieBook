@@ -40,3 +40,13 @@ Each user can create his own account and save his own series, while he remains l
 `docker compose up`
 
 `mvn clean package -DskipTests=true && docker compose up --build`
+
+
+`docker tag <image-id> kevin5655/seriebook-app-client:1.0.0`
+`docker tag <image-id> kevin5655/seriebook-app-server:1.0.0`
+
+`docker push kevin5655/seriebook-app-client:1.0.0`
+`docker push kevin5655/seriebook-app-server:1.0.0`
+
+> On Server
+`sudo docker-compose up --build`
