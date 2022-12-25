@@ -1,0 +1,22 @@
+.card {
+    padding: 0;
+    background: #868686;
+    border-radius: 1rem;
+    box-shadow:  10px 10px 40px #4a4a4a;
+}
+
+.card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1rem;
+    background: #6a6a6a;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.icon_hover:hover{
+    color: #780000;
+    transform: scale(1.4);
+}
+
