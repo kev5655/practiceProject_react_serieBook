@@ -34,19 +34,43 @@ Each user can create his own account and save his own series, while he remains l
 
 ## Deploy on Docker
 
-> In root folder run:
+### Dev
 
-`mvn package -DskipTests=true`
-`docker compose up`
+>> Compile Java Project
+>
+>`mvn package -DskipTests=true`
+>
+>> Create Container and Run Local
+>
+>`docker compose up --build`
+>
+>`mvn clean package -DskipTests=true && docker compose up --build`
+>
+>> On Server
+>
+>`sudo docker-compose up --build`
 
-`mvn clean package -DskipTests=true && docker compose up --build`
 
+### Prod
 
-`docker tag <image-id> kevin5655/seriebook-app-client:1.0.0`
-`docker tag <image-id> kevin5655/seriebook-app-server:1.0.0`
-
-`docker push kevin5655/seriebook-app-client:1.0.0`
-`docker push kevin5655/seriebook-app-server:1.0.0`
-
-> On Server
-`sudo docker-compose up --build`
+>> Compile Java Project
+>
+>`mvn package -DskipTests=true`
+>
+>> Create Container and Run Local
+>
+>`docker-compose -f docker-compose-prod.yml up --build`
+>
+>> Push Container to Docker Hub
+>
+>`docker tag <image-id> kevin5655/seriebook-app-client:1.0.0`
+>
+>`docker tag <image-id> kevin5655/seriebook-app-server:1.0.0`
+>
+>`docker push kevin5655/seriebook-app-client:1.0.0`
+>
+>`docker push kevin5655/seriebook-app-server:1.0.0`
+>
+>> On Server
+>
+>`sudo docker-compose up --build`

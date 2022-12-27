@@ -1,6 +1,6 @@
 import {ConnectionRefusedError, TokenError, UnauthorizedError} from "./Error";
 
-const serverUrl = 'http://192.168.1.138:8081'
+const serverUrl = '' //http://192.168.1.138:8081
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
         if (requestConfig.headers['Content-Type'] === 'application/json') {
