@@ -556,5 +556,5 @@ security/
 
 # Docker
 docker-compose.yml
-
+docker-compose-prod.yml
 package-lock.json
