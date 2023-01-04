@@ -40,7 +40,7 @@ const LoginForm = () => {
     return (
         <>
             <form className={classes.form} onSubmit={submitHandler}>
-                <div className={classes.form_username}>
+                <div>
                     <Input
                         type='text'
                         name='Username'
