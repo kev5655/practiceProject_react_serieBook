@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 import Popup from 'reactjs-popup';
 
-import Card from "../Card";
+import Card from "../../layout/Card";
 import Btn from "../form/Btn";
 
 import classes from "./InfoPopup.module.css";

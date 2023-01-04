@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import SerieList from "../components/app/seriePanel/SerieList";
 
 import './SeriePanel.module.css'
-import Card from "../components/ui/Card";
+import Card from "../components/layout/Card";
 import Header from "../components/app/seriePanel/Header";
 
 import classes from './SeriePanel.module.css'

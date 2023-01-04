@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Card from "../components/ui/Card";
+import Card from "../components/layout/Card";
 
 import classes from "./AuthenticationPanel.module.css";
 import LoginForm from "../components/app/authentication/LoginForm";

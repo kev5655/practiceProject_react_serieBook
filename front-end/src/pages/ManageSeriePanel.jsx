@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import EditSerieForm from "../components/app/manageSerie/EditSerieForm";
-import Card from "../components/ui/Card";
+import Card from "../components/layout/Card";
 import InfoPopup from "../components/ui/popup/InfoPopup";
 import IconBtn from "../components/ui/form/IconBtn";
 

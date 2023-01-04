@@ -7,10 +7,10 @@ const Card = (props) => {
     const styles = classes.card + ' ' + props.className
 
     return(
-        <section className={styles}
+        <article className={styles}
                  id={props.id}>
             {props.children}
-        </section>
+        </article>
     );
 };
 

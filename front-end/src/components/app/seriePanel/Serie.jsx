@@ -45,7 +45,7 @@ const Serie = (props) => {
     }
 
     return (
-        <article className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
+        <section className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
                     <p className={classes.serie_firstRow_title}>{title}</p>
@@ -65,7 +65,7 @@ const Serie = (props) => {
             </div>
             <IconBtn icon={EditIcon}
                      onClick={editSerieHandler}/>
-        </article>
+        </section>
     );
 }
 
