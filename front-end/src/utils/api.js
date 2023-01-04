@@ -1,4 +1,4 @@
-import {ConnectionRefusedError, TokenError, UnauthorizedError} from "./Error";
+import {TokenError} from "./Error";
 
 const serverUrl = ''; //http://192.168.1.138:8081
 export const api = () => {
@@ -30,10 +30,12 @@ export const api = () => {
             }
 
             const data = await response.json();
-            if (data.error_message) {
-                alert("Backend has an error: ", data.error_message)
-                if (TokenError.backendErrors.find(error => data.error_message.match(error))) {
-                    throw new TokenError(data.error_message);
+            if(data.error_message){
+                if(data.error_message.match("Token")){
+                    console.log("Token is Expired")
+                    if (TokenError.backendErrors.find(error => data.error_message.match(error))) {
+                        throw new TokenError(data.error_message);
+                    }
                 }
             }
 
