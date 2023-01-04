@@ -5,7 +5,6 @@ const INIT_ERROR = {
     errorText: ''
 };
 
-// ToDo update loginFailed to login Error like SingUpError
 const authenticateSlice = createSlice({
     name: 'authentication',
     initialState: {

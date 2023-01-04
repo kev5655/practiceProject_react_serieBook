@@ -29,7 +29,6 @@ export const authRequest = (loggingData) => {
 
         const catchError = (err) => {
             dispatch(authActions.loginFailed({errorText: err.message}))
-            alert(err.message)
         }
 
 
@@ -60,10 +59,7 @@ export const singUpRequest = (singUpDate) => {
 
         const catchError = (err) => {
             dispatch(authActions.singUpFailed({errorText: err.message}))
-            alert(err.message)
-            console.log(err)
         }
-
 
         await sendAuthRequest(requestConfig, extractor, catchError)
 
@@ -89,8 +85,6 @@ export const isUsernameAvailable = (username) => {
 
         const catchError = (err) => {
             dispatch(authActions.singUpFailed({errorText: err.message}))
-            alert(err.message)
-            console.log(err)
         }
 
 

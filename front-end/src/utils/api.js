@@ -1,6 +1,6 @@
 import {ConnectionRefusedError, TokenError, UnauthorizedError} from "./Error";
 
-const serverUrl = '' //http://192.168.1.138:8081
+const serverUrl = ''; //http://192.168.1.138:8081
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
         if (requestConfig.headers['Content-Type'] === 'application/json') {
@@ -14,26 +14,31 @@ export const api = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Request failed! ' + response.status);
+                switch (response.status) {
+                    case 401:
+                        console.log("Login Failed");
+                        throw new Error("Login Failed");
+                    case 404:
+                        console.log("Server is not reachable");
+                        alert("Server is not reachable");
+                        throw new Error("Server is not reachable");
+                    default:
+                        console.log("Unknown error");
+                        alert("Unknown error");
+                        throw new Error("Unknown error");
+                }
             }
 
             const data = await response.json();
             if (data.error_message) {
                 alert("Backend has an error: ", data.error_message)
-                if(TokenError.backendErrors.find(error => data.error_message.match(error))){
+                if (TokenError.backendErrors.find(error => data.error_message.match(error))) {
                     throw new TokenError(data.error_message);
                 }
-                if(UnauthorizedError.backendErrors.find(error => data.error_message.match(error))){
-                    throw new UnauthorizedError(data.error_message);
-                }
-                alert("Another error in api.js: ", data.error_message);
             }
 
             resolveData(data);
         } catch (err) {
-            if(ConnectionRefusedError.backendErrors.find(error => err.message.match(error))){
-                return error(new ConnectionRefusedError(err.message))
-            }
             error(err);
         }
     };

@@ -47,8 +47,6 @@ export const fetchSeries = () => {
             if (err instanceof TokenError) {
                 dispatch(authActions.logout())
             }
-            alert(err.message)
-            console.error(err)
         }
 
         await sendSeriesRequest(requestConfig, extractor, catchError)
@@ -157,8 +155,6 @@ export const addSerie = (newSerie) => {
             if (err instanceof TokenError) {
                 dispatch(authActions.logout())
             }
-            alert(err.message)
-            console.error(err)
         }
 
         await sendAddSerieRequest(requestConfig, extractor, catchError)
@@ -196,8 +192,6 @@ export const editSerie = (editedSerie) => {
             if (err instanceof TokenError) {
                 dispatch(authActions.logout())
             }
-            alert(err.message)
-            console.error(err)
         }
 
         await sendAddSerieRequest(requestConfig, extractor, catchError);
