@@ -30,18 +30,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/token/refresh") || request.getServletPath().equals("/api/user/save")) {
+        if (request.getServletPath().equals("/api/login") ||
+                request.getServletPath().equals("/api/token/refresh") ||
+                request.getServletPath().equals("/api/user/save")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if(authorizationHeader != null && authorizationHeader.startsWith(SecurityVariables.JWT_FOREWORD)) {
+            if (authorizationHeader != null && authorizationHeader.startsWith(SecurityVariables.JWT_FOREWORD)) {
                 try {
                     String token = authorizationHeader.substring(SecurityVariables.JWT_FOREWORD.length());
                     Algorithm algorithm = Algorithm.HMAC256(SecurityVariables.HMAC256_KEY.getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String [] roles = decodedJWT.getClaim(SecurityVariables.AUTHORITIES_NAME).asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(SecurityVariables.AUTHORITIES_NAME).asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));
