@@ -48,9 +48,30 @@ function App() {
                             </AuthRoute>
                         }
                     />
-                    <Route path='series/add' element={<ManageSeriePanel/>}/>
-                    <Route path='series/edit' element={<ManageSeriePanel/>}/>
-                    <Route path='series/settings' element={<Settings/>}/>
+                    <Route
+                        path="series/add"
+                        element={
+                            <AuthRoute redirectPath="/login" isAllowed={isAuth}>
+                                <ManageSeriePanel/>
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="series/edit"
+                        element={
+                            <AuthRoute redirectPath="/login" isAllowed={isAuth}>
+                                <ManageSeriePanel/>
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="settings"
+                        element={
+                            <AuthRoute redirectPath="/login" isAllowed={isAuth}>
+                                <Settings/>
+                            </AuthRoute>
+                        }
+                    />
                 </Routes>
             </BrowserRouter>
         </BlurLayout>
