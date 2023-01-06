@@ -16,7 +16,7 @@ const Header = (props) => {
     const navigate = useNavigate();
 
     const onSettingsClickHandler = () => {
-        navigate('settings')
+        navigate('/settings')
     }
 
     const onFilterClickHandler = () => {
