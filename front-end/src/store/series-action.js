@@ -3,6 +3,7 @@ import {api} from "../utils/api";
 import {authActions} from "./authenticate-slice";
 import {TokenError} from "../utils/Error";
 import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
+import {logout} from "./authenticate-action";
 
 
 export const fetchSeries = () => {
@@ -45,7 +46,7 @@ export const fetchSeries = () => {
 
         const catchError = (err) => {
             if (err instanceof TokenError) {
-                dispatch(authActions.logout())
+                dispatch(logout())
             }
         }
 
@@ -153,7 +154,7 @@ export const addSerie = (newSerie) => {
 
         const catchError = (err) => {
             if (err instanceof TokenError) {
-                dispatch(authActions.logout())
+                dispatch(logout())
             }
         }
 
@@ -190,7 +191,7 @@ export const editSerie = (editedSerie) => {
 
         const catchError = (err) => {
             if (err instanceof TokenError) {
-                dispatch(authActions.logout())
+                dispatch(logout())
             }
         }
 

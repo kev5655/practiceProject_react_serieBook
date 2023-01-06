@@ -24,7 +24,7 @@ export const authRequest = (loggingData) => {
                 refresh_token: token.refresh_token
             }))
             sessionStorage.setItem("access_token", token.access_token)
-            sessionStorage.setItem("refreshToken", token.refresh_token)
+            sessionStorage.setItem("refresh_token", token.refresh_token)
         }
 
         const catchError = (err) => {
@@ -94,7 +94,7 @@ export const isUsernameAvailable = (username) => {
 
 export const loadAuth = () => {
     return (dispatch) => {
-        const refresh_token = sessionStorage.getItem("refreshToken")
+        const refresh_token = sessionStorage.getItem("refresh_token")
         if(!refresh_token) return
 
         refreshAccessToken(dispatch, refresh_token).then()
@@ -119,7 +119,7 @@ const refreshAccessToken = async (dispatch, refresh_token) => {
                 refresh_token: token.refresh_token
             }))
             sessionStorage.setItem("access_token", token.access_token)
-            sessionStorage.setItem("refreshToken", token.refresh_token)
+            sessionStorage.setItem("refresh_token", token.refresh_token)
         }
 
         const catchError = (err) => {
@@ -130,3 +130,10 @@ const refreshAccessToken = async (dispatch, refresh_token) => {
 
 }
 
+export const logout = () => {
+    return (dispatch) => {
+        sessionStorage.removeItem("refresh_token")
+        sessionStorage.removeItem("access_token")
+        dispatch(authActions.logout())
+    }
+}
