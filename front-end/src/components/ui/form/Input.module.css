@@ -1,3 +1,7 @@
+.password_container{
+    width: 100%;
+}
+
 .input {
     all: unset;
     box-sizing: border-box;
@@ -31,9 +35,10 @@
 }
 
 .icon {
+    position: absolute;
     color: #555555;
     margin-left: -30px;
-    transform: translate(0, 6px);
+    transform: translate(0, 10px);
     cursor: pointer;
 }
 
