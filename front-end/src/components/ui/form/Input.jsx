@@ -11,12 +11,13 @@ const Input = forwardRef((props, ref) => {
 
     const {
         value,
+        isFocus,
         validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
-        reset,
+        resetHandler,
     } = useInput(initValue ?? '', validateObj ?? new defaultValidator(), backendValidator);
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
@@ -32,12 +33,13 @@ const Input = forwardRef((props, ref) => {
     }, [value, onChange])
 
     useImperativeHandle(ref, () => ({
-        isValid: validator.isValid,
         value: value,
+        isValid: validator.isValid,
+        isFocus: isFocus,
         onSubmit: () => {
             setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
         },
-        reset: () => reset()
+        reset: () => resetHandler()
     }));
 
 

@@ -70,20 +70,21 @@ const useInput = (initValue, validator, backendValidator) => {
 
     const inputFocusHandler = () => {
         dispatch({ type: ACTION.FOCUS })
-    }
+    };
 
-    const reset = () => {
+    const resetHandler = () => {
         dispatch({ type: ACTION.RESET });
     };
 
     return {
         value: inputState.value,
+        isFocus: inputState.isFocus,
         validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
-        reset,
+        resetHandler,
     };
 };
 
