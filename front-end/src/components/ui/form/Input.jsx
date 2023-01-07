@@ -7,35 +7,44 @@ import {defaultValidator} from "../../../utils/Validation";
 let isInit = true;
 
 const Input = forwardRef((props, ref) => {
-    const {initValue, type, name, maxLength, minNumber, placeholder, validateObj, backendValidator, onChange} = props
+    let { initValue,
+        type,
+        name,
+        maxLength,
+        minNumber,
+        placeholder,
+        validateObj,
+        backendValidator,
+        onChange,
+        onFocus,
+        onBlur } = props
+
+    initValue = initValue ?? "";
+    validateObj = validateObj ?? new defaultValidator()
+    onChange = onChange ?? function (){};
+    onFocus = onFocus ?? function (){};
+    onBlur = onBlur ?? function (){};
 
     const {
         value,
-        isFocus,
         validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
-    } = useInput(initValue ?? '', validateObj ?? new defaultValidator(), backendValidator);
+    } = useInput({initValue,
+        validateObj,
+        backendValidator,
+        onChange,
+        onFocus,
+        onBlur});
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
-
-    useEffect(() => {
-        if (isInit) {
-            isInit = false;
-            return;
-        }
-        if (onChange !== undefined) {
-            onChange(value);
-        }
-    }, [value, onChange])
 
     useImperativeHandle(ref, () => ({
         value: value,
         isValid: validator.isValid,
-        isFocus: isFocus,
         onSubmit: () => {
             setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
         },

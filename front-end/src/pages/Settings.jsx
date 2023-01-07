@@ -4,15 +4,72 @@ import classes from './Settings.module.css'
 import Input from "../components/ui/form/Input";
 import Btn from "../components/ui/form/Btn";
 import {isEmail, isNotEmpty, isPassword} from "../utils/Validation";
-import {isUsernameAvailable} from "../store/authenticate-action";
-import {useRef} from "react";
+import {isUsernameAvailable, logout} from "../store/authenticate-action";
+import {useRef, useState} from "react";
 import InputPassword from "../components/ui/form/InputPassword";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const Settings = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+
+    const [isShowUsernameBtn, setShowUsernameBtn] = useState(false);
+    const [isShowEmailBtn, setShowEmailBtn] = useState(false);
+    const [isShowPasswordBtn, setShowPasswordBtn] = useState(false);
+
+
+    const usernameFocusHandler = () => {
+        setShowUsernameBtn(true);
+    }
+
+    const usernameBlurHandler = () => {
+        setShowUsernameBtn(false);
+    }
+
+    const emailFocusHandler = () => {
+        setShowEmailBtn(true);
+    }
+
+    const emailBlurHandler = () => {
+        setShowEmailBtn(false);
+    }
+
+    const passwordFocusHandler = () => {
+        setShowPasswordBtn(true);
+    }
+
+    const passwordBlurHandler = () => {
+        setShowPasswordBtn(false);
+    }
+
+    const submitUsername = () => {
+        usernameRef.current.onSubmit();
+        let value = usernameRef.current.value;
+        usernameRef.current.reset();
+    }
+
+    const submitEmail = () => {
+        emailRef.current.onSubmit();
+        let value = emailRef.current.value;
+        emailRef.current.reset();
+    }
+
+    const submitPassword = () => {
+        passwordRef.current.onSubmit();
+        let value = passwordRef.current.value;
+        passwordRef.current.reset();
+    }
+
+
+    const logoutHandler = () => {
+        dispatch(logout());
+    }
 
     return (
         <Card className={classes.card}>
@@ -29,8 +86,10 @@ const Settings = () => {
                                    name='UpdateUsername'
                                    validateObj={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
+                                   onFocus={usernameFocusHandler}
+                                   onBlur={usernameBlurHandler}
                                    ref={usernameRef}/>
-                            <Btn label="Update"/>
+                            { isShowUsernameBtn && <Btn label="Update" onClick={submitUsername}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
@@ -39,8 +98,10 @@ const Settings = () => {
                             <Input type='email'
                                    name='updateEmail'
                                    validationObj={new isEmail()}
+                                   onFocus={emailFocusHandler}
+                                   onBlur={emailBlurHandler}
                                    ref={emailRef}/>
-                            <Btn label="Update"/>
+                            { isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
@@ -48,14 +109,16 @@ const Settings = () => {
                         <div className={classes.input}>
                             <InputPassword name='updatePassword'
                                            validateObj={new isPassword()}
+                                           onFocus={passwordFocusHandler}
+                                           onBlur={passwordBlurHandler}
                                            ref={passwordRef}/>
-                            <Btn label="Update"/>
+                            { isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
                         </div>
                     </div>
                     <div className={classes.space}></div>
                     <div className={classes.setting_action}>
                         <p>Logout</p>
-                        <Btn label="Logout"/>
+                        <Btn label="Logout" onClick={logoutHandler}/>
                     </div>
                     <div className={classes.setting_action}>
                         <p>Delete Account</p>
@@ -84,7 +147,6 @@ const Settings = () => {
                     </div>
                 </section>
             </div>
-
         </Card>
     )
 }

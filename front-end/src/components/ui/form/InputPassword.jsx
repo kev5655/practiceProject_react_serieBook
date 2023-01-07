@@ -10,26 +10,42 @@ import {defaultValidator} from "../../../utils/Validation";
 
 
 const InputPassword = forwardRef((props, ref) => {
-    const {initValue, name, maxLength, placeholder, validateObj} = props
+    let {initValue,
+        name,
+        maxLength,
+        placeholder,
+        validateObj,
+        onChange,
+        onFocus,
+        onBlur} = props
+
+    initValue = initValue ?? "";
+    validateObj = validateObj ?? new defaultValidator();
+    function empty () {};
+    onChange = onChange ?? empty;
+    onFocus = onFocus ?? empty;
+    onBlur = onBlur ?? empty;
 
     const [inputType, setInputType] = useState("password");
     const {
         value,
-        isFocus,
         validator,
         hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
-    } = useInput(initValue ?? '', validateObj ?? new defaultValidator());
+    } = useInput({initValue,
+        validateObj,
+        onChange,
+        onFocus,
+        onBlur});
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
 
     useImperativeHandle(ref, () => ({
         value: value,
         isValid: validator.isValid,
-        isFocus: isFocus,
         onSubmit: () => {
             setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
         },
