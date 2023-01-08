@@ -12,30 +12,28 @@ const Input = forwardRef((props, ref) => {
         maxLength,
         minNumber,
         placeholder,
-        validateOnRuntime,
-        validateOnSubmitting,
+        validator,
         backendValidator,
         onChange,
         onFocus,
         onBlur } = props
 
     initValue = initValue ?? "";
-    validateOnRuntime = validateOnRuntime ?? new defaultValidator();
-    validateOnSubmitting = validateOnSubmitting ?? new defaultValidator();
+    validator = validator ?? new defaultValidator();
     onChange = onChange ?? function (){};
     onFocus = onFocus ?? function (){};
     onBlur = onBlur ?? function (){};
 
     let {
         value,
-        hasRuntimeError,
-        isValidInBackend,
+        hasError,
+        validation,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
     } = useInput({initValue,
-        validate: validateOnRuntime,
+        validator,
         backendValidator,
         onChange,
         onFocus,
@@ -47,11 +45,8 @@ const Input = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         value: value,
         onSubmit: () => {
-            let isValid = validateOnSubmitting.validate(value) &&
-                (backendValidator === undefined ? true : isValidInBackend);
-            let errorMessage = validateOnSubmitting.getErrorText();
-            setDisplayError({isError: !isValid, text: errorMessage})
-            return isValid
+            setDisplayError({isError: !validation.isValid, text: validation.getErrorText()})
+            return validation.isValid
         },
         reset: () => {
             resetHandler()
@@ -63,7 +58,7 @@ const Input = forwardRef((props, ref) => {
     return (
         <>
             <input
-                className={`${classes.input} ${hasRuntimeError && classes.error} ${displayError.isError && classes.error}`}
+                className={`${classes.input} ${hasError && classes.error}`}
                 type={type}
                 name={name}
                 value={value}

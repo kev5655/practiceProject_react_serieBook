@@ -94,8 +94,7 @@ const EditSerieForm = () => {
                        initValue={activeSerie.title}
                        name='SerieName'
                        placeholder='Serie Name'
-                       validateOnRuntime={new isNotEmpty().setErrorText("Serie need a name")}
-                       validateOnSubmitting={new isNotEmpty().setErrorText("Serie need a name")}
+                       validator={new isNotEmpty().setErrorText("Serie need a name")}
                        ref={serieNameRef}/>
             </div>
 
@@ -104,8 +103,7 @@ const EditSerieForm = () => {
                        initValue={activeSerie.session}
                        name='Session'
                        placeholder='Session'
-                       validateOnRuntime={new isNotEmpty().setErrorText("add a number")}
-                       validateOnSubmitting={new isNotEmpty().setErrorText("add a number")}
+                       validator={new isNotEmpty().setErrorText("add a number")}
                        ref={sessionRef}/>
                 <Input tpye='number'
                        initValue={activeSerie.episode}

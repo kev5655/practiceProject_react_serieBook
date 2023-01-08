@@ -15,15 +15,14 @@ const InputPassword = forwardRef((props, ref) => {
         name,
         maxLength,
         placeholder,
-        validateOnRuntime,
-        validateOnSubmitting,
+        validator,
         onChange,
         onFocus,
         onBlur
     } = props
 
     initValue = initValue ?? "";
-    validateOnRuntime = validateOnRuntime ?? new defaultValidator();
+    validator = validator ?? new defaultValidator();
     function empty() {};
     onChange = onChange ?? empty;
     onFocus = onFocus ?? empty;
@@ -32,14 +31,15 @@ const InputPassword = forwardRef((props, ref) => {
     const [inputType, setInputType] = useState("password");
     const {
         value,
-        hasRuntimeError,
+        hasError,
+        validation,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
     } = useInput({
         initValue,
-        validate: validateOnRuntime,
+        validator,
         onChange,
         onFocus,
         onBlur
@@ -50,10 +50,8 @@ const InputPassword = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         value: value,
         onSubmit: () => {
-            let isValid = validateOnSubmitting.validate(value)
-            let errorMessage = validateOnSubmitting.getErrorText();
-            setDisplayError({isError: !isValid, text: errorMessage})
-            return isValid
+            setDisplayError({isError: !validation.isValid, text: validation.getErrorText()})
+            return validation.isValid
         },
         reset: () => {
             resetHandler()
@@ -73,7 +71,7 @@ const InputPassword = forwardRef((props, ref) => {
         <>
             <div className={classes.password_container}>
                 <input
-                    className={`${classes.input} ${hasRuntimeError && classes.error} ${displayError.isError && classes.error}`}
+                    className={`${classes.input} ${hasError && classes.error} ${displayError.isError && classes.error}`}
                     type={inputType}
                     name={name}
                     value={value}

@@ -43,14 +43,14 @@ const LoginForm = () => {
                         type='text'
                         name='Username'
                         placeholder='Username'
-                        validateOnRuntime={new isNotEmpty().setErrorText("Username is Empty")}
+                        validator={new isNotEmpty().setErrorText("Username is Empty")}
                         ref={usernameRef}/>
                 </div>
                 <div className={classes.form_password}>
                     <InputPassword
                         name='LoginPassword'
                         placeholder='Password'
-                        validateOnRuntime={new isNotEmpty().setErrorText("Password is Empty")}
+                        validator={new isNotEmpty().setErrorText("Password is Empty")}
                         ref={passwordRef}
                     />
                 </div>

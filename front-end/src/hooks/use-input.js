@@ -30,7 +30,7 @@ const inputStateReducer = (state, action) => {
     return inputStateReducer;
 };
 
-const useInput = ({initValue, validate, backendValidator, onChange, onFocus, onBlur}) => {
+const useInput = ({initValue, validator, backendValidator, onChange, onFocus, onBlur}) => {
     const [inputState, dispatch] = useReducer(
         inputStateReducer,
         initialInputState
@@ -53,10 +53,10 @@ const useInput = ({initValue, validate, backendValidator, onChange, onFocus, onB
     }, [inputState.value, dispatchValidator, backendValidator])
 
 
-    let valueIsValid = validate.validate(inputState.value);
+    let valueIsValid = validator.validate(inputState.value);
     if(backendValidator !== undefined){
         valueIsValid = valueIsValid && backendSaysIsAllowed;
-        validate.isValid = valueIsValid;
+        validator.isValid = valueIsValid;
     }
     const hasError = !valueIsValid && inputState.isTouched && !inputState.isFocus;
 
@@ -81,8 +81,8 @@ const useInput = ({initValue, validate, backendValidator, onChange, onFocus, onB
 
     return {
         value: inputState.value,
-        hasRuntimeError: hasError,
-        isValidInBackend: backendSaysIsAllowed,
+        validation: validator,
+        hasError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,

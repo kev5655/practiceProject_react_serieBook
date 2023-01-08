@@ -51,7 +51,7 @@ const SingUpFrom = (props) => {
                 <Input type='text'
                        name='SingUpUsername'
                        placeholder='Username'
-                       validateOnRuntime={new isNotEmpty().setErrorText("Username is Empty")}
+                       validator={new isNotEmpty().setErrorText("Username is Empty")}
                        backendValidator={isUsernameAvailable}
                        ref={usernameRef}/>
             </div>
@@ -59,13 +59,13 @@ const SingUpFrom = (props) => {
                 <Input type='email'
                        name='SingUpEmail'
                        placeholder='Email'
-                       validateOnRuntime={new isEmail()}
+                       validator={new isEmail()}
                        ref={emailRef}/>
             </div>
             <div className={classes.form_password}>
                 <InputPassword name='SingUpPassword'
                                placeholder='Password'
-                               validateOnRuntime={new isPassword()}
+                               validator={new isPassword()}
                                ref={passwordRef}/>
             </div>
             {
