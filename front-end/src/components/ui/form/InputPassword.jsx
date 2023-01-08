@@ -10,30 +10,55 @@ import {defaultValidator} from "../../../utils/Validation";
 
 
 const InputPassword = forwardRef((props, ref) => {
-    const {initValue, name, maxLength, placeholder, validateObj} = props
+    let {
+        initValue,
+        name,
+        maxLength,
+        placeholder,
+        validateOnRuntime,
+        validateOnSubmiting,
+        onChange,
+        onFocus,
+        onBlur
+    } = props
+
+    initValue = initValue ?? "";
+    validateOnRuntime = validateOnRuntime ?? new defaultValidator();
+    function empty() {};
+    onChange = onChange ?? empty;
+    onFocus = onFocus ?? empty;
+    onBlur = onBlur ?? empty;
 
     const [inputType, setInputType] = useState("password");
     const {
         value,
-        isFocus,
-        validator,
-        hasError,
+        hasRuntimeError,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
-    } = useInput(initValue ?? '', validateObj ?? new defaultValidator());
+    } = useInput({
+        initValue,
+        validate: validateOnRuntime,
+        onChange,
+        onFocus,
+        onBlur
+    });
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
 
     useImperativeHandle(ref, () => ({
         value: value,
-        isValid: validator.isValid,
-        isFocus: isFocus,
         onSubmit: () => {
-            setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
+            let isValid = validateOnSubmiting.validate(value)
+            let errorMessage = validateOnSubmiting.getErrorText();
+            setDisplayError({isError: !isValid, text: errorMessage})
+            return isValid
         },
-        reset: () => resetHandler()
+        reset: () => {
+            resetHandler()
+            setDisplayError({isError: false, text: ''})
+        }
     }))
 
     const onHideClickHandler = (e) => {
@@ -48,7 +73,7 @@ const InputPassword = forwardRef((props, ref) => {
         <>
             <div className={classes.password_container}>
                 <input
-                    className={`${classes.input} ${hasError && classes.error}`}
+                    className={`${classes.input} ${hasRuntimeError && classes.error} ${displayError.isError && classes.error}`}
                     type={inputType}
                     name={name}
                     value={value}

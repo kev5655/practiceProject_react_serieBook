@@ -23,10 +23,8 @@ const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        usernameRef.current.onSubmit();
-        passwordRef.current.onSubmit();
-        if(!usernameRef.current.isValid) return;
-        if(!passwordRef.current.isValid) return;
+        if(!usernameRef.current.onSubmit()) return;
+        if(!passwordRef.current.onSubmit()) return;
 
         dispatch(authRequest({
             username: usernameRef.current.value,
@@ -45,14 +43,14 @@ const LoginForm = () => {
                         type='text'
                         name='Username'
                         placeholder='Username'
-                        validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                        validateOnRuntime={new isNotEmpty().setErrorText("Username is Empty")}
                         ref={usernameRef}/>
                 </div>
                 <div className={classes.form_password}>
                     <InputPassword
                         name='LoginPassword'
                         placeholder='Password'
-                        validateObj={new isNotEmpty().setErrorText("Password is Empty")}
+                        validateOnRuntime={new isNotEmpty().setErrorText("Password is Empty")}
                         ref={passwordRef}
                     />
                 </div>

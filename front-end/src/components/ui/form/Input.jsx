@@ -4,49 +4,66 @@ import classes from "./Input.module.css"
 import useInput from "../../../hooks/use-input";
 import {defaultValidator} from "../../../utils/Validation";
 
-let isInit = true;
 
 const Input = forwardRef((props, ref) => {
-    const {initValue, type, name, maxLength, minNumber, placeholder, validateObj, backendValidator, onChange} = props
+    let { initValue,
+        type,
+        name,
+        maxLength,
+        minNumber,
+        placeholder,
+        validateOnRuntime,
+        validateOnSubmitting,
+        backendValidator,
+        onChange,
+        onFocus,
+        onBlur } = props
 
-    const {
+    initValue = initValue ?? "";
+    validateOnRuntime = validateOnRuntime ?? new defaultValidator();
+    validateOnSubmitting = validateOnSubmitting ?? new defaultValidator();
+    onChange = onChange ?? function (){};
+    onFocus = onFocus ?? function (){};
+    onBlur = onBlur ?? function (){};
+
+    let {
         value,
-        isFocus,
-        validator,
-        hasError,
+        hasRuntimeError,
+        isValidInBackend,
         valueChangeHandler,
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
-    } = useInput(initValue ?? '', validateObj ?? new defaultValidator(), backendValidator);
+    } = useInput({initValue,
+        validate: validateOnRuntime,
+        backendValidator,
+        onChange,
+        onFocus,
+        onBlur});
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
 
-    useEffect(() => {
-        if (isInit) {
-            isInit = false;
-            return;
-        }
-        if (onChange !== undefined) {
-            onChange(value);
-        }
-    }, [value, onChange])
 
     useImperativeHandle(ref, () => ({
         value: value,
-        isValid: validator.isValid,
-        isFocus: isFocus,
         onSubmit: () => {
-            setDisplayError({isError: !validator.isValid, text: validator.getErrorText()})
+            let isValid = validateOnSubmitting.validate(value) &&
+                (backendValidator === undefined ? true : isValidInBackend);
+            let errorMessage = validateOnSubmitting.getErrorText();
+            setDisplayError({isError: !isValid, text: errorMessage})
+            return isValid
         },
-        reset: () => resetHandler()
+        reset: () => {
+            resetHandler()
+            setDisplayError({isError: false, text: ''})
+        }
     }));
 
 
     return (
         <>
             <input
-                className={`${classes.input} ${hasError && classes.error}`}
+                className={`${classes.input} ${hasRuntimeError && classes.error} ${displayError.isError && classes.error}`}
                 type={type}
                 name={name}
                 value={value}

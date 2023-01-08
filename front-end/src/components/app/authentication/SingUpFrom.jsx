@@ -29,12 +29,9 @@ const SingUpFrom = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        usernameRef.current.onSubmit();
-        emailRef.current.onSubmit();
-        passwordRef.current.onSubmit();
-        if(!usernameRef.current.isValid) return;
-        if(!emailRef.current.isValid) return;
-        if(!passwordRef.current.isValid) return;
+        if(!usernameRef.current.onSubmit()) return;
+        if(!emailRef.current.onSubmit()) return;
+        if(!passwordRef.current.onSubmit()) return;
 
 
         dispatch(singUpRequest({
@@ -54,7 +51,7 @@ const SingUpFrom = (props) => {
                 <Input type='text'
                        name='SingUpUsername'
                        placeholder='Username'
-                       validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                       validateOnRuntime={new isNotEmpty().setErrorText("Username is Empty")}
                        backendValidator={isUsernameAvailable}
                        ref={usernameRef}/>
             </div>
@@ -62,13 +59,13 @@ const SingUpFrom = (props) => {
                 <Input type='email'
                        name='SingUpEmail'
                        placeholder='Email'
-                       validateObj={new isEmail()}
+                       validateOnRuntime={new isEmail()}
                        ref={emailRef}/>
             </div>
             <div className={classes.form_password}>
                 <InputPassword name='SingUpPassword'
                                placeholder='Password'
-                               validateObj={new isPassword()}
+                               validateOnRuntime={new isPassword()}
                                ref={passwordRef}/>
             </div>
             {

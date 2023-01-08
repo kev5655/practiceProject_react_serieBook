@@ -4,15 +4,77 @@ import classes from './Settings.module.css'
 import Input from "../components/ui/form/Input";
 import Btn from "../components/ui/form/Btn";
 import {isEmail, isNotEmpty, isPassword} from "../utils/Validation";
-import {isUsernameAvailable} from "../store/authenticate-action";
-import {useRef} from "react";
+import {isUsernameAvailable, logout} from "../store/authenticate-action";
+import {useRef, useState} from "react";
 import InputPassword from "../components/ui/form/InputPassword";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const Settings = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+
+    const [isShowUsernameBtn, setShowUsernameBtn] = useState(false);
+    const [isShowEmailBtn, setShowEmailBtn] = useState(false);
+    const [isShowPasswordBtn, setShowPasswordBtn] = useState(false);
+
+
+    const usernameFocusHandler = () => {
+        setShowUsernameBtn(true);
+        emailRef.current.reset();
+        passwordRef.current.reset();
+        setShowEmailBtn(false);
+        setShowPasswordBtn(false);
+    }
+
+
+    const emailFocusHandler = () => {
+        setShowEmailBtn(true);
+        usernameRef.current.reset();
+        passwordRef.current.reset();
+        setShowUsernameBtn(false);
+        setShowPasswordBtn(false);
+    }
+
+
+    const passwordFocusHandler = () => {
+        setShowPasswordBtn(true);
+        usernameRef.current.reset();
+        emailRef.current.reset();
+        setShowEmailBtn(false);
+        setShowUsernameBtn(false);
+        setShowEmailBtn(false);
+    }
+
+
+    const submitUsername = () => {
+        if(!usernameRef.current.onSubmit()) return;
+        let value = usernameRef.current.value;
+        usernameRef.current.reset();
+    }
+
+
+    const submitEmail = () => {
+        if(!emailRef.current.onSubmit()) return;
+        let value = emailRef.current.value;
+        emailRef.current.reset();
+    }
+
+    const submitPassword = () => {
+        if(!passwordRef.current.onSubmit()) return;
+        let value = passwordRef.current.value;
+        passwordRef.current.reset();
+    }
+
+
+    const logoutHandler = () => {
+        dispatch(logout());
+    }
 
     return (
         <Card className={classes.card}>
@@ -27,10 +89,11 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='text'
                                    name='UpdateUsername'
-                                   validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                                   validateOnSubmiting={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
+                                   onFocus={usernameFocusHandler}
                                    ref={usernameRef}/>
-                            <Btn label="Update"/>
+                            { isShowUsernameBtn && <Btn label="Update" onClick={submitUsername}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
@@ -38,24 +101,26 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='email'
                                    name='updateEmail'
-                                   validationObj={new isEmail()}
+                                   validateOnSubmiting={new isEmail()}
+                                   onFocus={emailFocusHandler}
                                    ref={emailRef}/>
-                            <Btn label="Update"/>
+                            { isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
                         <p>Update Password</p>
                         <div className={classes.input}>
                             <InputPassword name='updatePassword'
-                                           validateObj={new isPassword()}
+                                           validateOnSubmiting={new isPassword()}
+                                           onFocus={passwordFocusHandler}
                                            ref={passwordRef}/>
-                            <Btn label="Update"/>
+                            { isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
                         </div>
                     </div>
                     <div className={classes.space}></div>
                     <div className={classes.setting_action}>
                         <p>Logout</p>
-                        <Btn label="Logout"/>
+                        <Btn label="Logout" onClick={logoutHandler}/>
                     </div>
                     <div className={classes.setting_action}>
                         <p>Delete Account</p>
@@ -84,7 +149,6 @@ const Settings = () => {
                     </div>
                 </section>
             </div>
-
         </Card>
     )
 }
