@@ -1,6 +1,5 @@
 import React, {useRef} from 'react'
 
-import InputPassword from "../../ui/form/InputPassword";
 import Input from "../../ui/form/Input";
 import Btn from "../../ui/form/Btn";
 
@@ -10,7 +9,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {isUsernameAvailable, singUpRequest} from "../../../store/authenticate-action";
 import {isEmail, isNotEmpty, isPassword} from "../../../utils/Validation";
 import {useNavigate} from "react-router-dom";
-
 
 
 const SingUpFrom = (props) => {
@@ -29,9 +27,9 @@ const SingUpFrom = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(!usernameRef.current.onSubmit()) return;
-        if(!emailRef.current.onSubmit()) return;
-        if(!passwordRef.current.onSubmit()) return;
+        if (!usernameRef.current.onSubmit()) return;
+        if (!emailRef.current.onSubmit()) return;
+        if (!passwordRef.current.onSubmit()) return;
 
 
         dispatch(singUpRequest({
@@ -45,7 +43,7 @@ const SingUpFrom = (props) => {
         passwordRef.current.reset();
     }
 
-    return(
+    return (
         <form className={classes.form} onSubmit={submitHandler}>
             <div>
                 <Input type='text'
@@ -63,10 +61,11 @@ const SingUpFrom = (props) => {
                        ref={emailRef}/>
             </div>
             <div className={classes.form_password}>
-                <InputPassword name='SingUpPassword'
-                               placeholder='Password'
-                               validator={new isPassword()}
-                               ref={passwordRef}/>
+                <Input type='password' name='SingUpPassword'
+                       placeholder='Password'
+                       isPassword={true}
+                       validator={new isPassword()}
+                       ref={passwordRef}/>
             </div>
             {
                 singUpError.isFailed && <p className={classes.form_errorMsg}>{singUpError.errorText}</p>

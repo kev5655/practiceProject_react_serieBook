@@ -1,5 +1,4 @@
 import React, {useRef} from 'react'
-import InputPassword from "../../ui/form/InputPassword";
 
 import classes from "./LoggingForm.module.css"
 import Btn from "../../ui/form/Btn";
@@ -47,8 +46,10 @@ const LoginForm = () => {
                         ref={usernameRef}/>
                 </div>
                 <div className={classes.form_password}>
-                    <InputPassword
+                    <Input
+                        type='password'
                         name='LoginPassword'
+                        isPassword={true}
                         placeholder='Password'
                         validator={new isNotEmpty().setErrorText("Password is Empty")}
                         ref={passwordRef}

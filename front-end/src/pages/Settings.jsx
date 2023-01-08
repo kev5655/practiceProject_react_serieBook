@@ -6,7 +6,6 @@ import Btn from "../components/ui/form/Btn";
 import {isEmail, isNotEmpty, isPassword} from "../utils/Validation";
 import {isUsernameAvailable, logout} from "../store/authenticate-action";
 import {useRef, useState} from "react";
-import InputPassword from "../components/ui/form/InputPassword";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
@@ -53,20 +52,20 @@ const Settings = () => {
 
 
     const submitUsername = () => {
-        if(!usernameRef.current.onSubmit()) return;
+        if (!usernameRef.current.onSubmit()) return;
         let value = usernameRef.current.value;
         usernameRef.current.reset();
     }
 
 
     const submitEmail = () => {
-        if(!emailRef.current.onSubmit()) return;
+        if (!emailRef.current.onSubmit()) return;
         let value = emailRef.current.value;
         emailRef.current.reset();
     }
 
     const submitPassword = () => {
-        if(!passwordRef.current.onSubmit()) return;
+        if (!passwordRef.current.onSubmit()) return;
         let value = passwordRef.current.value;
         passwordRef.current.reset();
     }
@@ -90,11 +89,11 @@ const Settings = () => {
                             <Input type='text'
                                    name='UpdateUsername'
                                    validator={new isNotEmpty().setErrorText("Username is Empty")}
-                                   // validateOnSubmitting={new isNotEmpty().setErrorText("Username is Empty")}
+                                // validateOnSubmitting={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
                                    onFocus={usernameFocusHandler}
                                    ref={usernameRef}/>
-                            { isShowUsernameBtn && <Btn label="Update" onClick={submitUsername}/>}
+                            {isShowUsernameBtn && <Btn label="Update" onClick={submitUsername}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
@@ -105,17 +104,19 @@ const Settings = () => {
                                    validator={new isEmail()}
                                    onFocus={emailFocusHandler}
                                    ref={emailRef}/>
-                            { isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
+                            {isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
                         </div>
                     </div>
                     <div className={classes.setting_input}>
                         <p>Update Password</p>
                         <div className={classes.input}>
-                            <InputPassword name='updatePassword'
-                                           validator={new isPassword()}
-                                           onFocus={passwordFocusHandler}
-                                           ref={passwordRef}/>
-                            { isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
+                            <Input type='password'
+                                   name='updatePassword'
+                                   isPassword={true}
+                                   validator={new isPassword()}
+                                   onFocus={passwordFocusHandler}
+                                   ref={passwordRef}/>
+                            {isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
                         </div>
                     </div>
                     <div className={classes.space}></div>

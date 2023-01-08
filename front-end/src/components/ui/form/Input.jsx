@@ -1,28 +1,37 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react'
+import React, {forwardRef, useImperativeHandle, useState} from 'react'
 
 import classes from "./Input.module.css"
 import useInput from "../../../hooks/use-input";
 import {defaultValidator} from "../../../utils/Validation";
+import IconBtn from "./IconBtn";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 
 const Input = forwardRef((props, ref) => {
-    let { initValue,
+    let {
+        initValue,
         type,
         name,
         maxLength,
         minNumber,
         placeholder,
+        isPassword,
         validator,
         backendValidator,
         onChange,
         onFocus,
-        onBlur } = props
+        onBlur
+    } = props
 
     initValue = initValue ?? "";
     validator = validator ?? new defaultValidator();
-    onChange = onChange ?? function (){};
-    onFocus = onFocus ?? function (){};
-    onBlur = onBlur ?? function (){};
+    onChange = onChange ?? function () {
+    };
+    onFocus = onFocus ?? function () {
+    };
+    onBlur = onBlur ?? function () {
+    };
 
     let {
         value,
@@ -32,12 +41,14 @@ const Input = forwardRef((props, ref) => {
         inputBlurHandler,
         inputFocusHandler,
         resetHandler,
-    } = useInput({initValue,
+    } = useInput({
+        initValue,
         validator,
         backendValidator,
         onChange,
         onFocus,
-        onBlur});
+        onBlur
+    });
 
     const [displayError, setDisplayError] = useState({isError: false, text: ''});
 
@@ -54,21 +65,47 @@ const Input = forwardRef((props, ref) => {
         }
     }));
 
+    // For Password Input Filed
+    const [inputType, setInputType] = useState(type);
+
+    const onHideClickHandler = () => {
+        setInputType("text")
+    }
+
+    const onVisibleClickHandler = () => {
+        setInputType("password")
+    }
 
     return (
         <>
-            <input
-                className={`${classes.input} ${hasError && classes.error}`}
-                type={type}
-                name={name}
-                value={value}
-                maxLength={maxLength ?? 50}
-                min={minNumber}
-                placeholder={placeholder ?? ''}
-                onChange={valueChangeHandler}
-                onBlur={inputBlurHandler}
-                onFocus={inputFocusHandler}
-            />
+            <div className={classes.input_container}>
+                <input
+                    className={`${classes.input} ${hasError && classes.error}`}
+                    type={inputType}
+                    name={name}
+                    value={value}
+                    maxLength={maxLength ?? 50}
+                    min={minNumber}
+                    placeholder={placeholder ?? ''}
+                    onChange={valueChangeHandler}
+                    onBlur={inputBlurHandler}
+                    onFocus={inputFocusHandler}
+                />
+                {
+
+                    (isPassword && inputType === "password") && <IconBtn
+                        icon={VisibilityIcon}
+                        className={classes.icon}
+                        onClick={onHideClickHandler}/>
+                }
+                {
+                    (isPassword && inputType === "text") && <IconBtn
+                        icon={VisibilityOffIcon}
+                        className={classes.icon}
+                        onClick={onVisibleClickHandler}/>
+                }
+            </div>
+
             {displayError.isError &&
                 <p>
                     {displayError.text}
