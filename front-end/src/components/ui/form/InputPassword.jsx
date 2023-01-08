@@ -16,7 +16,7 @@ const InputPassword = forwardRef((props, ref) => {
         maxLength,
         placeholder,
         validateOnRuntime,
-        validateOnSubmiting,
+        validateOnSubmitting,
         onChange,
         onFocus,
         onBlur
@@ -50,8 +50,8 @@ const InputPassword = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         value: value,
         onSubmit: () => {
-            let isValid = validateOnSubmiting.validate(value)
-            let errorMessage = validateOnSubmiting.getErrorText();
+            let isValid = validateOnSubmitting.validate(value)
+            let errorMessage = validateOnSubmitting.getErrorText();
             setDisplayError({isError: !isValid, text: errorMessage})
             return isValid
         },

@@ -89,7 +89,7 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='text'
                                    name='UpdateUsername'
-                                   validateOnSubmiting={new isNotEmpty().setErrorText("Username is Empty")}
+                                   validateOnSubmitting={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
                                    onFocus={usernameFocusHandler}
                                    ref={usernameRef}/>
@@ -101,7 +101,7 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='email'
                                    name='updateEmail'
-                                   validateOnSubmiting={new isEmail()}
+                                   validateOnSubmitting={new isEmail()}
                                    onFocus={emailFocusHandler}
                                    ref={emailRef}/>
                             { isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
@@ -111,7 +111,7 @@ const Settings = () => {
                         <p>Update Password</p>
                         <div className={classes.input}>
                             <InputPassword name='updatePassword'
-                                           validateOnSubmiting={new isPassword()}
+                                           validateOnSubmitting={new isPassword()}
                                            onFocus={passwordFocusHandler}
                                            ref={passwordRef}/>
                             { isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
