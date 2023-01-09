@@ -89,7 +89,6 @@ const Settings = () => {
                             <Input type='text'
                                    name='UpdateUsername'
                                    validator={new isNotEmpty().setErrorText("Username is Empty")}
-                                // validateOnSubmitting={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
                                    onFocus={usernameFocusHandler}
                                    ref={usernameRef}/>
