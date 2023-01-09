@@ -1,6 +1,5 @@
 import {seriesAction} from './series-slice'
 import {api} from "../utils/api";
-import {authActions} from "./authenticate-slice";
 import {TokenError} from "../utils/Error";
 import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
 import {logout} from "./authenticate-action";
@@ -196,6 +195,43 @@ export const editSerie = (editedSerie) => {
         }
 
         await sendAddSerieRequest(requestConfig, extractor, catchError);
+    }
+}
+
+export const erasing = (extinguishingSeries) => {
+    return async (dispatch, getState) => {
+        const {sendRequestFN: sendDeleteSerieRequest} = api();
+        const access_token = getState().auth.access_token;
+
+        const requestConfig = {
+            url: '/api/serie/delete',
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: extinguishingSeries
+        }
+
+        const extractor = () => {
+            const series = [...getState().series.items];
+            const filteredSeries = [...getState().series.filteredItems];
+
+            const newSeries = series.filter(serie => extinguishingSeries.id !== serie.id);
+            const newFilteredSeries = filteredSeries.filter(serie => extinguishingSeries.id !== serie.id)
+
+
+            dispatch(seriesAction.loadSeries({series: newSeries}));
+            dispatch(seriesAction.updateFilteredSerie({series: newFilteredSeries}));
+        }
+
+        const catchError = (err) => {
+            if (err instanceof TokenError) {
+                dispatch(logout())
+            }
+        }
+
+        await sendDeleteSerieRequest(requestConfig, extractor, catchError);
     }
 }
 

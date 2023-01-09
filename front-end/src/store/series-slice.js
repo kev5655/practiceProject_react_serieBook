@@ -34,6 +34,10 @@ const seriesSlice = createSlice({
         },
         updateFilteredSerie(state, action) {
             state.filteredItems = action.payload.series;
+        },
+        updateAllItems(state, action){
+            state.items = action.payload.series;
+            state.filteredItems = action.payload.filteredSeries;
         }
     }
 })

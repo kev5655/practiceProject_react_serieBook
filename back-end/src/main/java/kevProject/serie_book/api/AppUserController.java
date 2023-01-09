@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -101,12 +102,13 @@ public class AppUserController {
 
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE))                        .withIssuer(request.getRequestURI())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE)).withIssuer(request.getRequestURI())
                         .withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
                 tokens.put("refresh_token", refresh_token);
+                tokens.put("lifetime", String.valueOf(SecurityVariables.ACCESS_TOKEN_LIVE));
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
