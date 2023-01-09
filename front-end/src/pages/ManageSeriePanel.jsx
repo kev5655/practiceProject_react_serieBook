@@ -34,6 +34,7 @@ const ManageSeriePanel = () => {
     const onAcceptDeletionClickHandler = () => {
         setActiveDeletion(false);
         disptach(erasing(editSerie));
+        navigate('/series');
     }
 
     const onCancelDeletionClickHandler = () => {
