@@ -1,5 +1,6 @@
 package kevProject.serie_book.api;
 
+import kevProject.serie_book.config.Secrets;
 import kevProject.serie_book.model.AppUser;
 import kevProject.serie_book.model.Serie;
 import kevProject.serie_book.service.AppUserService;
@@ -24,11 +25,12 @@ public class SerieController {
 
     private final SerieService serieService;
     private final AppUserService appUserService;
+    private final Secrets secrets;
 
     @CrossOrigin()
     @PostMapping(Url.series)
     public Collection<SerieResponse> getAllSeries(@RequestHeader Map<String, String> headers) {
-        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
         appUser.getSeries().forEach((serie) -> {
@@ -41,7 +43,7 @@ public class SerieController {
     @PostMapping(Url.serieAdd)
     public ResponseEntity<SerieResponse> add(@RequestHeader Map<String, String> headers, @RequestBody Serie serie) {
         log.info("Add Serie {}", serie);
-        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
         serie.setAppUser(appUser);
         serieService.saveSerie(serie);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieAdd).toUriString());
@@ -53,7 +55,7 @@ public class SerieController {
     public ResponseEntity<SerieResponse> updateSerie(@RequestHeader Map<String, String> headers, @RequestBody Serie serie) {
         //Serie updatedSerie = serieService.getSerie(serie.getId());
         Serie updatedSerie = serieService.getSerieById(serie.getId());
-        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
 
         updatedSerie.setTitle(serie.getTitle());
         updatedSerie.setSession(serie.getSession());
@@ -73,7 +75,7 @@ public class SerieController {
     @DeleteMapping(Url.serieDelete)
     public ResponseEntity<?> deleteSerie(@RequestHeader Map<String, String> headers, @RequestBody Serie serie){
         Serie serieToDelete = serieService.getSerieById(serie.getId());
-        AppUser appUser = new JwtUtils().getAppUser(appUserService, headers);
+        AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
         log.info("Delete Serie {} from user {}", serie, appUser.getUsername());
 
         serieService.deleteSerie(serieToDelete.getId());

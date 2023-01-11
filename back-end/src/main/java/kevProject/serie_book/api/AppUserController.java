@@ -5,9 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kevProject.serie_book.config.Secrets;
 import kevProject.serie_book.model.AppRole;
 import kevProject.serie_book.model.AppUser;
-import kevProject.serie_book.security.SecurityVariables;
 import kevProject.serie_book.service.AppUserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +38,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AppUserController {
 
     private final AppUserService appUserService;
+    private final Secrets secrets;
 
     @GetMapping(Url.users)
     public ResponseEntity<List<AppUser>> getUsers(){
@@ -91,10 +91,10 @@ public class AppUserController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if(authorizationHeader != null && authorizationHeader.startsWith(SecurityVariables.JWT_FOREWORD)) {
+        if(authorizationHeader != null && authorizationHeader.startsWith(secrets.getJwt_foreword())) {
             try {
-                String refresh_token = authorizationHeader.substring(SecurityVariables.JWT_FOREWORD.length());
-                Algorithm algorithm = Algorithm.HMAC256(SecurityVariables.HMAC256_KEY.getBytes());
+                String refresh_token = authorizationHeader.substring(secrets.getJwt_foreword().length());
+                Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
@@ -102,13 +102,13 @@ public class AppUserController {
 
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityVariables.ACCESS_TOKEN_LIVE)).withIssuer(request.getRequestURI())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + secrets.getAccess_jwt_lifetime())).withIssuer(request.getRequestURI())
                         .withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
                 tokens.put("refresh_token", refresh_token);
-                tokens.put("lifetime", String.valueOf(SecurityVariables.ACCESS_TOKEN_LIVE));
+                tokens.put("lifetime", String.valueOf(secrets.getAccess_jwt_lifetime()));
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
