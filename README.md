@@ -10,9 +10,10 @@ Each user can create his own account and save his own series, while he remains l
 
 > For the project to work, a security configuration must be made and the application.properties may need to be adjusted.
 > If you want the security configuration you can contact me
+> You need to update the application.properties files of the Spring Backend
 
 ## Installation
-> In the frontend folder, execute the installation command
+> In the front-end folder, execute the installation command
 
 `npm install`
 
@@ -21,12 +22,21 @@ Each user can create his own account and save his own series, while he remains l
 > For running the application you need a MqSql database`
 
 ### Running the backend
+
+> Switch to the back-end folder
+
+`cd ./back-end`
+
+> Uptate Spring Profiles `spring.profiles.active` to
+`spring.profiles.active=prod`
+
+> Run the Backend
 `./mvnw spring-boot:run`
 
 ### Running the frontend
-> Switch to the frontend folder
+> Switch to the front-end folder
 
-`cd ./frontend`
+`cd ./front-end`
 
 > Running the frontend
 
@@ -36,6 +46,10 @@ Each user can create his own account and save his own series, while he remains l
 
 ### Dev
 
+>> Uptate Spring Profiles `spring.profiles.active` to
+>
+>`spring.profiles.active=prod`
+>
 >> Compile Java Project
 >
 >`mvn package -DskipTests=true`
@@ -53,6 +67,10 @@ Each user can create his own account and save his own series, while he remains l
 
 ### Prod
 
+>> Uptate Spring Profiles `spring.profiles.active` to
+>
+>`spring.profiles.active=prod`
+>
 >> Compile Java Project
 >
 >`mvn package -DskipTests=true`
