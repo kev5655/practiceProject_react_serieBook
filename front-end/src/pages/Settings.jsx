@@ -88,6 +88,7 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='text'
                                    name='UpdateUsername'
+                                   placeholder="Coming soon"
                                    validator={new isNotEmpty().setErrorText("Username is Empty")}
                                    backendValidator={isUsernameAvailable}
                                    onFocus={usernameFocusHandler}
@@ -100,6 +101,7 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='email'
                                    name='updateEmail'
+                                   placeholder="Coming soon"
                                    validator={new isEmail()}
                                    onFocus={emailFocusHandler}
                                    ref={emailRef}/>
@@ -111,6 +113,7 @@ const Settings = () => {
                         <div className={classes.input}>
                             <Input type='password'
                                    name='updatePassword'
+                                   placeholder="Coming soon"
                                    isPassword={true}
                                    validator={new isPassword()}
                                    onFocus={passwordFocusHandler}
@@ -124,7 +127,7 @@ const Settings = () => {
                         <Btn label="Logout" onClick={logoutHandler}/>
                     </div>
                     <div className={classes.setting_action}>
-                        <p>Delete Account</p>
+                        <p>Delete Account -> Coming soon</p>
                         <Btn label="Delete Account"/>
                     </div>
                 </section>
@@ -132,7 +135,7 @@ const Settings = () => {
                 <section className={classes.section}>
                     <h2 className={classes.section_title}>Design</h2>
                     <div className={classes.setting_action}>
-                        <p>Theme</p>
+                        <p>Theme -> Coming soon</p>
                         <Btn label="Toggle Dark-mode"/>
                     </div>
                 </section>
@@ -140,7 +143,7 @@ const Settings = () => {
                 <section className={classes.section}>
                     <h2 className={classes.section_title}>Series</h2>
                     <div className={classes.setting_input}>
-                        <p>Upload Netflix Data</p>
+                        <p>Upload Netflix Data -> Coming soon</p>
                         <div className={classes.input}>
                             <input type="file"
                                    id="netflixCSV" name="netflixCSV"
