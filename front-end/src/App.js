@@ -9,6 +9,7 @@ import AuthRoute from "./components/Router/AuthRoute";
 import BlurLayout from "./components/layout/BlurLayout";
 import ManageSeriePanel from "./pages/ManageSeriePanel";
 import Settings from "./pages/Settings";
+import {fetchSeries} from "./store/series-action";
 
 
 function App() {
@@ -16,8 +17,15 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log("Load Auth");
         dispatch(loadAuth())
     }, [dispatch])
+
+    useEffect(() => {
+        if(isAuth) {
+            dispatch(fetchSeries())
+        }
+    }, [dispatch, isAuth])
 
     return (
         <BlurLayout>

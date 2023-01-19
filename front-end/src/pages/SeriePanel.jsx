@@ -11,12 +11,6 @@ import {useDispatch} from "react-redux";
 import {fetchSeries} from "../store/series-action";
 
 const SeriePanel = (props) => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchSeries())
-    }, [dispatch])
-
 
     return (<>
         <Card className={classes.header_card}>
