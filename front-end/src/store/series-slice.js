@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
 
 
 const INIT_SERIE = {
@@ -19,11 +20,13 @@ const seriesSlice = createSlice({
         items: [],
         filteredItems: [],
         selectSerie: INIT_SERIE,
+        sortParam: SORT_PARAMS.BY_LAST_MODIFIED,
         totalQuantity: 0,
     },
     reducers: {
         loadSeries(state, action) {
             state.items = action.payload.series
+            state.filteredItems = action.payload.series
             state.totalQuantity = action.payload.series.length
         },
         disselect(state) {
@@ -38,6 +41,9 @@ const seriesSlice = createSlice({
         updateAllItems(state, action){
             state.items = action.payload.series;
             state.filteredItems = action.payload.filteredSeries;
+        },
+        updateSortParam(state, action) {
+            state.sortParam = action.payload.sortParam;
         }
     }
 })

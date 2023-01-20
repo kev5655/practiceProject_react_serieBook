@@ -163,11 +163,16 @@ export const erasing = (extinguishingSeries) => {
 
 // ------------------ Filter And Sort Function ------------------
 
-export const sortSeries = (sortParams = SORT_PARAMS.BY_LAST_MODIFIED) => {
+export const sortSeries = (sortParam) => {
     return (dispatch, getState) => {
-        const series = [...getState().series.items];
+        if(sortParam === undefined) {
+            sortParam = getState().series.sortParam;
+        } else {
+            dispatch(seriesAction.updateSortParam({sortParam: sortParam}));
+        }
+        const series = [...getState().series.filteredItems];
         let sortedSeries = series;
-        switch (sortParams.id) {
+        switch (sortParam.id) {
             case SORT_PARAMS.BY_ABC.id:
                 sortedSeries = sortString(series, SORT_PARAMS.BY_ABC.valueName);
                 break;
@@ -194,12 +199,11 @@ export const sortSeries = (sortParams = SORT_PARAMS.BY_LAST_MODIFIED) => {
                 break;
             default:
                 console.error("Sort Param not found: ")
-                console.table(sortParams)
+                console.table(sortParam)
                 break
 
         }
         dispatch(seriesAction.updateFilteredSerie({series: sortedSeries}))
-
     }
 }
 
@@ -233,8 +237,10 @@ export const searchSerie = (searchInput) => {
                 return -1 !== index;
             })
             dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
+            dispatch(sortSeries());
         } else {
-            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}))
+            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}));
+            dispatch(sortSeries());
         }
     }
 }
