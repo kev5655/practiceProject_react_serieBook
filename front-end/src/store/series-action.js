@@ -124,6 +124,8 @@ export const searchSerie = (searchInput) => {
                 return -1 !== index;
             })
             dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
+        } else {
+            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}))
         }
     }
 }
