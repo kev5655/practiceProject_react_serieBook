@@ -4,7 +4,7 @@ import {TokenError} from "../utils/Error";
 import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
 import {logout} from "./authenticate-action";
 
-
+// ------------------ API Requests ------------------
 export const fetchSeries = () => {
     return async (dispatch, getState) => {
 
@@ -51,82 +51,6 @@ export const fetchSeries = () => {
 
         await sendSeriesRequest(requestConfig, extractor, catchError)
 
-    }
-}
-
-export const sortSeries = (sortParams = SORT_PARAMS.BY_LAST_MODIFIED) => {
-    return (dispatch, getState) => {
-        const series = [...getState().series.items];
-        let sortedSeries = series;
-        switch (sortParams.id) {
-            case SORT_PARAMS.BY_ABC.id:
-                sortedSeries = sortString(series, SORT_PARAMS.BY_ABC.valueName);
-                break;
-            case SORT_PARAMS.BY_STARS.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_STARS.valueName);
-                break;
-            case SORT_PARAMS.BY_SESSION.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_SESSION.valueName);
-                break;
-            case SORT_PARAMS.BY_EPISODE.id:
-                sortedSeries = sortInteger(series, SORT_PARAMS.BY_EPISODE.valueName);
-                break;
-            case SORT_PARAMS.BY_LAST_MODIFIED.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_LAST_MODIFIED.valueName);
-                break;
-            case SORT_PARAMS.BY_CREATED_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_CREATED_DATE.valueName);
-                break;
-            case SORT_PARAMS.BY_START_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_START_DATE.valueName);
-                break;
-            case SORT_PARAMS.BY_END_DATE.id:
-                sortedSeries = sortDate(series, SORT_PARAMS.BY_END_DATE.valueName);
-                break;
-            default:
-                console.error("Sort Param not found: ")
-                console.table(sortParams)
-                break
-
-        }
-        dispatch(seriesAction.updateFilteredSerie({series: sortedSeries}))
-
-    }
-}
-
-const sortString = (serieList, valueName) => {
-    serieList.sort((first, second) => {
-        first = first[valueName].toLowerCase();
-        second = second[valueName].toLowerCase();
-        return first < second ? -1 : first > second ? 1 : 0;
-    })
-    return serieList;
-}
-const sortInteger = (serieList, valueName) => {
-    serieList.sort((first, second) => {
-        return second[valueName] - first[valueName];
-    })
-    return serieList;
-}
-const sortDate = (serieList, valueName) => {
-    serieList.sort((first, second) => {
-        return new Date(second[valueName]) - new Date(first[valueName]);
-    })
-    return serieList;
-}
-
-export const searchSerie = (searchInput) => {
-    return (dispatch, getState) => {
-        if (searchInput !== "") {
-            const series = [...getState().series.items];
-            let filteredSeries = series.filter((serie) => {
-                let index = serie.title.toLowerCase().search(searchInput.toLowerCase());
-                return -1 !== index;
-            })
-            dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
-        } else {
-            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}))
-        }
     }
 }
 
@@ -236,6 +160,86 @@ export const erasing = (extinguishingSeries) => {
         await sendDeleteSerieRequest(requestConfig, extractor, catchError);
     }
 }
+
+// ------------------ Filter And Sort Function ------------------
+
+export const sortSeries = (sortParams = SORT_PARAMS.BY_LAST_MODIFIED) => {
+    return (dispatch, getState) => {
+        const series = [...getState().series.items];
+        let sortedSeries = series;
+        switch (sortParams.id) {
+            case SORT_PARAMS.BY_ABC.id:
+                sortedSeries = sortString(series, SORT_PARAMS.BY_ABC.valueName);
+                break;
+            case SORT_PARAMS.BY_STARS.id:
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_STARS.valueName);
+                break;
+            case SORT_PARAMS.BY_SESSION.id:
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_SESSION.valueName);
+                break;
+            case SORT_PARAMS.BY_EPISODE.id:
+                sortedSeries = sortInteger(series, SORT_PARAMS.BY_EPISODE.valueName);
+                break;
+            case SORT_PARAMS.BY_LAST_MODIFIED.id:
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_LAST_MODIFIED.valueName);
+                break;
+            case SORT_PARAMS.BY_CREATED_DATE.id:
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_CREATED_DATE.valueName);
+                break;
+            case SORT_PARAMS.BY_START_DATE.id:
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_START_DATE.valueName);
+                break;
+            case SORT_PARAMS.BY_END_DATE.id:
+                sortedSeries = sortDate(series, SORT_PARAMS.BY_END_DATE.valueName);
+                break;
+            default:
+                console.error("Sort Param not found: ")
+                console.table(sortParams)
+                break
+
+        }
+        dispatch(seriesAction.updateFilteredSerie({series: sortedSeries}))
+
+    }
+}
+
+const sortString = (serieList, valueName) => {
+    serieList.sort((first, second) => {
+        first = first[valueName].toLowerCase();
+        second = second[valueName].toLowerCase();
+        return first < second ? -1 : first > second ? 1 : 0;
+    })
+    return serieList;
+}
+const sortInteger = (serieList, valueName) => {
+    serieList.sort((first, second) => {
+        return second[valueName] - first[valueName];
+    })
+    return serieList;
+}
+const sortDate = (serieList, valueName) => {
+    serieList.sort((first, second) => {
+        return new Date(second[valueName]) - new Date(first[valueName]);
+    })
+    return serieList;
+}
+
+export const searchSerie = (searchInput) => {
+    return (dispatch, getState) => {
+        if (searchInput !== "") {
+            const series = [...getState().series.items];
+            let filteredSeries = series.filter((serie) => {
+                let index = serie.title.toLowerCase().search(searchInput.toLowerCase());
+                return -1 !== index;
+            })
+            dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
+        } else {
+            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}))
+        }
+    }
+}
+
+
 
 
 
