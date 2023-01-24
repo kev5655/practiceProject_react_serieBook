@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {seriesAction} from "../../../store/series-slice";
 import IconBtn from "../../ui/form/IconBtn";
 
-import classes from './Serie.module.css'
+import classes from './Serie.module.css';
 import {useNavigate} from "react-router-dom";
 
 
