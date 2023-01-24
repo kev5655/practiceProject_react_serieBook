@@ -33,9 +33,7 @@ public class SerieController {
         AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
-        appUser.getSeries().forEach((serie) -> {
-            serieResponses.add(new SerieResponse(serie));
-        });
+        appUser.getSeries().forEach((serie) -> serieResponses.add(new SerieResponse(serie)));
         return serieResponses;
     }
 
@@ -63,6 +61,7 @@ public class SerieController {
         updatedSerie.setStartDate(serie.getStartDate());
         updatedSerie.setEndDate(serie.getEndDate());
         updatedSerie.setStars(serie.getStars());
+        updatedSerie.setLastModifiedDate(serie.getLastModifiedDate());
         updatedSerie.setAppUser(appUser);
 
         log.info("Update Serie {}", updatedSerie);
