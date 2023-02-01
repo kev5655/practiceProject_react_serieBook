@@ -2,9 +2,10 @@
 
 .header_card{
     padding: 0;
+    background-color: #6a6a6a;
     box-shadow: inset 10px 10px 40px #5d5d5d,
-                inset -10px -10px 40px #777777,
-                10px 10px 40px #4a4a4a;
+    inset -10px -10px 40px #777777,
+    10px 10px 40px #4a4a4a;
 }
 
 .serieList_card {
