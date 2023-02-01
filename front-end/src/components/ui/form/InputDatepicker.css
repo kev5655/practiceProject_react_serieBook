@@ -35,3 +35,51 @@ input:focus{
     text-align: left;
 
 }
+
+
+.react-datepicker {
+    font-family: "JetBrains Mono", sans-serif;
+    background-color: #868686;
+    border-color: #6a6a6a;
+}
+
+.react-datepicker__triangle::before {
+    border-bottom-color: transparent !important;
+}
+
+.react-datepicker__triangle::after {
+    border-bottom-color: #6a6a6a !important;
+}
+
+.react-datepicker__navigation-icon::before {
+    border-color: black;
+}
+
+.react-datepicker__header {
+    background-color: #6a6a6a;
+    border-bottom-color: #868686;
+}
+
+.react-datepicker__month {
+    background-color: #868686;
+}
+
+.react-datepicker__day:hover {
+    background-color: #6a6a6a;
+}
+
+.react-datepicker__day--selected {
+    background-color: #780000;
+}
+
+.react-datepicker__day--keyboard-selected{
+    background-color: #780000;
+}
+
+.react-datepicker__day--today{
+    color: white;
+
+
+}
+
+
