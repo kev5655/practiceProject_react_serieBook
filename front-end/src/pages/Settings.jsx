@@ -121,14 +121,11 @@ const Settings = () => {
                             {isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
                         </div>
                     </div>
-                    <div className={classes.space}></div>
-                    <div className={classes.setting_action}>
-                        <p>Logout</p>
-                        <Btn label="Logout" onClick={logoutHandler}/>
-                    </div>
-                    <div className={classes.setting_action}>
-                        <p>Delete Account -> Coming soon</p>
-                        <Btn label="Delete Account"/>
+                    <div className={classes.btn_action}>
+                        <Btn className={{"width": "50%",
+                                        "maxWidth": "300px"}} label="Logout" onClick={logoutHandler}/>
+                        <Btn className={{"width": "50%",
+                                        "maxWidth":"300px"}} label="Delete Account -> Coming soon"/>
                     </div>
                 </section>
 
