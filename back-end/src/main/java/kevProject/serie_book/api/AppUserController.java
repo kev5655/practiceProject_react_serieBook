@@ -56,6 +56,7 @@ public class AppUserController {
             new ObjectMapper().writeValue(response.getOutputStream(), error);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
+        log.info("Save a new User username is {}", user.getUsername());
         appUserService.addRoleToUser(user.getUsername(), "ROLE_USER");
 
         return ResponseEntity.created(uri).body(appUser);
@@ -74,6 +75,7 @@ public class AppUserController {
     public ResponseEntity<AppRole>saveRole(@RequestBody AppRole role){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.roleSave).toUriString());
         if(role.isValid()){
+            log.info("Save a new Role role is {}", role);
             return ResponseEntity.created(uri).body(appUserService.saveAppRole(role));
         }else {
             log.error("Role is not valid role is: {}", role);
@@ -84,6 +86,7 @@ public class AppUserController {
     @PostMapping(Url.roleAddtouser)
     public ResponseEntity<?>saveRole(@RequestBody RoleToUserFrom form){
         appUserService.addRoleToUser(form.getUsername(), form.getRolename());
+        log.info("Add a role to User user is {} role is {}", form.getUsername(), form.getRolename());
         return ResponseEntity.ok().build();
     }
 
@@ -113,7 +116,7 @@ public class AppUserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
             } catch (Exception exception) {
-                log.error("Error logging in: {}", exception.getMessage());
+                log.error("Error with the refreshToken user try to refresh his accessToken, error message: {}", exception.getMessage());
                 Map<String, String> error = new HashMap<>();
                 error.put("error_message", exception.getMessage());
                 response.setHeader("error", exception.getMessage());
@@ -122,6 +125,7 @@ public class AppUserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         } else {
+            log.error("User try to Refresh the JWT but they have no refreshToken");
             throw new RuntimeException("Refresh Token is missing");
         }
     }

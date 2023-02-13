@@ -34,17 +34,18 @@ public class SerieController {
 
         Collection<SerieResponse> serieResponses = new ArrayList<>();
         appUser.getSeries().forEach((serie) -> serieResponses.add(new SerieResponse(serie)));
+        log.info("User gets allSeries the user is {}", appUser);
         return serieResponses;
     }
 
     @CrossOrigin()
     @PostMapping(Url.serieAdd)
     public ResponseEntity<SerieResponse> add(@RequestHeader Map<String, String> headers, @RequestBody Serie serie) {
-        log.info("Add Serie {}", serie);
         AppUser appUser = new JwtUtils(secrets).getAppUser(appUserService, headers);
         serie.setAppUser(appUser);
         serieService.saveSerie(serie);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieAdd).toUriString());
+        log.info("User adds a serie, serie is {}", serie);
         return ResponseEntity.created(uri).body(new SerieResponse(serie));
     }
 
@@ -64,7 +65,7 @@ public class SerieController {
         updatedSerie.setLastModifiedDate(serie.getLastModifiedDate());
         updatedSerie.setAppUser(appUser);
 
-        log.info("Update Serie {}", updatedSerie);
+        log.info("User update a serie, serie is {}", updatedSerie);
         serieService.updateSerie(updatedSerie);
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api" + Url.serieUpdate).toUriString());
