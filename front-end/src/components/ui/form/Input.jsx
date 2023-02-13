@@ -1,6 +1,7 @@
 import React, {forwardRef, useImperativeHandle, useState} from 'react'
 
 import classes from "./Input.module.css"
+import classError from "../../styles/Error.module.css"
 import useInput from "../../../hooks/use-input";
 import {defaultValidator} from "../../../utils/Validation";
 import IconBtn from "./IconBtn";
@@ -104,13 +105,14 @@ const Input = forwardRef((props, ref) => {
                         className={classes.icon}
                         onClick={onVisibleClickHandler}/>
                 }
+                {displayError.isError &&
+                    <p className={`${classError.error_message} ${classes.error_text}`}>
+                        {displayError.text}
+                    </p>
+                }
             </div>
 
-            {displayError.isError &&
-                <p>
-                    {displayError.text}
-                </p>
-            }
+
         </>
     );
 })

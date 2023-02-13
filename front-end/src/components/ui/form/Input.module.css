@@ -50,6 +50,11 @@
     background-color: rgba(193, 18, 31, 0.2);
 }
 
+.error_text {
+    display: block;
+    padding-top: 0.5rem;
+}
+
 /* Chrome, Safari, Edge, Opera */
 .input::-webkit-outer-spin-button,
 .input::-webkit-inner-spin-button {

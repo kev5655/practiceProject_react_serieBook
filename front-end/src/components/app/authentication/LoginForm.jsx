@@ -1,6 +1,7 @@
 import React, {useRef} from 'react'
 
 import classes from "./LoggingForm.module.css"
+import classError from "../../styles/Error.module.css";
 import Btn from "../../ui/form/Btn";
 import {useDispatch, useSelector} from "react-redux";
 import {authRequest} from "../../../store/authenticate-action";
@@ -22,8 +23,8 @@ const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(!usernameRef.current.onSubmit()) return;
-        if(!passwordRef.current.onSubmit()) return;
+        if (!usernameRef.current.onSubmit()) return;
+        if (!passwordRef.current.onSubmit()) return;
 
         dispatch(authRequest({
             username: usernameRef.current.value,
@@ -56,7 +57,8 @@ const LoginForm = () => {
                     />
                 </div>
                 {
-                    loginError.isFailed && <p className={classes.form_errorMsg}>{loginError.errorText}</p>
+                    loginError.isFailed &&
+                    <p className={`${classes.form_errorMsg} ${classError.error_message}`}>{loginError.errorText}</p>
                 }
                 <div className={classes.defaultsLogin}>
                     <p>Default Username: test</p>

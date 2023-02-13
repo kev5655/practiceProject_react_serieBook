@@ -7,8 +7,6 @@
 }
 
 .form_errorMsg {
-    color: #c1121f;
-    font-weight: bold;
     display: flex;
     justify-content: center;
     text-align: center;
