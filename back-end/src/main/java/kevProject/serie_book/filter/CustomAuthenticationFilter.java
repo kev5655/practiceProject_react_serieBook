@@ -36,6 +36,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        log.info("User Try to logging");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
@@ -44,6 +45,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     // ToDo Refactoring
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+        log.info("User is logged in, Application give the JWT");
         User user = (User)authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
         String access_token = JWT.create()
@@ -75,7 +77,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         log.info("could not log in: " + failed.getMessage());
         log.info("Request: " + request.toString() + " Response: " + response.toString());
-
         super.unsuccessfulAuthentication(request, response, failed);
     }
 }

@@ -25,6 +25,7 @@ export const authRequest = (loggingData) => {
                 access_token: token.access_token,
                 refresh_token: token.refresh_token
             }))
+            dispatch(authActions.resetLoginFailed());
             sessionStorage.setItem("access_token", token.access_token)
             sessionStorage.setItem("refresh_token", token.refresh_token)
         }
@@ -129,9 +130,10 @@ const refreshAccessToken = async (dispatch, refresh_token) => {
             dispatch(authActions.login({
                 access_token: token.access_token,
                 refresh_token: token.refresh_token
-            }))
-            sessionStorage.setItem("access_token", token.access_token)
-            sessionStorage.setItem("refresh_token", token.refresh_token)
+            }));
+
+            sessionStorage.setItem("access_token", token.access_token);
+            sessionStorage.setItem("refresh_token", token.refresh_token);
         }
 
         const catchError = () => {

@@ -35,7 +35,7 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = appUserRepo.findByUsername(username);
         if(user == null){
-            log.error("User not found in the database {}", username);
+            log.error("User not found in the database user is {}", username);
             throw new UsernameNotFoundException("User not found in the database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
