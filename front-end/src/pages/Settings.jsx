@@ -8,6 +8,7 @@ import {isUsernameAvailable, logout} from "../store/authenticate-action";
 import {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import InputFile from "../components/ui/form/InputFile";
 
 const Settings = () => {
 
@@ -17,6 +18,7 @@ const Settings = () => {
     const usernameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+    const fileUploadRef = useRef();
 
     const [isShowUsernameBtn, setShowUsernameBtn] = useState(false);
     const [isShowEmailBtn, setShowEmailBtn] = useState(false);
@@ -73,6 +75,10 @@ const Settings = () => {
 
     const logoutHandler = () => {
         dispatch(logout());
+    }
+
+    const submitFile = () => {
+        fileUploadRef.current.onReset();
     }
 
     return (
@@ -145,11 +151,19 @@ const Settings = () => {
                     <div className={classes.setting_input}>
                         <p>Upload Netflix Data -> Coming soon</p>
                         <div className={classes.input}>
-                            <input type="file"
-                                   id="netflixCSV" name="netflixCSV"
-                                   accept="text/csv"/>
-                            <Btn label="Upload"/>
+                            {/*<input type="file"*/}
+                            {/*       id="netflixCSV" name="netflixCSV"*/}
+                            {/*       accept="text/csv"/>*/}
+                            <InputFile id="netflix_csv" name="netflix_csv_upload" fileType="text/csv" ref={fileUploadRef}/>
+                            <Btn label="Upload" onClick={submitFile}/>
                         </div>
+                    </div>
+                </section>
+
+                <section className={classes.section}>
+                    <h2 className={classes.section_title}>Report a Error</h2>
+                    <div className={classes.setting_action}>
+                        <p><a href="https://github.com/kev5655/practiceProject_react_serieBook/issues/new">Report an error on GitHub</a></p>
                     </div>
                 </section>
             </div>

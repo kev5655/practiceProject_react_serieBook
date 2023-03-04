@@ -34,6 +34,45 @@
     text-align: left;
 }
 
+
+.inputFile::-webkit-file-upload-button {
+    display: none;
+}
+
+
+.inputFile {
+    content: none;
+    color: white;
+    font-family: "JetBrains Mono", sans-serif;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+    display: inline;
+    height: 40px;
+    background: #780000;
+    border-width: 1px;
+    border-style:solid;
+    border-color: #780000;
+    border-radius: 4px;
+    padding: 8.5px 14px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    outline: none;
+
+}
+.inputFile:hover{
+    background: #c1121f;
+    border-color: #c1121f;
+}
+.inputFile:focus{
+    color: black;
+    background: transparent;
+}
+.file {
+    display: none;
+}
+
+
+
 .icon {
     position: absolute;
     color: #555555;
