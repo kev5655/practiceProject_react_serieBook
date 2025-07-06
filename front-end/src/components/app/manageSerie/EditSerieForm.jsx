@@ -41,12 +41,12 @@ const EditSerieForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        serieNameRef.current.onSubmit();
-        sessionRef.current.onSubmit();
-        episodeRef.current.onSubmit();
-        if(!serieNameRef.current.isValid) return;
-        if(!sessionRef.current.isValid) return;
-        if(!episodeRef.current.isValid) return;
+        let serieNameError = !serieNameRef.current.onSubmit();
+        let sessionError = !sessionRef.current.onSubmit();
+        let episodeError = !episodeRef.current.onSubmit();
+
+        if(serieNameError || sessionError || episodeError) return;
+
 
         if(activeSerie.id === ''){
             dispatch(addSerie({
@@ -94,7 +94,7 @@ const EditSerieForm = () => {
                        initValue={activeSerie.title}
                        name='SerieName'
                        placeholder='Serie Name'
-                       validateObj={new isNotEmpty().setErrorText("Serie need a name")}
+                       validator={new isNotEmpty().setErrorText("Serie need a name")}
                        ref={serieNameRef}/>
             </div>
 
@@ -103,7 +103,7 @@ const EditSerieForm = () => {
                        initValue={activeSerie.session}
                        name='Session'
                        placeholder='Session'
-                       validateObj={new isNotEmpty().setErrorText("add a number")}
+                       validator={new isNotEmpty().setErrorText("add a number")}
                        ref={sessionRef}/>
                 <Input tpye='number'
                        initValue={activeSerie.episode}

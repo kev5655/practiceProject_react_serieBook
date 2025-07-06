@@ -2,6 +2,7 @@ import {convert_JSObject_To_x_www_form_urlencoded} from "../utils/api";
 import {authActions} from './authenticate-slice'
 import {api} from '../utils/api'
 
+let refreshTokenTimer;
 
 export const authRequest = (loggingData) => {
     return async (dispatch) => {
@@ -19,12 +20,14 @@ export const authRequest = (loggingData) => {
         }
 
         const extractor = (token) => {
+            refreshTokenScheduler(token.lifetime, dispatch, token.refresh_token);
             dispatch(authActions.login({
                 access_token: token.access_token,
                 refresh_token: token.refresh_token
             }))
+            dispatch(authActions.resetLoginFailed());
             sessionStorage.setItem("access_token", token.access_token)
-            sessionStorage.setItem("refreshToken", token.refresh_token)
+            sessionStorage.setItem("refresh_token", token.refresh_token)
         }
 
         const catchError = (err) => {
@@ -35,6 +38,14 @@ export const authRequest = (loggingData) => {
         await sendAuthRequest(requestConfig, extractor, catchError)
 
     }
+}
+
+const refreshTokenScheduler = (lifetime, dispatch, refresh_token) => {
+
+    const remainingTime = parseInt(lifetime) - 2000;
+
+    refreshTokenTimer = setTimeout(refreshAccessToken, remainingTime, dispatch, refresh_token);
+
 }
 
 export const singUpRequest = (singUpDate) => {
@@ -94,7 +105,7 @@ export const isUsernameAvailable = (username) => {
 
 export const loadAuth = () => {
     return (dispatch) => {
-        const refresh_token = sessionStorage.getItem("refreshToken")
+        const refresh_token = sessionStorage.getItem("refresh_token")
         if(!refresh_token) return
 
         refreshAccessToken(dispatch, refresh_token).then()
@@ -114,15 +125,18 @@ const refreshAccessToken = async (dispatch, refresh_token) => {
         }
 
         const extractor = (token) => {
+            clearTimeout(refreshTokenTimer);
+            refreshTokenScheduler(token.lifetime, dispatch, token.refresh_token);
             dispatch(authActions.login({
                 access_token: token.access_token,
                 refresh_token: token.refresh_token
-            }))
-            sessionStorage.setItem("access_token", token.access_token)
-            sessionStorage.setItem("refreshToken", token.refresh_token)
+            }));
+
+            sessionStorage.setItem("access_token", token.access_token);
+            sessionStorage.setItem("refresh_token", token.refresh_token);
         }
 
-        const catchError = (err) => {
+        const catchError = () => {
             dispatch(authActions.logout())
         }
 
@@ -130,3 +144,11 @@ const refreshAccessToken = async (dispatch, refresh_token) => {
 
 }
 
+export const logout = () => {
+    clearTimeout(refreshTokenTimer);
+    return (dispatch) => {
+        sessionStorage.removeItem("refresh_token")
+        sessionStorage.removeItem("access_token")
+        dispatch(authActions.logout())
+    }
+}

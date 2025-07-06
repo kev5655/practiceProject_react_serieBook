@@ -3,19 +3,21 @@ import React, {useEffect, useState} from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import EditSerieForm from "../components/app/manageSerie/EditSerieForm";
-import Card from "../components/ui/Card";
+import Card from "../components/layout/Card";
 import InfoPopup from "../components/ui/popup/InfoPopup";
 import IconBtn from "../components/ui/form/IconBtn";
 
 import classes from './ManageSeriePanel.module.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {erasing} from "../store/series-action";
 
 
 
 const ManageSeriePanel = () => {
 
     const [activeDeletion, setActiveDeletion] = useState(false);
+    const disptach = useDispatch();
     const editSerie = useSelector(state => state.series.selectSerie)
     const navigate = useNavigate();
 
@@ -31,8 +33,8 @@ const ManageSeriePanel = () => {
 
     const onAcceptDeletionClickHandler = () => {
         setActiveDeletion(false);
-        // deleteRef.current.deleteSerie();
-        // props.onDeletion(props.editingSerie)
+        disptach(erasing(editSerie));
+        navigate('/series');
     }
 
     const onCancelDeletionClickHandler = () => {

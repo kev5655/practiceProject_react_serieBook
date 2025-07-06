@@ -1,6 +1,5 @@
 import React, {useRef} from 'react'
 
-import InputPassword from "../../ui/form/InputPassword";
 import Input from "../../ui/form/Input";
 import Btn from "../../ui/form/Btn";
 
@@ -10,7 +9,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {isUsernameAvailable, singUpRequest} from "../../../store/authenticate-action";
 import {isEmail, isNotEmpty, isPassword} from "../../../utils/Validation";
 import {useNavigate} from "react-router-dom";
-
 
 
 const SingUpFrom = (props) => {
@@ -29,12 +27,9 @@ const SingUpFrom = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        usernameRef.current.onSubmit();
-        emailRef.current.onSubmit();
-        passwordRef.current.onSubmit();
-        if(!usernameRef.current.isValid) return;
-        if(!emailRef.current.isValid) return;
-        if(!passwordRef.current.isValid) return;
+        if (!usernameRef.current.onSubmit()) return;
+        if (!emailRef.current.onSubmit()) return;
+        if (!passwordRef.current.onSubmit()) return;
 
 
         dispatch(singUpRequest({
@@ -48,13 +43,13 @@ const SingUpFrom = (props) => {
         passwordRef.current.reset();
     }
 
-    return(
+    return (
         <form className={classes.form} onSubmit={submitHandler}>
             <div>
                 <Input type='text'
                        name='SingUpUsername'
                        placeholder='Username'
-                       validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                       validator={new isNotEmpty().setErrorText("Username is Empty")}
                        backendValidator={isUsernameAvailable}
                        ref={usernameRef}/>
             </div>
@@ -62,14 +57,15 @@ const SingUpFrom = (props) => {
                 <Input type='email'
                        name='SingUpEmail'
                        placeholder='Email'
-                       validateObj={new isEmail()}
+                       validator={new isEmail()}
                        ref={emailRef}/>
             </div>
             <div className={classes.form_password}>
-                <InputPassword name='SingUpPassword'
-                               placeholder='Password'
-                               validateObj={new isPassword()}
-                               ref={passwordRef}/>
+                <Input type='password' name='SingUpPassword'
+                       placeholder='Password'
+                       isPassword={true}
+                       validator={new isPassword()}
+                       ref={passwordRef}/>
             </div>
             {
                 singUpError.isFailed && <p className={classes.form_errorMsg}>{singUpError.errorText}</p>

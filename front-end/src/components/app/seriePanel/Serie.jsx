@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {seriesAction} from "../../../store/series-slice";
 import IconBtn from "../../ui/form/IconBtn";
 
-import classes from './Serie.module.css'
+import classes from './Serie.module.css';
 import {useNavigate} from "react-router-dom";
 
 
@@ -45,7 +45,7 @@ const Serie = (props) => {
     }
 
     return (
-        <article className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
+        <section className={`${classes.serie} ${classes.serie_hover}`} onClick={onClickHandler}>
             <div>
                 <div className={classes.serie_firstRow}>
                     <p className={classes.serie_firstRow_title}>{title}</p>
@@ -65,7 +65,7 @@ const Serie = (props) => {
             </div>
             <IconBtn icon={EditIcon}
                      onClick={editSerieHandler}/>
-        </article>
+        </section>
     );
 }
 

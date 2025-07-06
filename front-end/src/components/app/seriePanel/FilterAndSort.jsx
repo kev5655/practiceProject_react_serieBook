@@ -21,13 +21,17 @@ export const SORT_PARAMS = {
     BY_END_DATE: {value: 'by End Date', id: 8, valueName: 'endDate'},
 }
 
+let identifier = setTimeout(() => {});
 
 const FilterAndSort = () => {
 
     const dispatch = useDispatch();
 
     const onEnteredSearchParam = (searchParam) => {
-        dispatch(searchSerie(searchParam))
+        clearTimeout(identifier);
+        identifier = setTimeout(async () => {
+            dispatch(searchSerie(searchParam))
+        }, 200);
     }
 
     const onEnteredSortParam = (sortParam) => {

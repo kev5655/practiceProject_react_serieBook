@@ -13,24 +13,23 @@ const authenticateSlice = createSlice({
         loginError: INIT_ERROR,
         singUpError: INIT_ERROR,
         access_token: null,
-        refreshToken: null,
+        refresh_token: null,
     },
     reducers: {
         login(state, action){
             state.isAuth = true;
             state.singUpError = INIT_ERROR;
             state.access_token = action.payload.access_token;
-            state.refreshToken = action.payload.refresh_token;
+            state.refresh_token = action.payload.refresh_token;
         },
         logout(state){
             state.isAuth = false;
             state.access_token = null;
-            state.refreshToken = null;
+            state.refresh_token = null;
         },
         loginFailed(state, action){
             state.loginError.isFailed = true;
             state.loginError.errorText = action.payload.errorText;
-
         },
         resetLoginFailed(state){
             state.loginError.isFailed = false;

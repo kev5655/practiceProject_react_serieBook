@@ -3,11 +3,13 @@ import React, {useState} from 'react'
 import Popup from "reactjs-popup";
 
 
-import Card from "../../ui/Card";
+import Card from "../../layout/Card";
 
 import classes from './DetailSerie.module.css'
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
+
+
 
 const DetailSerie = (props) => {
     const {onClickOutside} = props;

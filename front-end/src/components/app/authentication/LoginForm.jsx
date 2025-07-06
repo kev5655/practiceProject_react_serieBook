@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
-import InputPassword from "../../ui/form/InputPassword";
 
 import classes from "./LoggingForm.module.css"
+import classError from "../../styles/Error.module.css";
 import Btn from "../../ui/form/Btn";
 import {useDispatch, useSelector} from "react-redux";
 import {authRequest} from "../../../store/authenticate-action";
@@ -23,10 +23,8 @@ const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        usernameRef.current.onSubmit();
-        passwordRef.current.onSubmit();
-        if(!usernameRef.current.isValid) return;
-        if(!passwordRef.current.isValid) return;
+        if (!usernameRef.current.onSubmit()) return;
+        if (!passwordRef.current.onSubmit()) return;
 
         dispatch(authRequest({
             username: usernameRef.current.value,
@@ -45,19 +43,22 @@ const LoginForm = () => {
                         type='text'
                         name='Username'
                         placeholder='Username'
-                        validateObj={new isNotEmpty().setErrorText("Username is Empty")}
+                        validator={new isNotEmpty().setErrorText("Username is Empty")}
                         ref={usernameRef}/>
                 </div>
                 <div className={classes.form_password}>
-                    <InputPassword
+                    <Input
+                        type='password'
                         name='LoginPassword'
+                        isPassword={true}
                         placeholder='Password'
-                        validateObj={new isNotEmpty().setErrorText("Password is Empty")}
+                        validator={new isNotEmpty().setErrorText("Password is Empty")}
                         ref={passwordRef}
                     />
                 </div>
                 {
-                    loginError.isFailed && <p className={classes.form_errorMsg}>{loginError.errorText}</p>
+                    loginError.isFailed &&
+                    <p className={`${classes.form_errorMsg} ${classError.error_message}`}>{loginError.errorText}</p>
                 }
                 <div className={classes.defaultsLogin}>
                     <p>Default Username: test</p>

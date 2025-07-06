@@ -5,7 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kevProject.serie_book.security.SecurityVariables;
+import kevProject.serie_book.config.Secrets;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,8 +27,12 @@ import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Slf4j
+@Slf4j @RequiredArgsConstructor
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
+
+    public final String AUTHORITIES_NAME = "roles";
+    private final Secrets secrets;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/api/login") ||
@@ -36,14 +41,14 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if (authorizationHeader != null && authorizationHeader.startsWith(SecurityVariables.JWT_FOREWORD)) {
+            if (authorizationHeader != null && authorizationHeader.startsWith(secrets.getJwt_foreword())) {
                 try {
-                    String token = authorizationHeader.substring(SecurityVariables.JWT_FOREWORD.length());
-                    Algorithm algorithm = Algorithm.HMAC256(SecurityVariables.HMAC256_KEY.getBytes());
+                    String token = authorizationHeader.substring(secrets.getJwt_foreword().length());
+                    Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim(SecurityVariables.AUTHORITIES_NAME).asArray(String.class);
+                    String[] roles = decodedJWT.getClaim(AUTHORITIES_NAME).asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));
