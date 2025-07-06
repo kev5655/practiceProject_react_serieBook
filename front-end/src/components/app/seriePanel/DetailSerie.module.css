@@ -4,12 +4,12 @@
         grid-gap: 1rem !important;
 
         grid-template-areas:
-        "session session"
-        "episode episode"
-        "stars stars"
-        "gridDate gridDate"
-        "gridDate gridDate"
-        "uneditableDate uneditableDate" !important
+            "session session"
+            "episode episode"
+            "stars stars"
+            "gridDate gridDate"
+            "gridDate gridDate"
+            "uneditableDate uneditableDate" !important
     }
 
     .gird_container_episode {
@@ -20,10 +20,23 @@
         padding-bottom: 0 !important;
     }
 
-    .dateGrid_desc_date{
+    .dateGrid_desc_date {
         margin: 0 0.5rem !important;
     }
 
+}
+
+.popupOverlay {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    touch-action: none;
+    /* Prevent all touch actions */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
 }
 
 .card {
@@ -147,6 +160,3 @@
     margin-top: 2rem;
     font-size: 0.9rem;
 }
-
-
-

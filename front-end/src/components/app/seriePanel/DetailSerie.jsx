@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useCallback} from 'react'
 
 import Popup from "reactjs-popup";
 
@@ -22,18 +22,53 @@ const DetailSerie = (props) => {
         return array;
     }
 
-    const onClose = (event) => {
-        event.preventDefault();
+    const onClose = useCallback((event) => {
+        // Stop propagation to prevent the click from reaching Serie components underneath
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
         setOpenPopUp(false);
         onClickOutside();
-    }
+    }, [onClickOutside]);
 
     const isUnknown = (value) => {
         return value !== null && value !== 0 && value !== undefined && value !== '';
     }
 
+    // On component mount, add global touch event handlers
+    React.useEffect(() => {
+        // Function to block touch events globally while the popup is open
+        const blockTouchEvents = (e) => {
+            // Only block touch events if they're not on the popup itself
+            if (!e.target.closest('#detailSerie')) {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose(e);
+            }
+        };
+        
+        // Add touch event listeners
+        document.addEventListener('touchstart', blockTouchEvents, { passive: false });
+        document.addEventListener('touchmove', blockTouchEvents, { passive: false });
+        
+        // Clean up
+        return () => {
+            document.removeEventListener('touchstart', blockTouchEvents);
+            document.removeEventListener('touchmove', blockTouchEvents);
+        };
+    }, [onClose]);
+
     return (
-        <Popup open={openPopUp} closeOnDocumentClick onClose={onClose}>
+        <Popup 
+            open={openPopUp} 
+            closeOnDocumentClick 
+            onClose={onClose}
+            // Prevent click events from reaching elements below the overlay
+            overlayStyle={{ zIndex: 1000 }}
+            // Add an overlay className to add our own event handlers
+            overlayClassName={classes.popupOverlay}
+        >
             <Card className={classes.card}
                   id='detailSerie'
             >

@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {seriesAction} from "../../../store/series-slice";
 import IconBtn from "../../ui/form/IconBtn";
 
@@ -15,6 +15,10 @@ import {useNavigate} from "react-router-dom";
 const Serie = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isBlurred = useSelector(state => {
+        console.log('SERIE: Reading Redux state:', state);
+        return state.ui?.isSerieListBlur || false;
+    });
 
     const {title, episode, session, stars} = props.serie
 
@@ -25,10 +29,10 @@ const Serie = (props) => {
     }
 
     const validEpisode = () => {
-        let isNull = episode === null;
-        let isIntNull = episode === 0;
-        let isUndefined = episode === undefined;
-        let isStringNull = episode === "";
+        const isNull = episode === null;
+        const isIntNull = episode === 0;
+        const isUndefined = episode === undefined;
+        const isStringNull = episode === "";
         return !isNull && !isIntNull && !isUndefined && !isStringNull;
     }
 
