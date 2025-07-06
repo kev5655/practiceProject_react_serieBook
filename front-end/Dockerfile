@@ -1,5 +1,5 @@
 # Base image for all environments
-FROM node:16-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
