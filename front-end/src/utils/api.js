@@ -1,6 +1,8 @@
-import {TokenError} from "./Error";
+import { TokenError } from "./Error";
 
-const serverUrl = ''; //http://192.168.1.138:8081
+const serverUrl = process.env.REACT_APP_API_URL || '';
+console.log("Server URL:", serverUrl);
+
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
         if (requestConfig.headers['Content-Type'] === 'application/json') {
@@ -30,8 +32,8 @@ export const api = () => {
             }
 
             const data = await response.json();
-            if(data.error_message){
-                if(data.error_message.match("Token")){
+            if (data.error_message) {
+                if (data.error_message.match("Token")) {
                     console.log("Token is Expired")
                     if (TokenError.backendErrors.find(error => data.error_message.match(error))) {
                         throw new TokenError(data.error_message);

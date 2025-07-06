@@ -21,10 +21,10 @@ const SerieList = () => {
     }
 
     const onOutSideClickHandler = () => {
-        setTimeout(() => {
+        // setTimeout(() => {
             setDetailSerie('');
             dispatch(uiAction.disableBlurSerieList())
-        }, 250);
+        // }, 250);
     }
 
 

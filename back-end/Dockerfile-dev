@@ -1,0 +1,11 @@
+# Dockerfile for development
+FROM maven:3.8-openjdk-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+FROM openjdk:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/serie_book_backend.jar ./serie_book_backend.jar
+COPY src/main/resources/application-dev.properties ./application.properties
+ENTRYPOINT ["java","-jar","/app/serie_book_backend.jar"]
