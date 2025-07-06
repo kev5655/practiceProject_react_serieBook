@@ -12,7 +12,7 @@ COPY package.json /app/
 COPY package-lock.json* /app/
 
 # Fix dependency issues
-RUN npm install --legacy-peer-deps
+RUN npm ci
 # Install react-scripts globally
 RUN npm install -g react-scripts@5.0.1
 
