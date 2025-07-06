@@ -1,6 +1,10 @@
 import { TokenError } from "./Error";
 
-const serverUrl = ''; //http://192.168.1.138:8081
+// Get the API URL from the window.API_URL which is set in env-config.js
+// This is injected at runtime by our Docker entrypoint script
+console.log("Available window.API_URL:", window.API_URL);
+const serverUrl = window.API_URL || 'http://localhost:8081';
+console.log("Using API URL:", serverUrl);
 
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
@@ -8,7 +12,7 @@ export const api = () => {
             requestConfig.body = JSON.stringify(requestConfig.body)
         }
         try {
-            const response = await fetch(requestConfig.url, {
+            const response = await fetch(serverUrl + requestConfig.url, {
                 method: requestConfig.method ? requestConfig.method : 'GET',
                 headers: requestConfig.headers ? requestConfig.headers : {},
                 body: requestConfig.body ? requestConfig.body : null,
