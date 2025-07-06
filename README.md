@@ -1,94 +1,138 @@
-# Serie Book
+# 📺 Serie Book
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/kevin5655/serie-book/docker-build-push.yml?branch=main)
+![Docker Image Version](https://img.shields.io/docker/v/kevin5655/seriebook-app-server?label=Docker%20Image)
 
-## Description
-This project was developed with Java Spring and React. It is used to store series. The series are stored in a MySQL database.
-Each user can create his own account and save his own series, while he remains logged in for a certain time, which is granted via a json web token.
+## 📝 Description
 
+Serie Book is a full-stack application built with Java Spring Boot and React. It allows users to track TV series they've watched, with the data stored in a MySQL database.
 
-**IMPORTANT**
+Each user can:
+- Create a personal account
+- Save and manage their series collection
+- Stay logged in via JSON Web Token authentication
 
-> For the project to work, a security configuration must be made and the application.properties may need to be adjusted.
-> If you want the security configuration you can contact me
-> You need to update the application.properties files of the Spring Backend
+## ⚠️ Prerequisites
 
-## Installation
-> In the front-end folder, execute the installation command
+Before you begin, ensure you have the following:
 
-`npm install`
+- Java 11+ installed
+- Node.js and npm installed
+- MySQL database server
+- Docker and Docker Compose (for containerized deployment)
 
+## 🔐 Security Configuration
 
-## Run
-> For running the application you need a MqSql database`
+> **IMPORTANT**: For the project to work properly, you need to:
+> - Configure security settings
+> - Adjust the application.properties files in the Spring Backend
+> - For security configuration details, please contact the repository owner
 
-### Running the backend
+## 🚀 Installation & Setup
 
-> Switch to the back-end folder
+### 1. Frontend Setup
 
-`cd ./back-end`
+```bash
+# Navigate to frontend directory
+cd ./front-end
 
-> Uptate Spring Profiles `spring.profiles.active` to
-`spring.profiles.active=prod`
+# Install dependencies
+npm install
+```
 
-> Run the Backend
-`./mvnw spring-boot:run`
+### 2. Backend Setup
 
-### Running the frontend
-> Switch to the front-end folder
+```bash
+# Navigate to backend directory
+cd ./back-end
 
-`cd ./front-end`
+# Build the project
+./mvnw clean install
+```
 
-> Running the frontend
+## 🏃 Running Locally
 
-`npm start`
+### Running the Backend
 
-## Deploy on Docker
+```bash
+# Navigate to backend directory
+cd ./back-end
 
-### Dev
+# Update Spring profile in application.properties
+# spring.profiles.active=dev
 
->> Uptate Spring Profiles `spring.profiles.active` to
->
->`spring.profiles.active=prod`
->
->> Compile Java Project
->
->`mvn package -DskipTests=true`
->
->> Create Container and Run Local
->
->`docker compose up --build`
->
->`mvn clean package -DskipTests=true && docker compose up --build`
->
->> On Server
->
->`sudo docker-compose up --build`
+# Run the Spring Boot application
+./mvnw spring-boot:run
+```
 
+### Running the Frontend
 
-### Prod
+```bash
+# Navigate to frontend directory
+cd ./front-end
 
->> Uptate Spring Profiles `spring.profiles.active` to
->
->`spring.profiles.active=prod`
->
->> Compile Java Project
->
->`mvn package -DskipTests=true`
->
->> Create Container and Run Local
->
->`docker-compose -f docker-compose-prod.yml up --build`
->
->> Push Container to Docker Hub
->
->`docker tag <image-id> kevin5655/seriebook-app-client:1.0.0`
->
->`docker tag <image-id> kevin5655/seriebook-app-server:1.0.0`
->
->`docker push kevin5655/seriebook-app-client:1.0.0`
->
->`docker push kevin5655/seriebook-app-server:1.0.0`
->
->> On Server
->
->`sudo docker-compose up --build`
+# Start the development server
+npm start
+```
+
+## 🐳 Docker Deployment
+
+### Development Environment
+
+```bash
+# 1. Set Spring profile to dev in application.properties
+# spring.profiles.active=dev
+
+# 2. Package the Java application
+cd ./back-end
+mvn package -DskipTests=true
+
+# 3. Start the Docker containers
+cd ..
+docker-compose up --build
+
+# One-liner for build and start
+mvn clean package -DskipTests=true && docker-compose up --build
+
+# On server
+sudo docker-compose up --build
+```
+
+### Production Environment
+
+```bash
+# 1. Set Spring profile to prod in application.properties
+# spring.profiles.active=prod
+
+# 2. Package the Java application
+cd ./back-end
+mvn package -DskipTests=true
+
+# 3. Build and run with production configuration
+cd ..
+docker-compose -f docker-compose-prod.yml up --build
+
+# 4. Tag and push images to Docker Hub (if needed)
+docker tag <image-id> kevin5655/seriebook-app-client:1.0.0
+docker tag <image-id> kevin5655/seriebook-app-server:1.0.0
+docker push kevin5655/seriebook-app-client:1.0.0
+docker push kevin5655/seriebook-app-server:1.0.0
+
+# On server
+sudo docker-compose -f docker-compose-prod.yml up --build
+```
+
+## 🔄 CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- Pushes to `main`: Build and deploy to Docker Hub with the `latest` tag
+- New releases: Build and deploy with the release version number as tag
+
+## 📚 Technologies
+
+- **Backend**: Java Spring Boot, Spring Security, JPA/Hibernate
+- **Frontend**: React, Redux, Material-UI
+- **Database**: MySQL
+- **DevOps**: Docker, GitHub Actions
+- **Authentication**: JWT (JSON Web Tokens)
