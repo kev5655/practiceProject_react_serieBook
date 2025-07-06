@@ -53,7 +53,9 @@ jobs:
           file: ./back-end/Dockerfile
           push: true
           tags: ${{ steps.set-tags.outputs.backend_tags }}
-          cache-from: type=registry,ref=kevin5655/seriebook-app-server:prod
+          build-args: |
+            SPRING_PROFILES_ACTIVE=prod
+          cache-from: type=registry,ref=kevin5655/seriebook-app-server:latest
           cache-to: type=inline
       
       # Build and push frontend image
@@ -61,8 +63,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./front-end
-          file: ./front-end/Dockerfile-prod
+          file: ./front-end/Dockerfile
           push: true
           tags: ${{ steps.set-tags.outputs.frontend_tags }}
-          cache-from: type=registry,ref=kevin5655/seriebook-app-client:prod
+          build-args: |
+            REACT_APP_ENV=prod
+          cache-from: type=registry,ref=kevin5655/seriebook-app-client:latest
           cache-to: type=inline
