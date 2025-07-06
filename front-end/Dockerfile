@@ -39,5 +39,14 @@ ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 # Copy the appropriate nginx config based on environment
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copy and set permissions for the entrypoint script
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+# Install envsubst utility
+RUN apk add --no-cache gettext
+
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+
+# Use the entrypoint script to inject environment variables at runtime
+CMD ["/docker-entrypoint.sh"]
