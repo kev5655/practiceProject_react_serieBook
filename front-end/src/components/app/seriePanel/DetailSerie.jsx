@@ -23,7 +23,6 @@ const DetailSerie = (props) => {
     }
 
     const onClose = useCallback((event) => {
-        // Stop propagation to prevent the click from reaching Serie components underneath
         if (event) {
             event.preventDefault();
             event.stopPropagation();
