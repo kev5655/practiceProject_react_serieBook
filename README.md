@@ -77,7 +77,80 @@ npm start
 
 ## 🐳 Docker Deployment
 
-### Development Environment
+### Environment Variables
+
+The application uses environment variables for configuration. You can set these in a `.env` file in the project root:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit the .env file with your values
+nano .env
+```
+
+**Key Environment Variables:**
+
+| Variable                     | Description                  | Example                                |
+| ---------------------------- | ---------------------------- | -------------------------------------- |
+| `IMAGE_TAG`                  | Docker image tag to use      | `latest`, `1.0.0`                      |
+| `SPRING_DATASOURCE_URL`      | Database connection URL      | `jdbc:mysql://mysqldb:3306/serie_book` |
+| `SPRING_DATASOURCE_USERNAME` | Database username            | `web`                                  |
+| `SPRING_DATASOURCE_PASSWORD` | Database password            | `yourpassword`                         |
+| `MYSQL_ROOT_PASSWORD`        | MySQL root password          | `rootpassword`                         |
+| `HMAC256_KEY`                | Secret key for JWT signing   | `32byteshexstring`                     |
+| `REACT_APP_API_URL`          | Backend API URL for frontend | `http://localhost:8081`                |
+
+To deploy with your environment variables:
+
+```bash
+# Start with environment variables
+docker-compose --env-file .env up -d
+```
+
+### Starting the Application with Environment Files
+
+#### Development Environment
+
+```bash
+# Start development environment with the default .env file
+docker-compose --env-file .env up -d
+
+# Start development environment with a specific environment file
+docker-compose --env-file .env.dev up -d
+
+# Start with a specific version tag
+IMAGE_TAG=1.0.8 docker-compose --env-file .env up -d
+
+# Start in detached mode (-d) or interactive mode
+docker-compose --env-file .env up       # Interactive with logs
+docker-compose --env-file .env up -d    # Detached mode (background)
+```
+
+#### Production Environment
+
+```bash
+# Start production environment with the production environment file
+docker-compose -f docker-compose-prod.yml --env-file .env.prod up -d
+
+# Start production with a specific version tag
+IMAGE_TAG=1.0.8 docker-compose -f docker-compose-prod.yml --env-file .env.prod up -d
+```
+
+#### Stopping the Application
+
+```bash
+# Stop development environment
+docker-compose down
+
+# Stop production environment
+docker-compose -f docker-compose-prod.yml down
+
+# Stop and remove volumes (will delete database data)
+docker-compose down -v
+```
+
+### Development Environment (Manual Setup)
 
 ```bash
 # 1. Set Spring profile to dev in application.properties
@@ -101,25 +174,18 @@ sudo docker-compose up --build
 ### Production Environment
 
 ```bash
-# 1. Set Spring profile to prod in application.properties
-# spring.profiles.active=prod
+# 1. Create a production .env file
+cp .env.example .env.prod
+nano .env.prod  # Edit with production values
 
-# 2. Package the Java application
-cd ./back-end
-mvn package -DskipTests=true
+# 2. Run using the production compose file with environment variables
+docker-compose -f docker-compose-prod.yml --env-file .env.prod up -d
 
-# 3. Build and run with production configuration
-cd ..
-docker-compose -f docker-compose-prod.yml up --build
-
-# 4. Tag and push images to Docker Hub (if needed)
-docker tag <image-id> kevin5655/seriebook-app-client:1.0.0
-docker tag <image-id> kevin5655/seriebook-app-server:1.0.0
-docker push kevin5655/seriebook-app-client:1.0.0
-docker push kevin5655/seriebook-app-server:1.0.0
+# For a specific version (e.g. v1.0.8)
+IMAGE_TAG=1.0.8 docker-compose -f docker-compose-prod.yml --env-file .env.prod up -d
 
 # On server
-sudo docker-compose -f docker-compose-prod.yml up --build
+sudo docker-compose -f docker-compose-prod.yml --env-file .env.prod up -d
 ```
 
 ## 🔄 CI/CD Pipeline
@@ -136,3 +202,24 @@ This project uses GitHub Actions for continuous integration and deployment:
 - **Database**: MySQL
 - **DevOps**: Docker, GitHub Actions
 - **Authentication**: JWT (JSON Web Tokens)
+
+## 🔧 Troubleshooting
+
+### Database Connection Issues
+
+If you encounter database connection issues, try these steps:
+
+```bash
+# 1. Check if containers are running
+docker ps
+
+# 2. Check the Spring Boot logs
+docker logs $(docker ps -qf "name=serie_book_backend")
+
+# 3. Check MySQL logs
+docker logs $(docker ps -qf "name=mysqldb")
+
+# 4. Restart the containers with proper waiting for MySQL
+docker-compose down
+docker-compose -f docker-compose-debug.yml up -d
+```

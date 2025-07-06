@@ -33,9 +33,11 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Use different nginx config based on environment
 ARG REACT_APP_ENV=dev
 ENV REACT_APP_ENV=${REACT_APP_ENV}
+ARG REACT_APP_API_URL=http://localhost:8081
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
 # Copy the appropriate nginx config based on environment
-COPY ./nginx/nginx-${REACT_APP_ENV}.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]

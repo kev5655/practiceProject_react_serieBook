@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  app-server:
+    # Using the image from Docker Hub instead of building locally
+    image: kevin5655/seriebook-app-server:${IMAGE_TAG:-latest}
+    container_name: serie_book_backend_dev
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:mysql://mysqldb:3306/serie_book}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-dev}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - HMAC256_KEY=${HMAC256_KEY}
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysqldb
+    networks:
+      - backend
+      - frontend
+
+  app-client:
+    # Using the image from Docker Hub instead of building locally
+    image: kevin5655/seriebook-app-client:${IMAGE_TAG:-latest}
+    container_name: serie_book_frontend_dev
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app-server
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:8081}
+      - REACT_APP_ENV=dev
+    networks:
+      - frontend
+
+  mysqldb:
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - serie_book_volume:/var/lib/mysql
+      - ./back-end/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_DATABASE: serie_book
+      MYSQL_USER: ${SPRING_DATASOURCE_USERNAME:-dev}
+      MYSQL_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - backend
+
+
+volumes:
+  serie_book_volume:
+
+networks:
+  backend:
+  frontend:

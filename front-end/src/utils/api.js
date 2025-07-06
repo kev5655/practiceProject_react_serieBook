@@ -1,7 +1,6 @@
 import { TokenError } from "./Error";
 
-const serverUrl = process.env.REACT_APP_API_URL || '';
-console.log("Server URL:", serverUrl);
+const serverUrl = ''; //http://192.168.1.138:8081
 
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
@@ -9,7 +8,7 @@ export const api = () => {
             requestConfig.body = JSON.stringify(requestConfig.body)
         }
         try {
-            const response = await fetch(serverUrl + requestConfig.url, {
+            const response = await fetch(requestConfig.url, {
                 method: requestConfig.method ? requestConfig.method : 'GET',
                 headers: requestConfig.headers ? requestConfig.headers : {},
                 body: requestConfig.body ? requestConfig.body : null,

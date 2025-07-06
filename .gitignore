@@ -555,8 +555,10 @@ application-dev.properties
 security/
 
 # Docker
-docker-compose.yml
 docker-compose-prod.yml
+
+# Env
+.env.prod
 
 # Logs
 logs/*
