@@ -24,11 +24,6 @@ RUN npm run build
 
 # Production environment with Nginx
 FROM nginx:1.29-alpine
-# Copy built app
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Remove default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
 
 # Use different nginx config based on environment
 ARG REACT_APP_ENV=dev
@@ -36,17 +31,20 @@ ENV REACT_APP_ENV=${REACT_APP_ENV}
 ARG REACT_APP_API_URL=http://localhost:8081
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
-# Copy the appropriate nginx config based on environment
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy and set permissions for the entrypoint script
-COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
-
-# Install envsubst utility
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 RUN apk add --no-cache gettext
+
+# Copy built app
+COPY --from=build /app/build /usr/share/nginx/html
+# Copy the appropriate nginx config based on environment
+COPY ./nginx/nginx.conf.template \
+     /etc/nginx/conf.d/default.conf.template
 
 EXPOSE 3000
 
-# Use the entrypoint script to inject environment variables at runtime
-CMD ["/docker-entrypoint.sh"]
+CMD ["sh", "-c", \
+  "envsubst '${REACT_APP_API_URL}' \
+    < /etc/nginx/conf.d/default.conf.template \
+    > /etc/nginx/conf.d/default.conf \
+   && exec nginx -g 'daemon off;'"]
