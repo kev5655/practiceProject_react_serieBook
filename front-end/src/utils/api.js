@@ -2,9 +2,7 @@ import { TokenError } from "./Error";
 
 // Get the API URL from the window.API_URL which is set in env-config.js
 // This is injected at runtime by our Docker entrypoint script
-console.log("Available window.API_URL:", window.API_URL);
 const serverUrl = window.API_URL || 'http://localhost:8081';
-console.log("Using API URL:", serverUrl);
 
 export const api = () => {
     const sendRequestFN = async (requestConfig, resolveData, error) => {
