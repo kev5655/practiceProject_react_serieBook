@@ -27,12 +27,9 @@ const Input = forwardRef((props, ref) => {
 
     initValue = initValue ?? "";
     validator = validator ?? new defaultValidator();
-    onChange = onChange ?? function () {
-    };
-    onFocus = onFocus ?? function () {
-    };
-    onBlur = onBlur ?? function () {
-    };
+    onChange = onChange ?? (() => {});
+    onFocus = onFocus ?? (() => {});
+    onBlur = onBlur ?? (() => {});
 
     let {
         value,
@@ -76,6 +73,7 @@ const Input = forwardRef((props, ref) => {
     const onVisibleClickHandler = () => {
         setInputType("password")
     }
+
 
     return (
         <>
