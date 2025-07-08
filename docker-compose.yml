@@ -23,6 +23,9 @@ services:
   app-client:
     # Using the image from Docker Hub instead of building locally
     image: kevin5655/seriebook-app-client:${IMAGE_TAG:-latest}
+    # build:
+    #   context: ./front-end
+    #   dockerfile: Dockerfile
     container_name: serie_book_frontend_dev
     restart: always
     ports:
