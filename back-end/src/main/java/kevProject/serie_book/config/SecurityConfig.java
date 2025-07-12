@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/health").permitAll() // Allow access to health endpoint without authentication
                 .antMatchers("/api/user/available").permitAll()
+                .antMatchers("/api/user/save").permitAll()
                 .anyRequest().authenticated();
 
         // Add any other security configurations here
