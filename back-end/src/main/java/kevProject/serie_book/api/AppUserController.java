@@ -41,15 +41,16 @@ public class AppUserController {
     private final Secrets secrets;
 
     @GetMapping(Url.users)
-    public ResponseEntity<List<AppUser>> getUsers(){
+    public ResponseEntity<List<AppUser>> getUsers() {
         return ResponseEntity.ok().body(appUserService.getAppUsers());
     }
 
     @PostMapping(Url.userSave)
-    public ResponseEntity<?>saveUsers(@RequestBody AppUser user, HttpServletResponse response) throws IOException {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.userSave).toUriString());
+    public ResponseEntity<?> saveUsers(@RequestBody AppUser user, HttpServletResponse response) throws IOException {
+        URI uri = URI.create(
+                ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.userSave).toUriString());
         AppUser appUser = appUserService.saveAppUser(user);
-        if(appUser == null){
+        if (appUser == null) {
             Map<String, String> error = new HashMap<>();
             error.put("error_message", HttpStatus.UNAUTHORIZED.toString());
             response.setContentType(APPLICATION_JSON_VALUE);
@@ -63,7 +64,7 @@ public class AppUserController {
     }
 
     @PostMapping(Url.userAvailable)
-    public ResponseEntity<?>isUserAvailable(@RequestBody userAvailableForm from){
+    public ResponseEntity<?> isUserAvailable(@RequestBody userAvailableForm from) {
         AppUser appUser = appUserService.getAppUser(from.getUsername());
         log.info("isUserAvailable: {} {}", from.getUsername(), appUser == null ? "yes" : "no");
         Map<String, Boolean> body = new HashMap<>();
@@ -72,19 +73,20 @@ public class AppUserController {
     }
 
     @PostMapping(Url.roleSave)
-    public ResponseEntity<AppRole>saveRole(@RequestBody AppRole role){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.roleSave).toUriString());
-        if(role.isValid()){
+    public ResponseEntity<AppRole> saveRole(@RequestBody AppRole role) {
+        URI uri = URI.create(
+                ServletUriComponentsBuilder.fromCurrentContextPath().path(Url.api + Url.roleSave).toUriString());
+        if (role.isValid()) {
             log.info("Save a new Role role is {}", role);
             return ResponseEntity.created(uri).body(appUserService.saveAppRole(role));
-        }else {
+        } else {
             log.error("Role is not valid role is: {}", role);
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping(Url.roleAddtouser)
-    public ResponseEntity<?>saveRole(@RequestBody RoleToUserFrom form){
+    public ResponseEntity<?> saveRole(@RequestBody RoleToUserFrom form) {
         appUserService.addRoleToUser(form.getUsername(), form.getRolename());
         log.info("Add a role to User user is {} role is {}", form.getUsername(), form.getRolename());
         return ResponseEntity.ok().build();
@@ -94,7 +96,7 @@ public class AppUserController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if(authorizationHeader != null && authorizationHeader.startsWith(secrets.getJwt_foreword())) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(secrets.getJwt_foreword())) {
             try {
                 String refresh_token = authorizationHeader.substring(secrets.getJwt_foreword().length());
                 Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
@@ -105,7 +107,8 @@ public class AppUserController {
 
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + secrets.getAccess_jwt_lifetime())).withIssuer(request.getRequestURI())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + secrets.getAccess_jwt_lifetime()))
+                        .withIssuer(request.getRequestURI())
                         .withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
@@ -116,7 +119,8 @@ public class AppUserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
             } catch (Exception exception) {
-                log.error("Error with the refreshToken user try to refresh his accessToken, error message: {}", exception.getMessage());
+                log.error("Error with the refreshToken user try to refresh his accessToken, error message: {}",
+                        exception.getMessage());
                 Map<String, String> error = new HashMap<>();
                 error.put("error_message", exception.getMessage());
                 response.setHeader("error", exception.getMessage());

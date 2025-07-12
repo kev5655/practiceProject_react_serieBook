@@ -27,21 +27,25 @@ import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Slf4j @RequiredArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     public final String AUTHORITIES_NAME = "roles";
     private final Secrets secrets;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         if (request.getServletPath().equals("/api/login") ||
                 request.getServletPath().equals("/api/token/refresh") ||
                 request.getServletPath().equals("/api/user/save")) {
+            log.info("No authorization filter applied for path: {}", request.getServletPath());
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith(secrets.getJwt_foreword())) {
+                log.info("Authorization header found, attempting to verify JWT.");
                 try {
                     String token = authorizationHeader.substring(secrets.getJwt_foreword().length());
                     Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
@@ -49,12 +53,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
                     String[] roles = decodedJWT.getClaim(AUTHORITIES_NAME).asArray(String.class);
+                    log.info("JWT verified for user: {} with roles: {}", username, (Object) roles);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));
                     });
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            username, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
 
@@ -66,6 +71,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
             } else {
+                log.info("No valid authorization header found, proceeding without authentication.");
                 filterChain.doFilter(request, response);
             }
         }

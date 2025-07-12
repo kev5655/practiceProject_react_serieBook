@@ -39,10 +39,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        // Log at ERROR level to ensure visibility regardless of log level configuration
-        log.error("AUTHENTICATION DEBUG: Login attempt received from IP: {}", request.getRemoteAddr());
-        log.error("AUTHENTICATION DEBUG: Content-Type: {}", request.getContentType());
-        log.error("AUTHENTICATION DEBUG: Request method: {}", request.getMethod());
 
         // Continue with normal info level logging
         log.info("Login attempt received from IP: {}", request.getRemoteAddr());
