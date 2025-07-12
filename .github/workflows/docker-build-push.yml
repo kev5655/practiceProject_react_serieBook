@@ -55,7 +55,7 @@ jobs:
           tags: ${{ steps.set-tags.outputs.backend_tags }}
           build-args: |
             SPRING_PROFILES_ACTIVE=prod
-            GIT_HASH=${{ github.head_ref }}.${{ github.sha }}
+            GIT_HASH=${{ github.sha }}
           cache-from: type=registry,ref=kevin5655/seriebook-app-server:latest
           cache-to: type=inline
       
@@ -69,6 +69,6 @@ jobs:
           tags: ${{ steps.set-tags.outputs.frontend_tags }}
           build-args: |
             REACT_APP_ENV=prod
-            GIT_HASH=${{ github.head_ref }}.${{ github.sha }}
+            GIT_HASH=${{ github.sha }}
           cache-from: type=registry,ref=kevin5655/seriebook-app-client:latest
           cache-to: type=inline
