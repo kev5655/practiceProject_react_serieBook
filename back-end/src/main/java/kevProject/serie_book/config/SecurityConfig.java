@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .csrf().disable() // Disable CSRF for API usage
                 .authorizeRequests()
                 .antMatchers("/api/health").permitAll() // Allow access to health endpoint without authentication
+                .antMatchers("/api/user/available").permitAll()
                 .anyRequest().authenticated();
 
         // Add any other security configurations here
