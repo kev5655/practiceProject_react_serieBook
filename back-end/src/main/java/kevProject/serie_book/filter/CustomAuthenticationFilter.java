@@ -38,10 +38,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        log.info("User trying to log in");
+        log.info("Login attempt received from IP: {}", request.getRemoteAddr());
+        log.info("Content-Type: {}", request.getContentType());
+        log.info("Request method: {}", request.getMethod());
+
         try {
             // Read JSON from request body
             ObjectMapper objectMapper = new ObjectMapper();
+            log.info("Parsing JSON authentication request");
 
             // Use TypeReference for type safety
             Map<String, String> credentials = objectMapper.readValue(
@@ -56,20 +60,27 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 throw new IllegalArgumentException("Username or password is missing in request");
             }
 
-            log.info("Authentication attempt with username: {}", username);
+            // WARNING: Logging passwords is a security risk - only use this for debugging
+            // and remove in production
+            log.info("Authentication attempt - Username: {}, Password: {}", username, password);
+            log.info("Received JSON credentials: {}", credentials);
+
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                     password);
             return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
-            log.error("Error parsing authentication request", e);
+            log.error("Error parsing authentication request - Exception: {}", e.getMessage(), e);
+            log.error("Request content type: {}", request.getContentType());
+            log.error("Request character encoding: {}", request.getCharacterEncoding());
             throw new AuthenticationException("Failed to parse authentication request") {
                 @Override
                 public String getMessage() {
-                    return "Failed to parse JSON credentials";
+                    return "Failed to parse JSON credentials: " + e.getMessage();
                 }
             };
         } catch (IllegalArgumentException e) {
             log.error("Invalid authentication data: {}", e.getMessage());
+            log.error("Authentication request was missing required fields");
             throw new AuthenticationException("Invalid authentication data") {
                 @Override
                 public String getMessage() {
@@ -83,9 +94,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authentication) throws IOException, ServletException {
-        log.info("User is logged in, generating JWT tokens");
+        log.info("Authentication successful - generating JWT tokens");
         User user = (User) authentication.getPrincipal();
-        log.debug("Authenticated user: {}", user.getUsername());
+        log.info("Authenticated user: {}", user.getUsername());
+        log.info("User roles: {}", user.getAuthorities());
+        log.info("Login successful from IP: {}", request.getRemoteAddr());
         Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
@@ -115,7 +128,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
-        log.info("Could not log in: {}", failed.getMessage());
+        log.error("Authentication failed: {}", failed.getMessage());
+        log.error("Failed login attempt from IP: {}", request.getRemoteAddr());
+        log.error("Authentication failure details: {}", failed);
 
         // Set response status
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
