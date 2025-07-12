@@ -2,10 +2,15 @@
 FROM maven:3.8.7-openjdk-17 AS build
 WORKDIR /app
 COPY . .
+# Capture git hash during build time
+ARG GIT_HASH
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
 WORKDIR /app
 COPY --from=build /app/target/serie_book_backend.jar ./serie_book_backend.jar
 COPY src/main/resources/application-prod.properties ./application.properties
+# Pass the git hash to the runtime environment
+ARG GIT_HASH=unknown
+ENV GIT_HASH=${GIT_HASH}
 ENTRYPOINT ["java","-jar","/app/serie_book_backend.jar"]

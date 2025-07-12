@@ -22,7 +22,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-                .csrf().disable(); // Disable CSRF for API usage
+                .csrf().disable() // Disable CSRF for API usage
+                .authorizeRequests()
+                .antMatchers("/api/health").permitAll() // Allow access to health endpoint without authentication
+                .anyRequest().authenticated();
 
         // Add any other security configurations here
 
