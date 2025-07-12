@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kevProject.serie_book.config.Secrets;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,9 +25,11 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Slf4j
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    // Create an explicit logger instead of using Lombok's @Slf4j
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CustomAuthenticationFilter.class);
 
     private final AuthenticationManager authenticationManager;
     private final Secrets secrets;
@@ -38,6 +39,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
+        // Log at ERROR level to ensure visibility regardless of log level configuration
+        log.error("AUTHENTICATION DEBUG: Login attempt received from IP: {}", request.getRemoteAddr());
+        log.error("AUTHENTICATION DEBUG: Content-Type: {}", request.getContentType());
+        log.error("AUTHENTICATION DEBUG: Request method: {}", request.getMethod());
+
+        // Continue with normal info level logging
         log.info("Login attempt received from IP: {}", request.getRemoteAddr());
         log.info("Content-Type: {}", request.getContentType());
         log.info("Request method: {}", request.getMethod());
