@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,45 +32,39 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final Secrets secrets;
-    private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        return authManagerBuilder.build();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Create and configure the authentication filter
+        AuthenticationManager authManager = authenticationManagerBean(http);
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(
-                authenticationManager(), secrets);
+                authManager, secrets);
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
-        // Configure security
         http.cors().and();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        
-        // Define access rules
+
         http.authorizeRequests()
-            // Public endpoints
-            .antMatchers("/api/login", "/api/token/refresh/**", "/api/user/save/**", "/api/user/available", "/api/health").permitAll()
-            // Admin-only endpoints
-            .antMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
-            .antMatchers(GET, "/api/role/save/**").hasAnyAuthority("ROLE_ADMIN")
-            .antMatchers(GET, "/api/role/addtouser/**").hasAnyAuthority("ROLE_ADMIN")
-            // All other requests need authentication
-            .anyRequest().authenticated();
-            
-        // Add filters
+                .antMatchers("/api/login", "/api/token/refresh/**", "/api/user/save/**", "/api/user/available",
+                        "/api/health")
+                .permitAll()
+                // Admin-only endpoints
+                .antMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(GET, "/api/role/save/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(GET, "/api/role/addtouser/**").hasAnyAuthority("ROLE_ADMIN")
+                // All other requests need authentication
+                .anyRequest().authenticated();
+
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(secrets), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

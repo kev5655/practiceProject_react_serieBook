@@ -20,6 +20,4 @@ public class SerieBookApplication {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
 }
