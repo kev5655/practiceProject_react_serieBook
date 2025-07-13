@@ -35,15 +35,19 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        return authManagerBuilder.build();
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // Create and configure the authentication filter
+        // Configure authentication manager
         AuthenticationManager authManager = authenticationManagerBean(http);
+
+        // Create and configure the authentication filter
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(
                 authManager, secrets);
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
@@ -53,7 +57,11 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/api/login", "/api/token/refresh/**", "/api/user/save/**", "/api/user/available",
+                .antMatchers(
+                        "/api/login",
+                        "/api/token/refresh/**",
+                        "/api/user/save/**",
+                        "/api/user/available",
                         "/api/health")
                 .permitAll()
                 // Admin-only endpoints
