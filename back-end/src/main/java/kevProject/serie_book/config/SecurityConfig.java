@@ -60,11 +60,14 @@ public class SecurityConfig {
                 authManager, secrets);
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
-        http.cors().and();
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Create a single instance of the authorization filter
+        CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter(secrets);
 
-        http.authorizeRequests()
+        http.cors().and()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
                 .antMatchers(
                         "/api/login",
                         "/api/token/refresh/**",
@@ -79,8 +82,9 @@ public class SecurityConfig {
                 // All other requests need authentication
                 .anyRequest().authenticated();
 
-        http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(secrets), UsernamePasswordAuthenticationFilter.class);
+        // Add the filters in a single chain
+        http.addFilter(customAuthenticationFilter)
+                .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
