@@ -8,7 +8,7 @@ import './InputDatepicker.css'
 
 const InputDatepicker = (props) => {
 
-    let date = props.value === '' ? '' : new Date(props.value);
+    const date = props.value === '' ? '' : new Date(props.value);
     const [startDate, setStartDate] = useState(date);
 
     const onChangeHandler = (date) => {
