@@ -101,7 +101,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         User user = (User) authentication.getPrincipal();
         log.info("Authenticated user: {}", user.getUsername());
         log.info("User roles: {}", user.getAuthorities());
-        log.info("Login successful from IP: {}", request.getRemoteAddr());
+        String realIp = request.getHeader("X-Real-IP");
+        log.info("Login successful from IP: {}, X-Real-IP: {}", request.getRemoteAddr(), realIp);
         Algorithm algorithm = Algorithm.HMAC256(secrets.getHMAC256_KEY().getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
