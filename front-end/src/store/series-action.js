@@ -1,14 +1,12 @@
-import {seriesAction} from './series-slice'
-import {api} from "../utils/api";
-import {TokenError} from "../utils/Error";
-import {SORT_PARAMS} from "../components/app/seriePanel/FilterAndSort";
-import {logout} from "./authenticate-action";
+import { seriesAction } from './series-slice'
+import { sendRequest } from "../utils/api.ts";
+import { TokenError } from "../utils/Error.ts";
+import { SORT_PARAMS } from "../components/app/seriePanel/FilterAndSort";
+import { logout } from "./auth/auth-actions.ts";
 
 // ------------------ API Requests ------------------
 export const fetchSeries = () => {
     return async (dispatch, getState) => {
-
-        const {sendRequestFN: sendSeriesRequest} = api();
         const access_token = getState().auth.access_token;
 
         const requestConfig = {
@@ -20,7 +18,10 @@ export const fetchSeries = () => {
             }
         }
 
-        const extractor = (series) => {
+        try {
+            const series = await sendRequest(requestConfig);
+
+            // Process the response data
             series.forEach((serie) => {
                 if (serie.startDate) {
                     serie.startDate = parseInt(serie.startDate) + 3600000;
@@ -32,31 +33,25 @@ export const fetchSeries = () => {
 
                 serie.createdDate = parseInt(serie.createdDate) + 3600000;
                 serie.lastModifiedDate = parseInt(serie.lastModifiedDate) + 3600000;
+            });
 
-            })
             dispatch(
                 seriesAction.loadSeries({
                     series: series || []
                 })
             );
             dispatch(sortSeries());
-
-        }
-
-        const catchError = (err) => {
+        } catch (err) {
             if (err instanceof TokenError) {
                 dispatch(logout())
             }
         }
-
-        await sendSeriesRequest(requestConfig, extractor, catchError)
 
     }
 }
 
 export const addSerie = (newSerie) => {
     return async (dispatch, getState) => {
-        const {sendRequestFN: sendAddSerieRequest} = api();
         const access_token = getState().auth.access_token;
 
         const requestConfig = {
@@ -69,27 +64,24 @@ export const addSerie = (newSerie) => {
             body: newSerie
         }
 
-        const extractor = (serie) => {
+        try {
+            const serie = await sendRequest(requestConfig);
+
             const series = [...getState().series.items];
             newSerie.id = serie.id;
-            series.push(newSerie)
-            dispatch(seriesAction.loadSeries({series: series}));
+            series.push(newSerie);
+            dispatch(seriesAction.loadSeries({ series: series }));
             dispatch(sortSeries());
-        }
-
-        const catchError = (err) => {
+        } catch (err) {
             if (err instanceof TokenError) {
                 dispatch(logout())
             }
         }
-
-        await sendAddSerieRequest(requestConfig, extractor, catchError)
     }
 }
 
 export const editSerie = (editedSerie) => {
     return async (dispatch, getState) => {
-        const {sendRequestFN: sendAddSerieRequest} = api();
         const access_token = getState().auth.access_token;
 
         const requestConfig = {
@@ -102,31 +94,28 @@ export const editSerie = (editedSerie) => {
             body: editedSerie
         }
 
-        const extractor = () => {
+        try {
+            await sendRequest(requestConfig);
+
             const series = [...getState().series.items];
             let updatesSeries = series.map((serie) => {
                 if (serie.id === editedSerie.id) {
-                    return editedSerie
+                    return editedSerie;
                 }
                 return serie;
-            })
-            dispatch(seriesAction.loadSeries({series: updatesSeries}));
-            dispatch(sortSeries())
-        }
-
-        const catchError = (err) => {
+            });
+            dispatch(seriesAction.loadSeries({ series: updatesSeries }));
+            dispatch(sortSeries());
+        } catch (err) {
             if (err instanceof TokenError) {
-                dispatch(logout())
+                dispatch(logout());
             }
         }
-
-        await sendAddSerieRequest(requestConfig, extractor, catchError);
     }
 }
 
 export const erasing = (extinguishingSeries) => {
     return async (dispatch, getState) => {
-        const {sendRequestFN: sendDeleteSerieRequest} = api();
         const access_token = getState().auth.access_token;
 
         const requestConfig = {
@@ -139,25 +128,22 @@ export const erasing = (extinguishingSeries) => {
             body: extinguishingSeries
         }
 
-        const extractor = () => {
+        try {
+            await sendRequest(requestConfig);
+
             const series = [...getState().series.items];
             const filteredSeries = [...getState().series.filteredItems];
 
             const newSeries = series.filter(serie => extinguishingSeries.id !== serie.id);
-            const newFilteredSeries = filteredSeries.filter(serie => extinguishingSeries.id !== serie.id)
+            const newFilteredSeries = filteredSeries.filter(serie => extinguishingSeries.id !== serie.id);
 
-
-            dispatch(seriesAction.loadSeries({series: newSeries}));
-            dispatch(seriesAction.updateFilteredSerie({series: newFilteredSeries}));
-        }
-
-        const catchError = (err) => {
+            dispatch(seriesAction.loadSeries({ series: newSeries }));
+            dispatch(seriesAction.updateFilteredSerie({ series: newFilteredSeries }));
+        } catch (err) {
             if (err instanceof TokenError) {
-                dispatch(logout())
+                dispatch(logout());
             }
         }
-
-        await sendDeleteSerieRequest(requestConfig, extractor, catchError);
     }
 }
 
@@ -165,10 +151,10 @@ export const erasing = (extinguishingSeries) => {
 
 export const sortSeries = (sortParam) => {
     return (dispatch, getState) => {
-        if(sortParam === undefined) {
+        if (sortParam === undefined) {
             sortParam = getState().series.sortParam;
         } else {
-            dispatch(seriesAction.updateSortParam({sortParam: sortParam}));
+            dispatch(seriesAction.updateSortParam({ sortParam: sortParam }));
         }
         const series = [...getState().series.filteredItems];
         let sortedSeries = series;
@@ -203,7 +189,7 @@ export const sortSeries = (sortParam) => {
                 break
 
         }
-        dispatch(seriesAction.updateFilteredSerie({series: sortedSeries}))
+        dispatch(seriesAction.updateFilteredSerie({ series: sortedSeries }))
     }
 }
 
@@ -236,10 +222,10 @@ export const searchSerie = (searchInput) => {
                 let index = serie.title.toLowerCase().search(searchInput.toLowerCase());
                 return -1 !== index;
             })
-            dispatch(seriesAction.updateFilteredSerie({series: filteredSeries}));
+            dispatch(seriesAction.updateFilteredSerie({ series: filteredSeries }));
             dispatch(sortSeries());
         } else {
-            dispatch(seriesAction.updateFilteredSerie({series: [...getState().series.items]}));
+            dispatch(seriesAction.updateFilteredSerie({ series: [...getState().series.items] }));
             dispatch(sortSeries());
         }
     }

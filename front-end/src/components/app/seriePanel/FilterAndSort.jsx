@@ -6,7 +6,7 @@ import InputDropDown from "../../ui/form/InputDropDown";
 
 import classes from './FilterAndSort.module.css'
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Input from "../../ui/form/Input";
+import Input from "../../ui/form/Input.tsx";
 import {useDispatch} from "react-redux";
 import {searchSerie, sortSeries} from "../../../store/series-action";
 

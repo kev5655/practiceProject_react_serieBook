@@ -7,7 +7,7 @@ import Settings from "../pages/Settings";
 import BlurLayout from "../components/layout/BlurLayout";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loadAuth} from "../store/authenticate-action";
+import {loadAuth} from "../store/auth/auth-actions.ts";
 import {fetchSeries} from "../store/series-action";
 
 const Router = () => {

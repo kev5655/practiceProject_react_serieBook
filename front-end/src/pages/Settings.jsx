@@ -1,10 +1,10 @@
 import Card from "../components/layout/Card";
 
 import classes from './Settings.module.css'
-import Input from "../components/ui/form/Input";
+import Input from "../components/ui/form/Input.tsx";
 import Btn from "../components/ui/form/Btn";
-import {isEmail, isNotEmpty, isPassword} from "../utils/Validation";
-import {isUsernameAvailable, logout} from "../store/authenticate-action";
+import {IsEmail, IsNotEmpty, IsPassword} from "../utils/Validation.ts";
+import {checkUsernameAvailability, logout} from "../store/auth/auth-actions.ts";
 import {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -95,8 +95,8 @@ const Settings = () => {
                             <Input type='text'
                                    name='UpdateUsername'
                                    placeholder="Coming soon"
-                                   validator={new isNotEmpty().setErrorText("Username is Empty")}
-                                   backendValidator={isUsernameAvailable}
+                                   validator={new IsNotEmpty().setErrorText("Username is Empty")}
+                                   backendValidator={checkUsernameAvailability}
                                    onFocus={usernameFocusHandler}
                                    ref={usernameRef}/>
                             {isShowUsernameBtn && <Btn label="Update" onClick={submitUsername}/>}
@@ -108,7 +108,7 @@ const Settings = () => {
                             <Input type='email'
                                    name='updateEmail'
                                    placeholder="Coming soon"
-                                   validator={new isEmail()}
+                                   validator={new IsEmail()}
                                    onFocus={emailFocusHandler}
                                    ref={emailRef}/>
                             {isShowEmailBtn && <Btn label="Update" onClick={submitEmail}/>}
@@ -121,7 +121,7 @@ const Settings = () => {
                                    name='updatePassword'
                                    placeholder="Coming soon"
                                    isPassword={true}
-                                   validator={new isPassword()}
+                                   validator={new IsPassword()}
                                    onFocus={passwordFocusHandler}
                                    ref={passwordRef}/>
                             {isShowPasswordBtn && <Btn label="Update" onClick={submitPassword}/>}
@@ -138,7 +138,7 @@ const Settings = () => {
                 <section className={classes.section}>
                     <h2 className={classes.section_title}>Design</h2>
                     <div className={classes.setting_action}>
-                        <p>Theme -> Coming soon</p>
+                        <p>Theme ➡️ Coming soon</p>
                         <Btn label="Toggle Dark-mode"/>
                     </div>
                 </section>
@@ -146,7 +146,7 @@ const Settings = () => {
                 <section className={classes.section}>
                     <h2 className={classes.section_title}>Series</h2>
                     <div className={classes.setting_input}>
-                        <p>Upload Netflix Data -> Coming soon</p>
+                        <p>Upload Netflix Data ➡️ Coming soon</p>
                         <div className={classes.input}>
                             {/*<input type="file"*/}
                             {/*       id="netflixCSV" name="netflixCSV"*/}

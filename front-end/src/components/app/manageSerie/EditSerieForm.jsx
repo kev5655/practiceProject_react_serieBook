@@ -4,10 +4,10 @@ import React, {useRef, useState} from 'react'
 import InputStars from "../../ui/form/InputStars";
 import Btn from "../../ui/form/Btn";
 import InputDatepicker from "../../ui/form/InputDatepicker";
-import Input from "../../ui/form/Input";
+import Input from "../../ui/form/Input.tsx";
 
 import classes from "./ManageSerieForm.module.css";
-import {isNotEmpty} from "../../../utils/Validation";
+import {IsNotEmpty} from "../../../utils/Validation.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {seriesAction} from "../../../store/series-slice";
 import {useNavigate} from "react-router-dom";
@@ -90,22 +90,22 @@ const EditSerieForm = () => {
     return (
         <form className={classes.grid} onSubmit={submitHandler}>
             <div className={`${classes.grid_title_container} ${classes.item}`}>
-                <Input tpye='text'
+                <Input type='text'
                        initValue={activeSerie.title}
                        name='SerieName'
                        placeholder='Serie Name'
-                       validator={new isNotEmpty().setErrorText("Serie need a name")}
+                       validator={new IsNotEmpty("Serie need a name")}
                        ref={serieNameRef}/>
             </div>
 
             <div className={`${classes.grid_episode_season_container} ${classes.item}`}>
-                <Input tpye='number'
+                <Input type='number'
                        initValue={activeSerie.session}
                        name='Session'
                        placeholder='Session'
-                       validator={new isNotEmpty().setErrorText("add a number")}
+                       validator={new IsNotEmpty("Add a number")}
                        ref={sessionRef}/>
-                <Input tpye='number'
+                <Input type='number'
                        initValue={activeSerie.episode}
                        name='Episode'
                        placeholder='Episode'

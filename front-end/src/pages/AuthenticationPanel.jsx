@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import Card from "../components/layout/Card";
 
 import classes from "./AuthenticationPanel.module.css";
-import LoginForm from "../components/app/authentication/LoginForm";
+import LoginForm from "../components/app/authentication/LoginForm.tsx";
 
-import SingUpFrom from "../components/app/authentication/SingUpFrom";
+import SingUpFrom from "../components/app/authentication/SignUpFrom.tsx";
 import Btn from "../components/ui/form/Btn";
 import {useDispatch} from "react-redux";
-import {authActions} from "../store/authenticate-slice";
+import {authActions} from "../store/auth/auth-slice.ts";
 
 // ToDo update setLoginFailed
 const AuthenticationPanel = () => {
@@ -17,7 +17,7 @@ const AuthenticationPanel = () => {
     const switchLoginSingUpClickHandler = () => {
         setHasAccount(!hasAccount);
         dispatch(authActions.resetLoginFailed())
-        dispatch(authActions.resetSingUpFailed())
+        dispatch(authActions.resetSignUpFailed())
     }
 
 
