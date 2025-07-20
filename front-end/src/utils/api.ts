@@ -1,15 +1,8 @@
 import { TokenError } from "./Error.ts";
 
-// Add types for window.API_URL
-declare global {
-    interface Window {
-        API_URL?: string;
-    }
-}
 
-// Get the API URL from the window.API_URL which is set in env-config.js
-// This is injected at runtime by our Docker entrypoint script
-const serverUrl: string = window.API_URL || 'http://localhost:8081';
+// The NGINX backend redirects the api calls on /api
+const serverUrl: string = 'http://0.0.0.0:3000';
 
 /**
  * Request configuration interface
