@@ -1,9 +1,5 @@
 import { TokenError } from "./Error.ts";
 
-
-// The NGINX backend redirects the api calls on /api
-const serverUrl: string = 'http://0.0.0.0:3000';
-
 /**
  * Request configuration interface
  */
@@ -43,7 +39,7 @@ export const sendRequest = async <T = any>(requestConfig: RequestConfig): Promis
     }
 
     // Make the request
-    const response = await fetch(serverUrl + requestConfig.url, config);
+    const response = await fetch(requestConfig.url, config);
 
     // Handle non-OK responses
     if (!response.ok) {
